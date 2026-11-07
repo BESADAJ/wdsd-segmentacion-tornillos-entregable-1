@@ -1,0 +1,46 @@
+{
+ "dataset": "WEEE Disassembly Screw Dataset (WDSD)",
+ "n_imagenes": 945,
+ "sha256_dataset": "39117b86f77b4f4277045d904848291306b4492bcd553872d6dddb097c4544a4",
+ "tipo_problema": "Segmentación de imágenes (binaria: tornillo / fondo)",
+ "metrica_primaria": "Dice de la clase tornillo, promediado por imagen",
+ "metricas_secundarias": [
+  "IoU de tornillo",
+  "mIoU",
+  "exactitud de píxel",
+  "recall y precisión por instancia"
+ ],
+ "delta_practico": 0.02,
+ "delta_estado": "provisional: se confirma con el piloto de la sección 4.1",
+ "alpha": 0.05,
+ "unidad_analisis": "imagen",
+ "unidad_independencia": "grupo de independencia (sesión o escena)",
+ "particion": {
+  "semilla": 42,
+  "umbral_phash": 60,
+  "tamanos": {
+   "train": 744,
+   "test": 108,
+   "val": 93
+  },
+  "sha256": {
+   "train": "efb6e322326e5d935919045586c4169155cb2fb0f7d44294f72eb7efa2b984c4",
+   "val": "8252f051f632fa44a1be3f1e39146d0b35422232b986043003caa73b3d2b9166",
+   "test": "af1fed4e311dfab3fe2762961b6d6b5bbd6c36184ff179af77247a76e16e80fa"
+  },
+  "archivo": "results/eda/particion.csv"
+ },
+ "normalizacion_train": {
+  "media_rgb_0_1": [
+   0.38552,
+   0.46256,
+   0.41176
+  ],
+  "std_rgb_0_1": [
+   0.22329,
+   0.21101,
+   0.20605
+  ],
+  "n_imagenes": 744
+ }
+}

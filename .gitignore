@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Dataset: no se redistribuye
+/WDSD-*/
+
+# Cachés del EDA: contienen rutas locales y se regeneran
+results/eda/*
+!results/eda/particion.csv
+!results/eda/declaracion_a_priori.json
+!results/eda/normalizacion_train.json
