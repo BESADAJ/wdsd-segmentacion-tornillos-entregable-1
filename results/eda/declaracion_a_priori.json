@@ -2,19 +2,19 @@
  "dataset": "WEEE Disassembly Screw Dataset (WDSD)",
  "n_imagenes": 945,
  "sha256_dataset": "39117b86f77b4f4277045d904848291306b4492bcd553872d6dddb097c4544a4",
- "tipo_problema": "Segmentaci髇 de im醙enes (binaria: tornillo / fondo)",
+ "tipo_problema": "Segmentaci贸n de im谩genes (binaria: tornillo / fondo)",
  "metrica_primaria": "Dice de la clase tornillo, promediado por imagen",
  "metricas_secundarias": [
   "IoU de tornillo",
   "mIoU",
-  "exactitud de p韝el",
-  "recall y precisi髇 por instancia"
+  "exactitud de p铆xel",
+  "recall y precisi贸n por instancia"
  ],
  "delta_practico": 0.02,
- "delta_estado": "provisional: se confirma con el piloto de la secci髇 4.1",
+ "delta_estado": "provisional: se confirma con el piloto de la secci贸n 4.1",
  "alpha": 0.05,
  "unidad_analisis": "imagen",
- "unidad_independencia": "grupo de independencia (sesi髇 o escena)",
+ "unidad_independencia": "grupo de independencia (sesi贸n o escena)",
  "particion": {
   "semilla": 42,
   "umbral_phash": 60,

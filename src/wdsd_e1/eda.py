@@ -1,4 +1,4 @@
-﻿"""Inventario, trazabilidad y medidas por imagen de WDSD.
+"""Inventario, trazabilidad y medidas por imagen de WDSD.
 
 El dataset llega partido en dos descargas de Google Drive (``WDSD-*-1-001`` y
 ``WDSD-*-1-002``). Este módulo las une en un solo inventario y calcula, con
