@@ -1,0 +1,4 @@
+modelo,parametros,capas_conv,s_por_epoca_con_val,mem_pico_gpu_gb
+fcn,1180211,13,55.8,0.783
+segnet,1362945,20,66.7,1.396
+unet,1942577,23,108.9,1.648

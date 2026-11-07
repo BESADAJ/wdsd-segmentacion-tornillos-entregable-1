@@ -10,3 +10,11 @@ results/eda/*
 !results/eda/particion.csv
 !results/eda/declaracion_a_priori.json
 !results/eda/normalizacion_train.json
+
+# Modelos base: datos, pesos y paquetes locales
+*.zip
+*.pt
+train/
+val/
+test/
+Annotations/
