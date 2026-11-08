@@ -9,4 +9,5 @@ __pycache__/
 results/eda/*
 !results/eda/particion.csv
 !results/eda/declaracion_a_priori.json
+!results/eda/declaracion_a_priori_instancias.json
 !results/eda/normalizacion_train.json
