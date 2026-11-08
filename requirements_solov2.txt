@@ -1,0 +1,10 @@
+# Entorno aparte wdsd_mmdet (Python 3.11). Instalar en este orden (ver ENTRENAMIENTO_INSTANCIAS.md):
+# pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cu121
+# pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu121/torch2.1/index.html
+numpy<2
+mmengine==0.10.4
+mmdet==3.3.0
+pycocotools
+pandas
+scipy
+setuptools<70

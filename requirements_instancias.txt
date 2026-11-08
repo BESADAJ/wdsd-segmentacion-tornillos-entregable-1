@@ -1,0 +1,5 @@
+# Entorno wdsd_dl (Mask R-CNN y YOLOv8-seg), además de requirements_entrenamiento.txt
+ultralytics
+pycocotools
+scipy
+pandas

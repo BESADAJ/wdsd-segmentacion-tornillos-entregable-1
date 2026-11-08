@@ -1,0 +1,1230 @@
+2026/11/08 05:40:07 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.11.18 | packaged by Anaconda, Inc. | (main, Oct 26 2026, 18:13:29) [MSC v.1942 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 44
+    GPU 0: NVIDIA GeForce RTX 3060 Laptop GPU
+    CUDA_HOME: None
+    GCC: n/a
+    PyTorch: 2.1.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.8.1  (built against CUDA 12.0)
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.8.1, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.4
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'gloo'}
+    seed: 44
+    deterministic: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2026/11/08 05:40:08 - mmengine - INFO - Config:
+default_hooks = dict(
+    checkpoint=dict(
+        interval=1,
+        max_keep_ckpts=1,
+        rule='greater',
+        save_best='coco/segm_mAP',
+        type='CheckpointHook'),
+    logger=dict(interval=50, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'))
+default_scope = 'mmdet'
+env_cfg = dict(cudnn_benchmark=False, dist_cfg=dict(backend='gloo'))
+load_from = 'https://download.openmmlab.com/mmdetection/v2.0/solov2/solov2_r50_fpn_1x_coco/solov2_r50_fpn_1x_coco_20220512_125858-a357fa23.pth'
+log_level = 'INFO'
+model = dict(
+    backbone=dict(
+        depth=50,
+        frozen_stages=1,
+        init_cfg=dict(checkpoint='torchvision://resnet50', type='Pretrained'),
+        num_stages=4,
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        style='pytorch',
+        type='ResNet'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_mask=True,
+        pad_size_divisor=32,
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='DetDataPreprocessor'),
+    mask_head=dict(
+        cls_down_index=0,
+        feat_channels=512,
+        in_channels=256,
+        loss_cls=dict(
+            alpha=0.25,
+            gamma=2.0,
+            loss_weight=1.0,
+            type='FocalLoss',
+            use_sigmoid=True),
+        loss_mask=dict(loss_weight=3.0, type='DiceLoss', use_sigmoid=True),
+        mask_feature_head=dict(
+            end_level=3,
+            feat_channels=128,
+            mask_stride=4,
+            norm_cfg=dict(num_groups=32, requires_grad=True, type='GN'),
+            out_channels=256,
+            start_level=0),
+        num_classes=1,
+        num_grids=[
+            40,
+            36,
+            24,
+            16,
+            12,
+        ],
+        pos_scale=0.2,
+        scale_ranges=(
+            (
+                1,
+                96,
+            ),
+            (
+                48,
+                192,
+            ),
+            (
+                96,
+                384,
+            ),
+            (
+                192,
+                768,
+            ),
+            (
+                384,
+                2048,
+            ),
+        ),
+        stacked_convs=4,
+        strides=[
+            8,
+            8,
+            16,
+            32,
+            32,
+        ],
+        type='SOLOV2Head'),
+    neck=dict(
+        in_channels=[
+            256,
+            512,
+            1024,
+            2048,
+        ],
+        num_outs=5,
+        out_channels=256,
+        start_level=0,
+        type='FPN'),
+    test_cfg=dict(
+        filter_thr=0.05,
+        kernel='gaussian',
+        mask_thr=0.5,
+        max_per_img=100,
+        nms_pre=500,
+        score_thr=0.05,
+        sigma=2.0),
+    type='SOLOv2')
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=35, norm_type=2),
+    optimizer=dict(lr=0.00125, momentum=0.9, type='SGD', weight_decay=0.0001),
+    type='AmpOptimWrapper')
+param_scheduler = [
+    dict(
+        begin=0, by_epoch=False, end=300, start_factor=0.001, type='LinearLR'),
+    dict(T_max=12, begin=0, by_epoch=True, end=12, type='CosineAnnealingLR'),
+]
+randomness = dict(deterministic=False, seed=44)
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_sampler=None,
+    batch_size=1,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/test.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/test/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=False, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file=
+    'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/test.json',
+    format_only=False,
+    metric='segm',
+    type='CocoMetric')
+train_cfg = dict(max_epochs=12, type='EpochBasedTrainLoop', val_interval=1)
+train_dataloader = dict(
+    batch_sampler=dict(type='AspectRatioBatchSampler'),
+    batch_size=2,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/train.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/train/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=True, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(prob=0.5, type='RandomFlip'),
+            dict(type='PackDetInputs'),
+        ],
+        test_mode=False,
+        type='CocoDataset'),
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=True, type='DefaultSampler'))
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_sampler=None,
+    batch_size=1,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/val.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/val/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=False, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file=
+    'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/val.json',
+    format_only=False,
+    metric='segm',
+    type='CocoMetric')
+work_dir = 'D:\\Documents\\Personal\\Uninorte\\Maestría\\Primer semestre\\Deep Learning\\Trabajo\\datos\\wdsd\\results\\instancias\\corridas\\solov2_s44'
+
+2026/11/08 05:40:09 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2026/11/08 05:40:09 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2026/11/08 05:40:10 - mmengine - INFO - load model from: torchvision://resnet50
+2026/11/08 05:40:10 - mmengine - INFO - Loads checkpoint by torchvision backend from path: torchvision://resnet50
+2026/11/08 05:40:10 - mmengine - WARNING - The model and loaded state dict do not match exactly
+
+unexpected key in source state_dict: fc.weight, fc.bias
+
+Name of parameter - Initialization information
+
+backbone.conv1.weight - torch.Size([64, 3, 7, 7]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv1.weight - torch.Size([64, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.0.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv1.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.0.weight - torch.Size([512, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv1.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.0.weight - torch.Size([1024, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv1.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.0.weight - torch.Size([2048, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+neck.lateral_convs.0.conv.weight - torch.Size([256, 256, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.lateral_convs.1.conv.weight - torch.Size([256, 512, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.lateral_convs.2.conv.weight - torch.Size([256, 1024, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.lateral_convs.3.conv.weight - torch.Size([256, 2048, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.fpn_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.fpn_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.fpn_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+neck.fpn_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.0.conv.weight - torch.Size([512, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.cls_convs.0.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.0.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.1.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.cls_convs.1.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.1.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.2.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.cls_convs.2.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.2.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.3.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.cls_convs.3.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.cls_convs.3.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.0.conv.weight - torch.Size([512, 258, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.kernel_convs.0.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.0.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.1.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.kernel_convs.1.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.1.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.2.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.kernel_convs.2.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.2.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.3.conv.weight - torch.Size([512, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.kernel_convs.3.gn.weight - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.kernel_convs.3.gn.bias - torch.Size([512]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.conv_cls.weight - torch.Size([1, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=-4.59511985013459 
+
+mask_head.conv_cls.bias - torch.Size([1]): 
+NormalInit: mean=0, std=0.01, bias=-4.59511985013459 
+
+mask_head.conv_kernel.weight - torch.Size([256, 512, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.conv_kernel.bias - torch.Size([256]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.0.conv0.conv.weight - torch.Size([128, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.0.conv0.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.0.conv0.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.1.conv0.conv.weight - torch.Size([128, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.1.conv0.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.1.conv0.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.2.conv0.conv.weight - torch.Size([128, 256, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.2.conv0.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.2.conv0.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.2.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.2.conv1.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.2.conv1.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv0.conv.weight - torch.Size([128, 258, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.3.conv0.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv0.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv1.conv.weight - torch.Size([128, 128, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.3.conv1.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv1.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv2.conv.weight - torch.Size([128, 128, 3, 3]): 
+NormalInit: mean=0, std=0.01, bias=0 
+
+mask_head.mask_feature_head.convs_all_levels.3.conv2.gn.weight - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.convs_all_levels.3.conv2.gn.bias - torch.Size([128]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.conv_pred.conv.weight - torch.Size([256, 128, 1, 1]): 
+Initialized by user-defined `init_weights` in ConvModule  
+
+mask_head.mask_feature_head.conv_pred.gn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+
+mask_head.mask_feature_head.conv_pred.gn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of SOLOv2  
+2026/11/08 05:40:10 - mmengine - INFO - Load checkpoint from https://download.openmmlab.com/mmdetection/v2.0/solov2/solov2_r50_fpn_1x_coco/solov2_r50_fpn_1x_coco_20220512_125858-a357fa23.pth
+2026/11/08 05:40:10 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2026/11/08 05:40:10 - mmengine - INFO - Checkpoints will be saved to D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\instancias\corridas\solov2_s44.
+2026/11/08 05:40:29 - mmengine - INFO - Epoch(train)  [1][ 50/372]  lr: 2.0589e-04  eta: 0:27:50  time: 0.3806  data_time: 0.0808  memory: 2789  grad_norm: 27.1059  loss: 1.8863  loss_mask: 1.3438  loss_cls: 0.5425
+2026/11/08 05:40:48 - mmengine - INFO - Epoch(train)  [1][100/372]  lr: 4.1472e-04  eta: 0:27:32  time: 0.3779  data_time: 0.0734  memory: 2766  grad_norm: 21.0521  loss: 1.3394  loss_mask: 1.0063  loss_cls: 0.3331
+2026/11/08 05:41:07 - mmengine - INFO - Epoch(train)  [1][150/372]  lr: 6.2354e-04  eta: 0:27:12  time: 0.3843  data_time: 0.0783  memory: 2769  grad_norm: 22.5676  loss: 1.6225  loss_mask: 1.3051  loss_cls: 0.3174
+2026/11/08 05:41:26 - mmengine - INFO - Epoch(train)  [1][200/372]  lr: 8.3236e-04  eta: 0:27:06  time: 0.3888  data_time: 0.0801  memory: 2743  grad_norm: 13.3323  loss: 1.0216  loss_mask: 0.8178  loss_cls: 0.2037
+2026/11/08 05:41:45 - mmengine - INFO - Epoch(train)  [1][250/372]  lr: 1.0412e-03  eta: 0:26:46  time: 0.3773  data_time: 0.0713  memory: 2789  grad_norm: 22.2906  loss: 1.3031  loss_mask: 1.0530  loss_cls: 0.2500
+2026/11/08 05:42:04 - mmengine - INFO - Epoch(train)  [1][300/372]  lr: 1.2500e-03  eta: 0:26:26  time: 0.3723  data_time: 0.0699  memory: 2768  grad_norm: 20.3441  loss: 1.4360  loss_mask: 1.1540  loss_cls: 0.2820
+2026/11/08 05:42:23 - mmengine - INFO - Epoch(train)  [1][350/372]  lr: 1.2500e-03  eta: 0:26:07  time: 0.3907  data_time: 0.0776  memory: 2769  grad_norm: 18.4294  loss: 1.1802  loss_mask: 0.9318  loss_cls: 0.2484
+2026/11/08 05:42:32 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:42:32 - mmengine - INFO - Saving checkpoint at 1 epochs
+2026/11/08 05:42:40 - mmengine - INFO - Epoch(val)  [1][50/93]    eta: 0:00:05  time: 0.1271  data_time: 0.0226  memory: 2741  
+2026/11/08 05:42:45 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:42:45 - mmengine - INFO - segm_mAP_copypaste: 0.053 0.162 0.013 0.053 0.375 -1.000
+2026/11/08 05:42:45 - mmengine - INFO - Epoch(val) [1][93/93]    coco/segm_mAP: 0.0530  coco/segm_mAP_50: 0.1620  coco/segm_mAP_75: 0.0130  coco/segm_mAP_s: 0.0530  coco/segm_mAP_m: 0.3750  coco/segm_mAP_l: -1.0000  data_time: 0.0231  time: 0.1251
+2026/11/08 05:42:46 - mmengine - INFO - The best checkpoint with 0.0530 coco/segm_mAP at 1 epoch is saved to best_coco_segm_mAP_epoch_1.pth.
+2026/11/08 05:43:07 - mmengine - INFO - Epoch(train)  [2][ 50/372]  lr: 1.2287e-03  eta: 0:25:39  time: 0.3718  data_time: 0.0714  memory: 2767  grad_norm: 14.5602  loss: 1.0291  loss_mask: 0.8081  loss_cls: 0.2210
+2026/11/08 05:43:26 - mmengine - INFO - Epoch(train)  [2][100/372]  lr: 1.2287e-03  eta: 0:25:22  time: 0.3865  data_time: 0.0789  memory: 2768  grad_norm: 13.1299  loss: 1.0700  loss_mask: 0.8567  loss_cls: 0.2133
+2026/11/08 05:43:45 - mmengine - INFO - Epoch(train)  [2][150/372]  lr: 1.2287e-03  eta: 0:25:06  time: 0.4002  data_time: 0.0775  memory: 2744  grad_norm: 13.3699  loss: 0.9487  loss_mask: 0.7483  loss_cls: 0.2005
+2026/11/08 05:44:05 - mmengine - INFO - Epoch(train)  [2][200/372]  lr: 1.2287e-03  eta: 0:24:48  time: 0.3871  data_time: 0.0784  memory: 2768  grad_norm: 15.3787  loss: 1.2229  loss_mask: 0.9882  loss_cls: 0.2347
+2026/11/08 05:44:23 - mmengine - INFO - Epoch(train)  [2][250/372]  lr: 1.2287e-03  eta: 0:24:27  time: 0.3734  data_time: 0.0742  memory: 2742  grad_norm: 13.8948  loss: 1.0131  loss_mask: 0.8142  loss_cls: 0.1989
+2026/11/08 05:44:42 - mmengine - INFO - Epoch(train)  [2][300/372]  lr: 1.2287e-03  eta: 0:24:07  time: 0.3749  data_time: 0.0722  memory: 2790  grad_norm: 18.5456  loss: 1.2035  loss_mask: 0.9909  loss_cls: 0.2125
+2026/11/08 05:45:01 - mmengine - INFO - Epoch(train)  [2][350/372]  lr: 1.2287e-03  eta: 0:23:46  time: 0.3668  data_time: 0.0659  memory: 2769  grad_norm: 14.8372  loss: 0.8553  loss_mask: 0.6538  loss_cls: 0.2014
+2026/11/08 05:45:10 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:45:10 - mmengine - INFO - Saving checkpoint at 2 epochs
+2026/11/08 05:45:17 - mmengine - INFO - Epoch(val)  [2][50/93]    eta: 0:00:05  time: 0.1258  data_time: 0.0254  memory: 2741  
+2026/11/08 05:45:23 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:45:23 - mmengine - INFO - segm_mAP_copypaste: 0.062 0.193 0.017 0.061 0.339 -1.000
+2026/11/08 05:45:23 - mmengine - INFO - Epoch(val) [2][93/93]    coco/segm_mAP: 0.0620  coco/segm_mAP_50: 0.1930  coco/segm_mAP_75: 0.0170  coco/segm_mAP_s: 0.0610  coco/segm_mAP_m: 0.3390  coco/segm_mAP_l: -1.0000  data_time: 0.0224  time: 0.1241
+2026/11/08 05:45:23 - mmengine - INFO - The previous best checkpoint D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\instancias\corridas\solov2_s44\best_coco_segm_mAP_epoch_1.pth is removed
+2026/11/08 05:45:24 - mmengine - INFO - The best checkpoint with 0.0620 coco/segm_mAP at 2 epoch is saved to best_coco_segm_mAP_epoch_2.pth.
+2026/11/08 05:45:44 - mmengine - INFO - Epoch(train)  [3][ 50/372]  lr: 1.1663e-03  eta: 0:23:17  time: 0.3709  data_time: 0.0757  memory: 2790  grad_norm: 10.1263  loss: 0.7883  loss_mask: 0.6087  loss_cls: 0.1796
+2026/11/08 05:46:03 - mmengine - INFO - Epoch(train)  [3][100/372]  lr: 1.1663e-03  eta: 0:22:56  time: 0.3716  data_time: 0.0744  memory: 2741  grad_norm: 8.3878  loss: 0.7386  loss_mask: 0.6064  loss_cls: 0.1322
+2026/11/08 05:46:21 - mmengine - INFO - Epoch(train)  [3][150/372]  lr: 1.1663e-03  eta: 0:22:36  time: 0.3806  data_time: 0.0775  memory: 2774  grad_norm: 8.8231  loss: 0.7535  loss_mask: 0.6234  loss_cls: 0.1301
+2026/11/08 05:46:40 - mmengine - INFO - Epoch(train)  [3][200/372]  lr: 1.1663e-03  eta: 0:22:15  time: 0.3654  data_time: 0.0713  memory: 2740  grad_norm: 10.1481  loss: 0.9141  loss_mask: 0.7349  loss_cls: 0.1791
+2026/11/08 05:46:59 - mmengine - INFO - Epoch(train)  [3][250/372]  lr: 1.1663e-03  eta: 0:21:56  time: 0.3819  data_time: 0.0818  memory: 2789  grad_norm: 12.1543  loss: 0.8756  loss_mask: 0.7563  loss_cls: 0.1193
+2026/11/08 05:47:01 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:47:17 - mmengine - INFO - Epoch(train)  [3][300/372]  lr: 1.1663e-03  eta: 0:21:36  time: 0.3549  data_time: 0.0685  memory: 2766  grad_norm: 10.2787  loss: 0.7912  loss_mask: 0.6593  loss_cls: 0.1320
+2026/11/08 05:47:36 - mmengine - INFO - Epoch(train)  [3][350/372]  lr: 1.1663e-03  eta: 0:21:16  time: 0.3849  data_time: 0.0793  memory: 2742  grad_norm: 9.1736  loss: 0.7856  loss_mask: 0.6619  loss_cls: 0.1238
+2026/11/08 05:47:45 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:47:45 - mmengine - INFO - Saving checkpoint at 3 epochs
+2026/11/08 05:47:52 - mmengine - INFO - Epoch(val)  [3][50/93]    eta: 0:00:05  time: 0.1208  data_time: 0.0227  memory: 2743  
+2026/11/08 05:47:58 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:47:58 - mmengine - INFO - segm_mAP_copypaste: 0.102 0.284 0.038 0.098 0.496 -1.000
+2026/11/08 05:47:58 - mmengine - INFO - Epoch(val) [3][93/93]    coco/segm_mAP: 0.1020  coco/segm_mAP_50: 0.2840  coco/segm_mAP_75: 0.0380  coco/segm_mAP_s: 0.0980  coco/segm_mAP_m: 0.4960  coco/segm_mAP_l: -1.0000  data_time: 0.0227  time: 0.1243
+2026/11/08 05:47:58 - mmengine - INFO - The previous best checkpoint D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\instancias\corridas\solov2_s44\best_coco_segm_mAP_epoch_2.pth is removed
+2026/11/08 05:47:59 - mmengine - INFO - The best checkpoint with 0.1020 coco/segm_mAP at 3 epoch is saved to best_coco_segm_mAP_epoch_3.pth.
+2026/11/08 05:48:19 - mmengine - INFO - Epoch(train)  [4][ 50/372]  lr: 1.0669e-03  eta: 0:20:49  time: 0.3946  data_time: 0.0842  memory: 2742  grad_norm: 9.4906  loss: 0.7772  loss_mask: 0.6508  loss_cls: 0.1264
+2026/11/08 05:48:39 - mmengine - INFO - Epoch(train)  [4][100/372]  lr: 1.0669e-03  eta: 0:20:31  time: 0.3787  data_time: 0.0800  memory: 2744  grad_norm: 8.7940  loss: 0.6756  loss_mask: 0.5712  loss_cls: 0.1044
+2026/11/08 05:48:57 - mmengine - INFO - Epoch(train)  [4][150/372]  lr: 1.0669e-03  eta: 0:20:11  time: 0.3708  data_time: 0.0699  memory: 2766  grad_norm: 8.1191  loss: 0.5656  loss_mask: 0.4814  loss_cls: 0.0842
+2026/11/08 05:49:16 - mmengine - INFO - Epoch(train)  [4][200/372]  lr: 1.0669e-03  eta: 0:19:51  time: 0.3775  data_time: 0.0803  memory: 2819  grad_norm: 8.5342  loss: 0.6505  loss_mask: 0.5376  loss_cls: 0.1129
+2026/11/08 05:49:34 - mmengine - INFO - Epoch(train)  [4][250/372]  lr: 1.0669e-03  eta: 0:19:32  time: 0.3707  data_time: 0.0716  memory: 2789  grad_norm: 9.1839  loss: 0.6466  loss_mask: 0.5345  loss_cls: 0.1120
+2026/11/08 05:49:53 - mmengine - INFO - Epoch(train)  [4][300/372]  lr: 1.0669e-03  eta: 0:19:12  time: 0.3751  data_time: 0.0742  memory: 2766  grad_norm: 8.1834  loss: 0.6778  loss_mask: 0.5651  loss_cls: 0.1127
+2026/11/08 05:50:12 - mmengine - INFO - Epoch(train)  [4][350/372]  lr: 1.0669e-03  eta: 0:18:53  time: 0.3834  data_time: 0.0709  memory: 2742  grad_norm: 10.2225  loss: 0.7233  loss_mask: 0.5865  loss_cls: 0.1369
+2026/11/08 05:50:20 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:50:20 - mmengine - INFO - Saving checkpoint at 4 epochs
+2026/11/08 05:50:28 - mmengine - INFO - Epoch(val)  [4][50/93]    eta: 0:00:05  time: 0.1174  data_time: 0.0226  memory: 2766  
+2026/11/08 05:50:33 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:50:33 - mmengine - INFO - segm_mAP_copypaste: 0.126 0.331 0.074 0.124 0.528 -1.000
+2026/11/08 05:50:33 - mmengine - INFO - Epoch(val) [4][93/93]    coco/segm_mAP: 0.1260  coco/segm_mAP_50: 0.3310  coco/segm_mAP_75: 0.0740  coco/segm_mAP_s: 0.1240  coco/segm_mAP_m: 0.5280  coco/segm_mAP_l: -1.0000  data_time: 0.0231  time: 0.1214
+2026/11/08 05:50:33 - mmengine - INFO - The previous best checkpoint D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\instancias\corridas\solov2_s44\best_coco_segm_mAP_epoch_3.pth is removed
+2026/11/08 05:50:34 - mmengine - INFO - The best checkpoint with 0.1260 coco/segm_mAP at 4 epoch is saved to best_coco_segm_mAP_epoch_4.pth.
+2026/11/08 05:50:54 - mmengine - INFO - Epoch(train)  [5][ 50/372]  lr: 9.3750e-04  eta: 0:18:25  time: 0.3745  data_time: 0.0733  memory: 2742  grad_norm: 8.7986  loss: 0.6896  loss_mask: 0.5766  loss_cls: 0.1130
+2026/11/08 05:51:13 - mmengine - INFO - Epoch(train)  [5][100/372]  lr: 9.3750e-04  eta: 0:18:06  time: 0.3775  data_time: 0.0776  memory: 2741  grad_norm: 9.6170  loss: 0.6573  loss_mask: 0.5873  loss_cls: 0.0699
+2026/11/08 05:51:31 - mmengine - INFO - Epoch(train)  [5][150/372]  lr: 9.3750e-04  eta: 0:17:46  time: 0.3804  data_time: 0.0697  memory: 2789  grad_norm: 9.1463  loss: 0.6101  loss_mask: 0.5104  loss_cls: 0.0997
+2026/11/08 05:51:50 - mmengine - INFO - Epoch(train)  [5][200/372]  lr: 9.3750e-04  eta: 0:17:28  time: 0.3710  data_time: 0.0697  memory: 2768  grad_norm: 10.9659  loss: 0.7825  loss_mask: 0.6682  loss_cls: 0.1143
+2026/11/08 05:52:09 - mmengine - INFO - Epoch(train)  [5][250/372]  lr: 9.3750e-04  eta: 0:17:09  time: 0.3725  data_time: 0.0678  memory: 2766  grad_norm: 10.2286  loss: 0.6421  loss_mask: 0.5324  loss_cls: 0.1096
+2026/11/08 05:52:28 - mmengine - INFO - Epoch(train)  [5][300/372]  lr: 9.3750e-04  eta: 0:16:50  time: 0.3846  data_time: 0.0802  memory: 2769  grad_norm: 6.1409  loss: 0.5973  loss_mask: 0.5079  loss_cls: 0.0893
+2026/11/08 05:52:47 - mmengine - INFO - Epoch(train)  [5][350/372]  lr: 9.3750e-04  eta: 0:16:31  time: 0.3872  data_time: 0.0774  memory: 2741  grad_norm: 7.9763  loss: 0.5353  loss_mask: 0.4493  loss_cls: 0.0860
+2026/11/08 05:52:56 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:52:56 - mmengine - INFO - Saving checkpoint at 5 epochs
+2026/11/08 05:53:03 - mmengine - INFO - Epoch(val)  [5][50/93]    eta: 0:00:05  time: 0.1201  data_time: 0.0229  memory: 2789  
+2026/11/08 05:53:09 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:53:09 - mmengine - INFO - segm_mAP_copypaste: 0.100 0.266 0.040 0.099 0.468 -1.000
+2026/11/08 05:53:09 - mmengine - INFO - Epoch(val) [5][93/93]    coco/segm_mAP: 0.1000  coco/segm_mAP_50: 0.2660  coco/segm_mAP_75: 0.0400  coco/segm_mAP_s: 0.0990  coco/segm_mAP_m: 0.4680  coco/segm_mAP_l: -1.0000  data_time: 0.0231  time: 0.1203
+2026/11/08 05:53:28 - mmengine - INFO - Epoch(train)  [6][ 50/372]  lr: 7.8676e-04  eta: 0:16:04  time: 0.3777  data_time: 0.0761  memory: 2768  grad_norm: 5.8804  loss: 0.5147  loss_mask: 0.4520  loss_cls: 0.0627
+2026/11/08 05:53:47 - mmengine - INFO - Epoch(train)  [6][100/372]  lr: 7.8676e-04  eta: 0:15:46  time: 0.3745  data_time: 0.0746  memory: 2770  grad_norm: 6.5483  loss: 0.5258  loss_mask: 0.4643  loss_cls: 0.0615
+2026/11/08 05:54:02 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:54:05 - mmengine - INFO - Epoch(train)  [6][150/372]  lr: 7.8676e-04  eta: 0:15:26  time: 0.3648  data_time: 0.0724  memory: 2741  grad_norm: 7.5073  loss: 0.5428  loss_mask: 0.4654  loss_cls: 0.0774
+2026/11/08 05:54:24 - mmengine - INFO - Epoch(train)  [6][200/372]  lr: 7.8676e-04  eta: 0:15:08  time: 0.3874  data_time: 0.0815  memory: 2790  grad_norm: 7.7613  loss: 0.5435  loss_mask: 0.4597  loss_cls: 0.0837
+2026/11/08 05:54:43 - mmengine - INFO - Epoch(train)  [6][250/372]  lr: 7.8676e-04  eta: 0:14:49  time: 0.3760  data_time: 0.0722  memory: 2789  grad_norm: 6.4727  loss: 0.5701  loss_mask: 0.4880  loss_cls: 0.0821
+2026/11/08 05:55:02 - mmengine - INFO - Epoch(train)  [6][300/372]  lr: 7.8676e-04  eta: 0:14:30  time: 0.3637  data_time: 0.0707  memory: 2742  grad_norm: 9.4513  loss: 0.5275  loss_mask: 0.4546  loss_cls: 0.0729
+2026/11/08 05:55:20 - mmengine - INFO - Epoch(train)  [6][350/372]  lr: 7.8676e-04  eta: 0:14:10  time: 0.3665  data_time: 0.0685  memory: 2766  grad_norm: 8.3148  loss: 0.5729  loss_mask: 0.4959  loss_cls: 0.0770
+2026/11/08 05:55:28 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:55:28 - mmengine - INFO - Saving checkpoint at 6 epochs
+2026/11/08 05:55:36 - mmengine - INFO - Epoch(val)  [6][50/93]    eta: 0:00:05  time: 0.1217  data_time: 0.0225  memory: 2743  
+2026/11/08 05:55:41 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:55:41 - mmengine - INFO - segm_mAP_copypaste: 0.132 0.333 0.063 0.130 0.480 -1.000
+2026/11/08 05:55:41 - mmengine - INFO - Epoch(val) [6][93/93]    coco/segm_mAP: 0.1320  coco/segm_mAP_50: 0.3330  coco/segm_mAP_75: 0.0630  coco/segm_mAP_s: 0.1300  coco/segm_mAP_m: 0.4800  coco/segm_mAP_l: -1.0000  data_time: 0.0226  time: 0.1206
+2026/11/08 05:55:41 - mmengine - INFO - The previous best checkpoint D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\instancias\corridas\solov2_s44\best_coco_segm_mAP_epoch_4.pth is removed
+2026/11/08 05:55:42 - mmengine - INFO - The best checkpoint with 0.1320 coco/segm_mAP at 6 epoch is saved to best_coco_segm_mAP_epoch_6.pth.
+2026/11/08 05:56:03 - mmengine - INFO - Epoch(train)  [7][ 50/372]  lr: 6.2500e-04  eta: 0:13:43  time: 0.3873  data_time: 0.0812  memory: 2742  grad_norm: 5.9751  loss: 0.3831  loss_mask: 0.3429  loss_cls: 0.0402
+2026/11/08 05:56:21 - mmengine - INFO - Epoch(train)  [7][100/372]  lr: 6.2500e-04  eta: 0:13:24  time: 0.3647  data_time: 0.0670  memory: 2741  grad_norm: 6.2097  loss: 0.4452  loss_mask: 0.3979  loss_cls: 0.0473
+2026/11/08 05:56:40 - mmengine - INFO - Epoch(train)  [7][150/372]  lr: 6.2500e-04  eta: 0:13:05  time: 0.3729  data_time: 0.0690  memory: 2789  grad_norm: 7.6169  loss: 0.5579  loss_mask: 0.4960  loss_cls: 0.0619
+2026/11/08 05:56:59 - mmengine - INFO - Epoch(train)  [7][200/372]  lr: 6.2500e-04  eta: 0:12:46  time: 0.3683  data_time: 0.0701  memory: 2769  grad_norm: 7.4976  loss: 0.4404  loss_mask: 0.3780  loss_cls: 0.0624
+2026/11/08 05:57:18 - mmengine - INFO - Epoch(train)  [7][250/372]  lr: 6.2500e-04  eta: 0:12:27  time: 0.3778  data_time: 0.0739  memory: 2790  grad_norm: 7.2038  loss: 0.4052  loss_mask: 0.3490  loss_cls: 0.0561
+2026/11/08 05:57:37 - mmengine - INFO - Epoch(train)  [7][300/372]  lr: 6.2500e-04  eta: 0:12:08  time: 0.3684  data_time: 0.0689  memory: 2742  grad_norm: 6.3278  loss: 0.4486  loss_mask: 0.4009  loss_cls: 0.0477
+2026/11/08 05:57:56 - mmengine - INFO - Epoch(train)  [7][350/372]  lr: 6.2500e-04  eta: 0:11:50  time: 0.3905  data_time: 0.0814  memory: 2742  grad_norm: 7.8107  loss: 0.5338  loss_mask: 0.4708  loss_cls: 0.0630
+2026/11/08 05:58:04 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 05:58:04 - mmengine - INFO - Saving checkpoint at 7 epochs
+2026/11/08 05:58:12 - mmengine - INFO - Epoch(val)  [7][50/93]    eta: 0:00:05  time: 0.1161  data_time: 0.0225  memory: 2740  
+2026/11/08 05:58:17 - mmengine - INFO - Evaluating segm...
+2026/11/08 05:58:17 - mmengine - INFO - segm_mAP_copypaste: 0.120 0.297 0.047 0.118 0.513 -1.000
+2026/11/08 05:58:17 - mmengine - INFO - Epoch(val) [7][93/93]    coco/segm_mAP: 0.1200  coco/segm_mAP_50: 0.2970  coco/segm_mAP_75: 0.0470  coco/segm_mAP_s: 0.1180  coco/segm_mAP_m: 0.5130  coco/segm_mAP_l: -1.0000  data_time: 0.0228  time: 0.1178
+2026/11/08 05:58:36 - mmengine - INFO - Epoch(train)  [8][ 50/372]  lr: 4.6324e-04  eta: 0:11:23  time: 0.3731  data_time: 0.0693  memory: 2768  grad_norm: 7.5501  loss: 0.4932  loss_mask: 0.4456  loss_cls: 0.0476
+2026/11/08 05:58:55 - mmengine - INFO - Epoch(train)  [8][100/372]  lr: 4.6324e-04  eta: 0:11:04  time: 0.3797  data_time: 0.0770  memory: 2790  grad_norm: 6.0626  loss: 0.4232  loss_mask: 0.3890  loss_cls: 0.0342
+2026/11/08 05:59:14 - mmengine - INFO - Epoch(train)  [8][150/372]  lr: 4.6324e-04  eta: 0:10:45  time: 0.3773  data_time: 0.0729  memory: 2742  grad_norm: 7.0445  loss: 0.4504  loss_mask: 0.4037  loss_cls: 0.0467
+2026/11/08 05:59:33 - mmengine - INFO - Epoch(train)  [8][200/372]  lr: 4.6324e-04  eta: 0:10:27  time: 0.3810  data_time: 0.0749  memory: 2766  grad_norm: 8.2299  loss: 0.3842  loss_mask: 0.3390  loss_cls: 0.0453
+2026/11/08 05:59:52 - mmengine - INFO - Epoch(train)  [8][250/372]  lr: 4.6324e-04  eta: 0:10:08  time: 0.3783  data_time: 0.0722  memory: 2770  grad_norm: 6.0651  loss: 0.3867  loss_mask: 0.3456  loss_cls: 0.0411
+2026/11/08 06:00:11 - mmengine - INFO - Epoch(train)  [8][300/372]  lr: 4.6324e-04  eta: 0:09:49  time: 0.3666  data_time: 0.0696  memory: 2742  grad_norm: 8.5556  loss: 0.5028  loss_mask: 0.4701  loss_cls: 0.0327
+2026/11/08 06:00:29 - mmengine - INFO - Epoch(train)  [8][350/372]  lr: 4.6324e-04  eta: 0:09:30  time: 0.3687  data_time: 0.0735  memory: 2742  grad_norm: 6.1991  loss: 0.3715  loss_mask: 0.3328  loss_cls: 0.0387
+2026/11/08 06:00:38 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:00:38 - mmengine - INFO - Saving checkpoint at 8 epochs
+2026/11/08 06:00:45 - mmengine - INFO - Epoch(val)  [8][50/93]    eta: 0:00:05  time: 0.1191  data_time: 0.0212  memory: 2789  
+2026/11/08 06:00:50 - mmengine - INFO - Evaluating segm...
+2026/11/08 06:00:50 - mmengine - INFO - segm_mAP_copypaste: 0.113 0.282 0.050 0.110 0.480 -1.000
+2026/11/08 06:00:50 - mmengine - INFO - Epoch(val) [8][93/93]    coco/segm_mAP: 0.1130  coco/segm_mAP_50: 0.2820  coco/segm_mAP_75: 0.0500  coco/segm_mAP_s: 0.1100  coco/segm_mAP_m: 0.4800  coco/segm_mAP_l: -1.0000  data_time: 0.0223  time: 0.1159
+2026/11/08 06:00:59 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:01:09 - mmengine - INFO - Epoch(train)  [9][ 50/372]  lr: 3.1250e-04  eta: 0:09:02  time: 0.3774  data_time: 0.0738  memory: 2790  grad_norm: 5.8528  loss: 0.3640  loss_mask: 0.3335  loss_cls: 0.0305
+2026/11/08 06:01:28 - mmengine - INFO - Epoch(train)  [9][100/372]  lr: 3.1250e-04  eta: 0:08:44  time: 0.3802  data_time: 0.0716  memory: 2789  grad_norm: 7.8312  loss: 0.3911  loss_mask: 0.3556  loss_cls: 0.0354
+2026/11/08 06:01:47 - mmengine - INFO - Epoch(train)  [9][150/372]  lr: 3.1250e-04  eta: 0:08:25  time: 0.3867  data_time: 0.0850  memory: 2769  grad_norm: 6.1559  loss: 0.4117  loss_mask: 0.3614  loss_cls: 0.0503
+2026/11/08 06:02:05 - mmengine - INFO - Epoch(train)  [9][200/372]  lr: 3.1250e-04  eta: 0:08:06  time: 0.3711  data_time: 0.0735  memory: 2742  grad_norm: 6.8445  loss: 0.3931  loss_mask: 0.3626  loss_cls: 0.0305
+2026/11/08 06:02:24 - mmengine - INFO - Epoch(train)  [9][250/372]  lr: 3.1250e-04  eta: 0:07:47  time: 0.3778  data_time: 0.0747  memory: 2768  grad_norm: 6.8856  loss: 0.3167  loss_mask: 0.2912  loss_cls: 0.0255
+2026/11/08 06:02:43 - mmengine - INFO - Epoch(train)  [9][300/372]  lr: 3.1250e-04  eta: 0:07:28  time: 0.3769  data_time: 0.0776  memory: 2768  grad_norm: 6.7751  loss: 0.3701  loss_mask: 0.3338  loss_cls: 0.0363
+2026/11/08 06:03:02 - mmengine - INFO - Epoch(train)  [9][350/372]  lr: 3.1250e-04  eta: 0:07:09  time: 0.3753  data_time: 0.0757  memory: 2741  grad_norm: 10.1025  loss: 0.4571  loss_mask: 0.4198  loss_cls: 0.0373
+2026/11/08 06:03:10 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:03:10 - mmengine - INFO - Saving checkpoint at 9 epochs
+2026/11/08 06:03:18 - mmengine - INFO - Epoch(val)  [9][50/93]    eta: 0:00:05  time: 0.1183  data_time: 0.0224  memory: 2741  
+2026/11/08 06:03:23 - mmengine - INFO - Evaluating segm...
+2026/11/08 06:03:23 - mmengine - INFO - segm_mAP_copypaste: 0.126 0.320 0.050 0.124 0.500 -1.000
+2026/11/08 06:03:23 - mmengine - INFO - Epoch(val) [9][93/93]    coco/segm_mAP: 0.1260  coco/segm_mAP_50: 0.3200  coco/segm_mAP_75: 0.0500  coco/segm_mAP_s: 0.1240  coco/segm_mAP_m: 0.5000  coco/segm_mAP_l: -1.0000  data_time: 0.0232  time: 0.1178
+2026/11/08 06:03:41 - mmengine - INFO - Epoch(train) [10][ 50/372]  lr: 1.8306e-04  eta: 0:06:42  time: 0.3629  data_time: 0.0722  memory: 2789  grad_norm: 10.2835  loss: 0.3664  loss_mask: 0.3336  loss_cls: 0.0328
+2026/11/08 06:04:00 - mmengine - INFO - Epoch(train) [10][100/372]  lr: 1.8306e-04  eta: 0:06:23  time: 0.3554  data_time: 0.0675  memory: 2742  grad_norm: 6.5409  loss: 0.3843  loss_mask: 0.3642  loss_cls: 0.0201
+2026/11/08 06:04:18 - mmengine - INFO - Epoch(train) [10][150/372]  lr: 1.8306e-04  eta: 0:06:04  time: 0.3779  data_time: 0.0799  memory: 2743  grad_norm: 7.5643  loss: 0.4251  loss_mask: 0.3782  loss_cls: 0.0469
+2026/11/08 06:04:37 - mmengine - INFO - Epoch(train) [10][200/372]  lr: 1.8306e-04  eta: 0:05:45  time: 0.3784  data_time: 0.0713  memory: 2789  grad_norm: 5.9615  loss: 0.3532  loss_mask: 0.3269  loss_cls: 0.0263
+2026/11/08 06:04:57 - mmengine - INFO - Epoch(train) [10][250/372]  lr: 1.8306e-04  eta: 0:05:26  time: 0.3805  data_time: 0.0742  memory: 2742  grad_norm: 5.9834  loss: 0.3522  loss_mask: 0.3144  loss_cls: 0.0378
+2026/11/08 06:05:16 - mmengine - INFO - Epoch(train) [10][300/372]  lr: 1.8306e-04  eta: 0:05:07  time: 0.3794  data_time: 0.0738  memory: 2770  grad_norm: 7.7408  loss: 0.2812  loss_mask: 0.2638  loss_cls: 0.0174
+2026/11/08 06:05:34 - mmengine - INFO - Epoch(train) [10][350/372]  lr: 1.8306e-04  eta: 0:04:48  time: 0.3746  data_time: 0.0756  memory: 2768  grad_norm: 8.6348  loss: 0.4124  loss_mask: 0.3842  loss_cls: 0.0282
+2026/11/08 06:05:43 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:05:43 - mmengine - INFO - Saving checkpoint at 10 epochs
+2026/11/08 06:05:50 - mmengine - INFO - Epoch(val) [10][50/93]    eta: 0:00:05  time: 0.1163  data_time: 0.0220  memory: 2767  
+2026/11/08 06:05:55 - mmengine - INFO - Evaluating segm...
+2026/11/08 06:05:55 - mmengine - INFO - segm_mAP_copypaste: 0.127 0.328 0.045 0.125 0.500 -1.000
+2026/11/08 06:05:55 - mmengine - INFO - Epoch(val) [10][93/93]    coco/segm_mAP: 0.1270  coco/segm_mAP_50: 0.3280  coco/segm_mAP_75: 0.0450  coco/segm_mAP_s: 0.1250  coco/segm_mAP_m: 0.5000  coco/segm_mAP_l: -1.0000  data_time: 0.0224  time: 0.1185
+2026/11/08 06:06:14 - mmengine - INFO - Epoch(train) [11][ 50/372]  lr: 8.3734e-05  eta: 0:04:21  time: 0.3792  data_time: 0.0758  memory: 2789  grad_norm: 5.7246  loss: 0.3139  loss_mask: 0.2929  loss_cls: 0.0210
+2026/11/08 06:06:32 - mmengine - INFO - Epoch(train) [11][100/372]  lr: 8.3734e-05  eta: 0:04:02  time: 0.3702  data_time: 0.0763  memory: 2770  grad_norm: 5.6613  loss: 0.2920  loss_mask: 0.2683  loss_cls: 0.0238
+2026/11/08 06:06:51 - mmengine - INFO - Epoch(train) [11][150/372]  lr: 8.3734e-05  eta: 0:03:44  time: 0.3744  data_time: 0.0738  memory: 2743  grad_norm: 7.5670  loss: 0.3209  loss_mask: 0.2917  loss_cls: 0.0291
+2026/11/08 06:07:10 - mmengine - INFO - Epoch(train) [11][200/372]  lr: 8.3734e-05  eta: 0:03:25  time: 0.3613  data_time: 0.0683  memory: 2742  grad_norm: 6.0475  loss: 0.3640  loss_mask: 0.3436  loss_cls: 0.0204
+2026/11/08 06:07:29 - mmengine - INFO - Epoch(train) [11][250/372]  lr: 8.3734e-05  eta: 0:03:06  time: 0.3671  data_time: 0.0700  memory: 2772  grad_norm: 7.4019  loss: 0.3271  loss_mask: 0.3004  loss_cls: 0.0267
+2026/11/08 06:07:40 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:07:47 - mmengine - INFO - Epoch(train) [11][300/372]  lr: 8.3734e-05  eta: 0:02:47  time: 0.3723  data_time: 0.0763  memory: 2741  grad_norm: 6.3720  loss: 0.3460  loss_mask: 0.3226  loss_cls: 0.0234
+2026/11/08 06:08:06 - mmengine - INFO - Epoch(train) [11][350/372]  lr: 8.3734e-05  eta: 0:02:28  time: 0.3703  data_time: 0.0774  memory: 2742  grad_norm: 5.9801  loss: 0.2742  loss_mask: 0.2582  loss_cls: 0.0160
+2026/11/08 06:08:14 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:08:14 - mmengine - INFO - Saving checkpoint at 11 epochs
+2026/11/08 06:08:21 - mmengine - INFO - Epoch(val) [11][50/93]    eta: 0:00:04  time: 0.1105  data_time: 0.0209  memory: 2789  
+2026/11/08 06:08:26 - mmengine - INFO - Evaluating segm...
+2026/11/08 06:08:26 - mmengine - INFO - segm_mAP_copypaste: 0.127 0.318 0.058 0.123 0.489 -1.000
+2026/11/08 06:08:26 - mmengine - INFO - Epoch(val) [11][93/93]    coco/segm_mAP: 0.1270  coco/segm_mAP_50: 0.3180  coco/segm_mAP_75: 0.0580  coco/segm_mAP_s: 0.1230  coco/segm_mAP_m: 0.4890  coco/segm_mAP_l: -1.0000  data_time: 0.0230  time: 0.1135
+2026/11/08 06:08:45 - mmengine - INFO - Epoch(train) [12][ 50/372]  lr: 2.1296e-05  eta: 0:02:01  time: 0.3677  data_time: 0.0701  memory: 2767  grad_norm: 6.5147  loss: 0.2523  loss_mask: 0.2298  loss_cls: 0.0225
+2026/11/08 06:09:03 - mmengine - INFO - Epoch(train) [12][100/372]  lr: 2.1296e-05  eta: 0:01:42  time: 0.3762  data_time: 0.0770  memory: 2769  grad_norm: 5.4005  loss: 0.3176  loss_mask: 0.2808  loss_cls: 0.0368
+2026/11/08 06:09:22 - mmengine - INFO - Epoch(train) [12][150/372]  lr: 2.1296e-05  eta: 0:01:23  time: 0.3822  data_time: 0.0790  memory: 2741  grad_norm: 5.7927  loss: 0.3113  loss_mask: 0.2914  loss_cls: 0.0199
+2026/11/08 06:09:41 - mmengine - INFO - Epoch(train) [12][200/372]  lr: 2.1296e-05  eta: 0:01:04  time: 0.3818  data_time: 0.0815  memory: 2789  grad_norm: 5.8065  loss: 0.3383  loss_mask: 0.3236  loss_cls: 0.0147
+2026/11/08 06:10:00 - mmengine - INFO - Epoch(train) [12][250/372]  lr: 2.1296e-05  eta: 0:00:45  time: 0.3635  data_time: 0.0682  memory: 2746  grad_norm: 5.5848  loss: 0.2666  loss_mask: 0.2488  loss_cls: 0.0178
+2026/11/08 06:10:18 - mmengine - INFO - Epoch(train) [12][300/372]  lr: 2.1296e-05  eta: 0:00:27  time: 0.3693  data_time: 0.0707  memory: 2766  grad_norm: 6.3913  loss: 0.2986  loss_mask: 0.2732  loss_cls: 0.0254
+2026/11/08 06:10:37 - mmengine - INFO - Epoch(train) [12][350/372]  lr: 2.1296e-05  eta: 0:00:08  time: 0.3756  data_time: 0.0811  memory: 2789  grad_norm: 6.2649  loss: 0.3635  loss_mask: 0.3408  loss_cls: 0.0227
+2026/11/08 06:10:45 - mmengine - INFO - Exp name: 20261108_054007
+2026/11/08 06:10:45 - mmengine - INFO - Saving checkpoint at 12 epochs
+2026/11/08 06:10:53 - mmengine - INFO - Epoch(val) [12][50/93]    eta: 0:00:04  time: 0.1171  data_time: 0.0236  memory: 2740  
+2026/11/08 06:10:57 - mmengine - INFO - Evaluating segm...
+2026/11/08 06:10:58 - mmengine - INFO - segm_mAP_copypaste: 0.128 0.329 0.051 0.127 0.467 -1.000
+2026/11/08 06:10:58 - mmengine - INFO - Epoch(val) [12][93/93]    coco/segm_mAP: 0.1280  coco/segm_mAP_50: 0.3290  coco/segm_mAP_75: 0.0510  coco/segm_mAP_s: 0.1270  coco/segm_mAP_m: 0.4670  coco/segm_mAP_l: -1.0000  data_time: 0.0225  time: 0.1136

@@ -1,0 +1,44 @@
+{
+ "modelo": "yolov8seg",
+ "semilla": 44,
+ "epocas": 40,
+ "s_total": 1265.6434514522552,
+ "entorno": {
+  "python": "3.11.18",
+  "torch": "2.11.0+cu128",
+  "so": "Windows-10-10.0.26200-SP0",
+  "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "torchvision": "0.26.0+cu128",
+  "ultralytics": "8.4.207"
+ },
+ "s_total_entrenamiento": 1252.638710975647,
+ "s_por_epoca": 31.315967774391176,
+ "gpu_pico_gb": 2.5804085731506348,
+ "parametros": 3390771,
+ "historial_csv": "D:\\Documents\\Personal\\Uninorte\\Maestr\u00eda\\Primer semestre\\Deep Learning\\Trabajo\\datos\\wdsd\\results\\instancias\\corridas\\yolov8seg_s44\\ultra\\results.csv",
+ "metricas": {
+  "umbral_score": 0.35,
+  "val": {
+   "AP": 0.2668064807983924,
+   "AP50": 0.7298702612224152,
+   "AP75": 0.09257464738582424,
+   "AP_small": 0.2659880688909982,
+   "F1_img": 0.6232820721268347,
+   "PQ_img": 0.43151555894263016,
+   "F1_grupo": 0.7655507545096015,
+   "PQ_grupo": 0.5431831268416906
+  },
+  "test": {
+   "AP": 0.22271308949387458,
+   "AP50": 0.6112371752268828,
+   "AP75": 0.07424531388526648,
+   "AP_small": 0.21970589255893894,
+   "F1_img": 0.4288898579055584,
+   "PQ_img": 0.3056354748457455,
+   "SQ_img": 0.3949630317329816,
+   "F1_grupo": 0.6941466311875114,
+   "PQ_grupo": 0.48319119590198667,
+   "dice_semantico_img": 0.3744703193433281
+  }
+ }
+}
