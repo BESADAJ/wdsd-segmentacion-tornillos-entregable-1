@@ -1,6 +1,6 @@
 # WDSD: segmentación de instancias de tornillos, entregable 1 de Deep Learning
 
-**Autores:** Jose David Castillo e Ivan Berrio.
+**Autores:** Ivan Berrio, Jose David Castillo y Jaime Besada.
 
 EDA del WEEE Disassembly Screw Dataset (WDSD), planteado como segmentación de instancias: cada tornillo es un objeto que hay que encontrar y delimitar. El EDA está terminado; la revisión de literatura, los tres modelos base y el análisis estadístico están pendientes.
 
