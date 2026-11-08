@@ -11,3 +11,9 @@ results/eda/*
 !results/eda/declaracion_a_priori.json
 !results/eda/declaracion_a_priori_instancias.json
 !results/eda/normalizacion_train.json
+
+# Instancias: datos derivados (enlaces a imágenes) y pesos no se versionan
+datos_inst/
+*.pt
+*.pth
+results/instancias/**/ultra/weights/

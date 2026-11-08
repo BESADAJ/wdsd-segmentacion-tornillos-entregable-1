@@ -1,0 +1,220 @@
+titulo,año,doi,fuente,tornillos_desmontaje,Mask R-CNN,YOLO-seg (v5/v7/v8/v11-seg),YOLO (cualquiera),YOLACT,SOLO/SOLOv2,Cascade Mask R-CNN,Mask2Former,CondInst,BlendMask,PointRend,SAM,Mask Scoring R-CNN,HTC,RTMDet,SparseInst,QueryInst,U-Net,DeepLab
+Combining Instance Segmentation and Background Subtraction Models for Small Object Detection,2025,10.20965/ijat.2025.p0237,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Improved Small Target Segmentation Model Based on Mask Dino,2025,10.3390/app15041832,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Deep Learning-Based Small Object Detection and Classification Model for Garbage Waste Management in Smart Cities and IoT Environment,2022,10.3390/app12052281,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CentroidNetV2: A hybrid deep neural network for small-object segmentation and counting,2021,10.1016/j.neucom.2020.10.075,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Efficient Hybrid Supervision for Instance Segmentation in Aerial Images,2021,10.3390/rs13020252,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Instance Segmentation for Governmental Inspection of Small Touristic Infrastructure in Beach Zones Using Multispectral High-Resolution WorldView-3 Imagery,2021,10.3390/ijgi10120813,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fine-grained visual explanations for the convolutional neural network via class discriminative deconvolution,2022,10.1007/s11042-021-11464-0,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Real-Time Instance Segmentation Method Based on Location Attention,2024,10.3837/tiis.2024.09.002,WoS,False,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Recognition of steel bridge corrosion considering the effect of training dataset quality,2024,10.1016/j.cscm.2024.e03722,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Domain-adaptive instance segmentation for far-field object monitoring using SAM-based weak supervision and noisy student self-training,2026,10.1016/j.autcon.2026.106772,WoS,False,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+SPR-YOLOv8: A Real-Time Instance Segmentation and Dynamic Size Measurement System for Diamond Particles,2026,10.3390/s26103004,WoS,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Integrated Scale-Adaptive Adjustment Factor-Enhanced BlendMask Method for Pineapple Processing System,2024,10.3390/agriculture14091569,WoS,False,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+Segment-based UAV Tracking via Shape-Aware Kalman Filter,2026,10.3837/tiis.2026.03.016,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Improved Swin Transformer-Based Model for Remote Sensing Object Detection and Instance Segmentation,2021,10.3390/rs13234779,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automated Zebrafish Spine Scoring System Based on Instance Segmentation,2025,10.1109/access.2025.3532680,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+High-Precision Peach Fruit Segmentation under Adverse Conditions Using Swin Transformer,2024,10.3390/agriculture14060903,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BshapeNet: Object detection and instance segmentation with bounding shape masks,2020,10.1016/j.patrec.2020.01.024,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Shoreline-Adaptive Plastic Segmentation Network (SAPS-Net): A Dual-Cascade Framework with Cross-Modulated Feature Fusion for Automated Coastal Litter Monitoring,2026,10.1021/acsestengg.6c00098,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CabbageNet: Deep Learning for High-Precision Cabbage Segmentation in Complex Settings for Autonomous Harvesting Robotics,2024,10.3390/s24248115,WoS,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Research on Polygon Pest-Infected Leaf Region Detection Based on YOLOv8,2023,10.3390/agriculture13122253,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Improved YOLOv8-Based Segmentation Method for Strawberry Leaf and Powdery Mildew Lesions in Natural Backgrounds,2025,10.3390/agronomy15030525,WoS,False,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+LGVM-YOLOv8n: A Lightweight Apple Instance Segmentation Model for Standard Orchard Environments,2025,10.3390/agriculture15121238,WoS,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PESA R-CNN: Perihematomal Edema Guided Scale Adaptive R-CNN for Hemorrhage Segmentation,2023,10.1109/jbhi.2022.3220820,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+An Embeddable Algorithm for Automatic Garbage Detection Based on Complex Marine Environment,2021,10.3390/s21196391,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SupeRGB-D: Zero-Shot Instance Segmentation in Cluttered Indoor Environments,2023,10.1109/lra.2023.3271527,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Comparative Evaluation of CNN and Transformer-Based Instance Segmentation Architectures for Whitefly Detection in Citrus Crops,2026,10.3390/plants15182874,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PointRend-enhanced instance segmentation for multi-type bridge defect detection with explainable analysis,2026,10.1016/j.istruc.2026.112508,WoS,False,1,1,1,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0
+Enhancing Instance Segmentation in Agriculture: An Optimized YOLOv8 Solution,2025,10.3390/s25175506,WoS,False,1,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+"Equirectangular Image Data Detection, Segmentation and Classification of Varying Sized Traffic Signs: A Comparison of Deep Learning Methods",2023,10.3390/s23073381,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+"YOLOv11-WFD: A Multimodal Grape Segmentation Framework with Wavelet Convolution, FasterNeXt, and Dynamic Upsampling for Intelligent Harvesting",2026,10.3390/agronomy16070679,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Log Volume Measurement and Counting Based on Improved Cascade Mask R-CNN and Deep SORT,2024,10.3390/f15111884,WoS,False,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+TinySeg: A deep learning model for small target segmentation of grape pedicels with multi-attention and multi-scale feature fusion,2025,10.1016/j.compag.2025.110726,WoS,False,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Combining RGB imaging with a two-stage deep learning method to reveal genetic variation of wheat sprouting traits,2026,10.1016/j.plaphe.2025.100163,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Pan-cancer image segmentation based on feature pyramids and Mask R-CNN framework,2024,10.1002/mp.17014,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Improved Instance Segmentation Method for Fast Assessment of Damaged Buildings Based on Post-Earthquake UAV Images,2024,10.3390/s24134371,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LFG-Net: Low-Level Feature Guided Network for Precise Ship Instance Segmentation in SAR Images,2022,10.1109/tgrs.2022.3188677,WoS,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Using UAV images and deep learning to enhance the mapping of deadwood in boreal forests,2025,10.1016/j.rse.2025.114906,WoS,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Data-Centric Approach for Wind Plant Instance-Level Segmentation Using Semantic Segmentation and GIS,2023,10.3390/rs15051240,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Interactive Dairy Goat Image Segmentation for Precision Livestock Farming,2023,10.3390/ani13203250,WoS,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+Real-Time Instance Segmentation of Metal Screw Defects Based on Deep Learning Approach,2022,10.2478/msr-2022-0014,WoS,True,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Instance segmentation algorithm for sorting dismantling components of end-of-life vehicles,2024,10.1016/j.engappai.2024.108318,WoS,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automatic Vertebral Body Segmentation Performance in Lateral Thoracic Spine X-Rays: A Comparative Analysis Based on Implant Presence and Subtype,2026,10.1007/s10278-026-02343-x,WoS,True,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automated crack detection of train rivets using fluorescent magnetic particle inspection and instance segmentation,2024,10.1038/s41598-024-61396-6,WoS,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fine-grained detection and defect analysis for multiple key components in railway tracks based on ABI-RTLSeg [基于 ABI-RTLSeg 的轨道线路多关键部件精细化检测及缺陷分析],2025,10.13382/j.jemi.b2407985,Scopus,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Panoptic Segmentation for Intelligent Fishing Port Environment Recognition Using Mask2Former,2026,10.1109/icct-pacific69083.2026.11518745,Scopus,False,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+Comparison Study of One-Stage and Two-Stage Instance Segmentation Methods in Different Application Scenarios,2026,10.1109/caibda70336.2026.11621589,Scopus,False,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Residual Cascade CNN for Detection of Spatially Relevant Objects in Agriculture: The Grape-Stem Paradigm,2023,10.1007/978-3-031-44137-0_14,Scopus,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Cross-City Building Instance Segmentation: From More Data to Diffusion-Augmentation,2024,10.1109/bigdata62323.2024.10825702,Scopus,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Regularization Algorithm for Building Footprints Using Direction Field Features [引入方向场特征的遥感影像建筑物轮廓规则化方法],2025,10.12082/dqxxkx.2025.240628,Scopus,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Footwear Damage Assessment for Remanufacturing: A Multi-View Rgb Dataset and Instance Segmentation Baselines,2026,10.23919/splitech70133.2026.11685487,Scopus,True,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Correction: MC-ASFF-ShipYOLO: Improved Algorithm for Small-Target and Multi-Scale Ship Detection for Synthetic Aperture Radar (SAR) Images (Sensors, (2025), 25, 9, (2940), 10.3390/s25092940)",2026,10.3390/s26020696,Scopus,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AF-YOLO: A High-Precision Aircraft Safety Wire Segmentation Network for Assembly Quality Inspection,2026,10.1109/icetci68937.2026.11610705,Scopus,True,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Weed detection with YOLOv8-seg in UAV-imagery Network architecture and the detection of small weed plants,2024,,Scopus,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Comparison of Single and Multi-Modality YOLOv8 Models for Grapevine Segmentation,2025,10.1109/dtda64656.2025.11623101,Scopus,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Fastener counting method with an improved Blendmask,2022,10.23919/ascc56756.2022.9828051,Scopus,True,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+Dual-CNN fusion panoptic segmentation based on edge optimization,2022,10.1117/12.2617704,Scopus,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A bounding box regression method of instance segmentation based on deep learning [基于深度学习的实例分割边界框回归方法研究],2024,10.11990/jheu.202110049,Scopus,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Overcoming Data Scarcity in EV Battery Disassembly with Augmented Deep Learning and Structural Reasoning,2025,10.1109/epts67931.2025.11547622,Scopus,True,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+Detection versus Instance Segmentation for Multi-Species Malaria Diagnosis: A Head-to-Head Comparison and Multi-Dataset Validation of YOLOv12 Architectures with Small Object Optimization,2026,,Scopus,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Real-Time Urban Flood Detection Using YOLOv5-Seg,2025,10.1109/icufn65838.2025.11170106,Scopus,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Greenhouse sweet pepper segmentation method based on SP—SOLOv2 [基于 SP—SOLOv2 的温室甜椒分割方法],2026,10.13733/j.jcam.issn.2095-5553.2026.05.013,Scopus,False,0,0,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0
+Depth-Aware YOLO Segmentation: Enhancing Small Object Detection via MiDaS-Based Spatial Reasoning,2025,10.1109/ivcnz67716.2025.11281862,Scopus,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Optimized Leakage-Aware YOLO-Based Deep Learning Framework for Instance Segmentation and Environmental Impact Assessment of Mixed Metal and Glass Waste,2026,10.3390/computers15070449,Scopus,False,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Detecting Multi-Scale Rose Apple Skin and Defects Using Instance Segmentation With Anchors Optimization,2024,10.1109/access.2024.3463733,Scopus,False,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Semantic segmentation and model matching-integrated indoor scenario-relevant reconstruction method [结合语义分割与模型匹配的室内场景重建方法],2023,10.11834/jig.220518,Scopus,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Unsupervised human instance segmentation in residential surveillance for intruder detection,2026,10.1016/j.procs.2026.06.306,Scopus,False,1,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+LPHD: Line Perspective Hexagonal Screw Detection,2023,10.23919/ccc58697.2023.10239720,Scopus,True,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Detection Method of Track Fastener State Based on Improved Mask R-CNN [基于改进Mask R-CNN的轨道扣件状态检测方法],2022,10.3969/j.issn.1001-4632.2022.01.06,Scopus,True,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Industrial Screw Picking via YOLO26 Parallel PSPE,2026,10.1109/eitce70137.2026.11634452,Scopus,True,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+DANet: Dual-Branch Activation Network for Small Object Instance Segmentation of Ship Images,2023,10.1109/tcsvt.2023.3267127,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Performance Comparison of Deep Learning Techniques for Recognizing Birds in Aerial Images,2018,10.1109/dsc.2018.00052,IEEE,False,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+A Comparative Study on HSV-based and Deep Learning-based Object Detection Algorithms for Pedestrian Traffic Light Signal Recognition,2020,10.1109/icoias49312.2020.9081854,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Improved YOLOv8 method for Ship Instances Segmentation of Small targets in Remote Sensing Images,2023,10.1109/cac59555.2023.10450859,IEEE,False,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Adaptive Fusion and Mask Refinement Instance Segmentation Network for High Resolution Remote Sensing Images,2020,10.1109/igarss39084.2020.9324050,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Real-Time Instance Segmentation for Object Scale Diversity,2025,10.1109/iccbdai66607.2025.11388017,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+YOLOv8n-BAseg Instance Segmentation Network For Angle Tower Bolt Groups and Connecting Plates Detection,2024,10.23919/ccc63176.2024.10661397,IEEE,True,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Advanced Object Detection Algorithms and Its Application Based on Deep Learning,2021,10.1109/mlbdbi54094.2021.00083,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FactSeg: Foreground Activation-Driven Small Object Semantic Segmentation in Large-Scale Remote Sensing Imagery,2022,10.1109/tgrs.2021.3097148,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SPRNet: Single-Pixel Reconstruction for One-Stage Instance Segmentation,2021,10.1109/tcyb.2020.2969046,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Improved Mask R-CNN based on attention-enhanced pyramid and edge refinement: high-precision instance segmentation for industrial disordered parts,2025,10.1109/aipcvt67868.2025.11405599,IEEE,False,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+YOLO-Bubble: A Lightweight and High-Precision Instance Segmentation Model for Industrial Bubble Detection With BubConv Enhancement,2026,10.1109/access.2026.3716943,IEEE,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automated Vision-based Bolt Sorting by Manipulator for Industrial Applications,2024,10.1109/case59546.2024.10711806,IEEE,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+YOLOv8n-Seg-ELA: Real-Time Instance Segmentation of Industrial Packages With Efficient Local Attention,2025,10.1109/aiotc66747.2025.11198641,IEEE,False,1,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+ISDA: Position-Aware Instance Segmentation with Deformable Attention,2022,10.1109/icassp43922.2022.9747246,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A New Localization Objective for Accurate Fine-Grained Affordance Segmentation Under High-Scale Variations,2020,10.1109/access.2019.2958608,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Comparative Evaluation of State-of-the-Art Urban Instance Segmentation Models on Cityscapes,2025,10.1109/icaiqsa67794.2025.11440446,IEEE,False,1,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0
+State of the art object detection: A comparative study of YOLO and ViT,2024,10.1109/iscs61804.2024.10581202,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Deep Learning Based Instance Segmentation for Individual Crop Delineation and Classification from Hyperspectral UAV Imagery,2026,10.1109/migars72065.2026.11688468,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+CalabashSeg+: A Comparative Evaluation of YOLOv8-Seg and Mask R-CNN for Calabash Fruit Instance Segmentation and Maturity Detection,2026,10.1109/robothia68364.2026.11507103,IEEE,False,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Research on Real-Time Instance Segmentation Based on Multi-Scale Context Information Fusion,2025,10.1109/nnice64954.2025.11063877,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+ARANet: A Unified Representation Alignment Framework for SAR Ship Instance Segmentation,2026,10.1109/jstars.2026.3720719,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+YOLO-ITC: A New YOLO Method for Instance Segmentation of Individual Tree Crowns,2026,10.1109/tetci.2025.3543833,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bolt Loosening Detection Using YOLOv8 and Computer Vision,2025,10.1109/aiea66061.2025.11160609,IEEE,True,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Deep Learning Based Image Segmentation for Computer Vision,2025,10.1109/iccea65460.2025.11102201,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+Comparative Evaluation Using Backbone Architecture Cascade Mask R-CNN for Robust Waste Instance Segmentations,2025,10.1109/ies67184.2025.11161816,IEEE,False,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+Dual Regression-Based Semi-Supervised Infrared Image Instance Segmentation Method for Power Transmission Line Surveillance,2025,10.1109/ainit65432.2025.11034991,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Concatenated Feature Pyramid Network for Instance Segmentation,2019,10.1109/bigmm.2019.000-7,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Instance Segmentation Method Based on YOLOv8 for Detecting Bird's Nest on Transmission Tower,2025,10.1109/aiita65135.2025.11047949,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Recognition and Instance Segmentation of Space Non-cooperative Satellite Components Based on Deep Learning,2021,10.1109/cac53003.2021.9727622,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Rice disease identification method based on improved Mask R-CNN,2021,10.1109/cisai54367.2021.00054,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Evaluating Instance Segmentation Techniques in Complex Counting Environments using Ornamental Fish Imagery,2026,10.1109/icarc68737.2026.11453860,IEEE,False,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0
+Comparison of deep learning-based image segmentation methods for the detection of voids in X-ray images of microelectronic components,2021,10.1109/case49439.2021.9551671,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Research on the Application of Mask2Former for Segmenting Small Mushroom Caps of Seafood Mushrooms,2024,10.1109/eiect64462.2024.10866427,IEEE,False,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+Semantic Road Segmentation using Deep Learning,2021,10.1109/atigb50996.2021.9423307,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Visual Positioning System for Industrial Sorting Robots Enabled by Deep Learning,2026,10.1109/aiita69518.2026.11567067,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Metrological comparison of DL techniques for bin picking applications,2022,10.1109/metroind4.0iot54413.2022.9831722,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Survey of Industrial Surface Defect Detection Based on Deep Learning,2024,10.1109/iccsi62669.2024.10799405,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Unsupervised Pre-Training With Language-Vision Prompts for Low-Data Instance Segmentation,2025,10.1109/tpami.2025.3579469,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Advancements in instance segmentation for Forward-Looking Sonar imagery: a comparative analysis of state-of-the-art Convolutional Neural Network models,2024,10.1109/auv61864.2024.11030408,IEEE,False,1,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Lightweight Instance Segmentation Network for Highly Clustered Ores Driven by Hybrid Priors,2026,10.1109/icmtim69588.2026.11525745,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Segmenting Unseen Industrial Components In A Heavy Clutter Using RGB-D Fusion And Synthetic Data,2020,10.1109/icip40778.2020.9190804,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mouth Cavity Visual Analysis Based on Deep Learning for Oropharyngeal Swab Robot Sampling,2023,10.1109/thms.2023.3309256,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Poly-BRBLE: A Boundary Refinement-Based Individual Building Localization and Extraction Model Combined With Regularization,2025,10.1109/tgrs.2025.3554255,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Method for Constructing Synthetic Datasets for Weakly Textured Pipe Instance Segmentation,2024,10.1109/iaeac59436.2024.10503926,IEEE,False,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+SDCDet: Robust Remote Sensing Object Detection Based on Instance Segmentation Direction Correction,2021,10.1109/prai53619.2021.9551029,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bounding Box-Free Instance Segmentation Using Semi-Supervised Iterative Learning for Vehicle Detection,2022,10.1109/jstars.2022.3169128,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Enhancing Geometric Factors in Model Learning and Inference for Object Detection and Instance Segmentation,2022,10.1109/tcyb.2021.3095305,IEEE,False,0,0,1,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+AI Models for Defect Detection in Lean Manufacturing: A Comparative Study of Deep Learning Techniques,2024,10.1109/icbir61386.2024.10875971,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Evaluation of Zero-Shot Instance Segmentation Model Performance in Seed Germination Using Grounded SAM 2,2026,10.1109/isemantic71495.2026.11742959,IEEE,False,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0
+Automatic Damage Detection of Fasteners in Overhaul Processes,2019,10.1109/coase.2019.8843049,IEEE,True,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SODAR: Exploring Locally Aggregated Learning of Mask Representations for Instance Segmentation,2022,10.1109/tip.2021.3135717,IEEE,False,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Comparative Analysis of Object Detection Algorithms for Wood Defect Detection,2024,10.1109/iceict61637.2024.10670842,IEEE,False,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Comparative Evaluation of Deep Learning Techniques for Photovoltaic Panel Detection From Aerial Images,2023,10.1109/access.2023.3275435,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Automated Quantification of Trophectoderm Morphology in Human Blastocysts via Instance Segmentation,2026,10.1109/tase.2026.3664754,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Utilizing an Instance Segmentation Network Capable of Balancing Precision and Speed to Achieve Fine-Grained Vibration Displacement Measurement of Rotating Bodies,2024,10.1109/jsen.2024.3472730,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Boosting Low-Data Instance Segmentation by Unsupervised Pre-training with Saliency Prompt,2023,10.1109/cvpr52729.2023.01486,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Method for Segmentation of Surface Defects in Non-flat Area Based on Deep Learning,2021,10.1109/icaica52286.2021.9497895,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Enhanced Mask2Former for Rebar Instance Segmentation in Construction Site Images,2026,10.1109/icsp69961.2026.11540621,IEEE,False,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+A New Backbone Network for Instance Segmentation: Application on a Semiconductor Process Inspection,2020,10.1109/access.2020.3039356,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Method for Generating Environmental Maps Based on the Improved YOLOv8,2024,10.1109/wrcsara64167.2024.10685677,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Harvesting Information Estimation Algorithm for Occluded Fruits in Autonomous Open-Field Orchard Robotic Systems,2024,10.1109/scisisis61014.2024.10760131,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Diagnosing Oral Mucosal Diseases Using Deep Learning,2024,10.1109/cac63892.2024.10864634,IEEE,False,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+The Research on Sheet Metal Part Recognition Technology Based on Improved Mask R-CNN,2024,10.1109/icmlca63499.2024.10753862,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Accurate Instance Segmentation Method for Point Clouds of Metallic Objects with Remarkable Pose Variations in Robotic Bin-Picking Scenes,2024,10.23919/ccc63176.2024.10661839,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+IRDCLNet: Instance Segmentation of Ship Images Based on Interference Reduction and Dynamic Contour Learning in Foggy Scenes,2022,10.1109/tcsvt.2022.3155182,IEEE,False,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+Revolutionizing leather quality assurance through deep learning powered precision in defect detection and segmentation by a comparative analysis of Mask RCNN and YOLO v8,2024,10.1109/adics58448.2024.10533600,IEEE,False,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Small-Object Feature-Enhanced Visual Segmentation Model Based on BlendMask for Evaluating Sludge Performance,2024,10.1109/tim.2024.3463027,IEEE,False,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+Ariadne+: Deep Learning--Based Augmented Framework for the Instance Segmentation of Wires,2022,10.1109/tii.2022.3154477,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Multiclass Weighted Loss for Instance Segmentation of Cluttered Cells,2018,10.1109/icip.2018.8451187,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Edge Feature Fusion Enhanced YOLOv11 for Mobile Offline Counting of Aircraft Assembly Waste Components,2025,10.1109/ccat68690.2025.00010,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Zero-Shot Deep Learning-Supported Sensing System for Crop Seeds and Berries Phenotyping,2024,10.1109/jsen.2024.3485912,IEEE,False,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+MsSDEdit: Deep Learning Image Enhancement for Automated Bounding Box Annotations in Automotive Monocular Camera Applications,2023,10.1109/vtc2023-spring57618.2023.10200175,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Merged-Sampling Mask R-CNN With Random Proposal Expansion for Particle Measurement of SEM Images of Molecular Sieve Catalysts,2021,10.1109/tim.2021.3124835,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An Improved YOLOv11-seg Method for Complex Pipe Segmentation,2026,10.1109/icivc70586.2026.11686522,IEEE,False,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Multi-level Feature Reweighting and Fusion for Instance Segmentation,2022,10.1109/indin51773.2022.9976099,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Towards Robust Part-aware Instance Segmentation for Industrial Bin Picking,2022,10.1109/icra46639.2022.9811728,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+OPPFormer: Wavelet-Enhanced Object Prior Perception for Underwater Instance Segmentation in Ocean Internet of Things,2026,10.1109/jiot.2026.3747260,IEEE,False,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+Two-Stage Framework for Specialty Vehicles Detection and Classification: Toward Intelligent Visual Surveillance of Airport Surface,2024,10.1109/taes.2023.3342797,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+YOLO-RCS: A Road Crack Segmentation Model with Deformable Convolution and Cross-stage Feature Fusion,2025,10.1109/imcec66174.2025.11331958,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Res2Net: A New Multi-Scale Backbone Architecture,2021,10.1109/tpami.2019.2938758,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automated Quantification of Seafloor Polymetallic Nodule Coverage with an Improved YOLOv11n-seg Model,2025,10.1109/iccbdai66607.2025.11388355,IEEE,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LVCNet: Embedded Label-Vector Co-occurrence for Instance Segmentation of Concrete Bridge Surface Defects,2026,10.1109/tii.2026.3688463,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Scale-aware Automatic Augmentation for Object Detection,2021,10.1109/cvpr46437.2021.00944,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Scale-Aware Automatic Augmentations for Object Detection With Dynamic Training,2023,10.1109/tpami.2022.3166905,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PrimitiveGroup: A Fast Primitive Segmentation Framework on Industrial Point Clouds,2026,10.1109/tii.2025.3649692,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Computing Particle Size Distribution of Mineral Rocks using Deep Learning-based Instance Segmentation,2022,10.1109/euvip53989.2022.9922748,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+RT-DLO: Real-Time Deformable Linear Objects Instance Segmentation,2023,10.1109/tii.2023.3245641,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bimodal-based Object Detection and Instance Segmentation Models for Substation Equipments,2020,10.1109/iecon43393.2020.9254456,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Pavement Defect Detection With Deep Learning: A Comprehensive Survey,2024,10.1109/tiv.2023.3326136,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Superpixel-based Refinement for Object Proposal Generation,2021,10.1109/icpr48806.2021.9412834,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AttentionBoost: Learning What to Attend for Gland Segmentation in Histopathological Images by Boosting Fully Convolutional Networks,2020,10.1109/tmi.2020.3015198,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Transformer-Based Person Detection in Paired RGB-T Aerial Images With VTSaR Dataset,2025,10.1109/jstars.2025.3526995,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Multi-lane Detection Using Instance Segmentation and Attentive Voting,2019,10.23919/iccas47443.2019.8971488,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+6D Pose Estimation for Bin-Picking based on Improved Mask R-CNN and DenseFusion,2021,10.1109/etfa45728.2021.9613149,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AutoFocusFormer: Image Segmentation off the Grid,2023,10.1109/cvpr52729.2023.01748,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+LightMica: Toward Lightweight Mica Sheet Defect Detector via Discriminative Representation Distillation,2026,10.1109/jsen.2026.3705755,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Checkerboard Dropout: A Structured Dropout With Checkerboard Pattern for Convolutional Neural Networks,2022,10.1109/access.2022.3190643,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Detecting Underwater Discrete Scatterers in Echograms with Deep Learning-Based Semantic Segmentation,2023,10.1109/cvprw59228.2023.00043,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+IMP: Instance Mask Projection for High Accuracy Semantic Segmentation of Things,2019,10.1109/iccv.2019.00528,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+NeuralLabeling: A versatile toolset for labeling vision datasets using Neural Radiance Fields,2024,10.1109/iros58592.2024.10801449,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Bottleneck Transformers for Visual Recognition,2021,10.1109/cvpr46437.2021.01625,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Detection Method for Substation Instrument Indication Status Based on Dual-Stream Isomorphic Model and Affordance Knowledge,2025,10.1109/tim.2025.3627349,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Feature Pyramid Networks for Object Detection,2017,10.1109/cvpr.2017.106,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FASTDLO: Fast Deformable Linear Objects Instance Segmentation,2022,10.1109/lra.2022.3189791,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Smart Task Assistance Through Deep Learning-Based Visual Guidance in Asymmetric XR Remote Collaboration,2024,10.1109/access.2024.3455014,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Quantitative Measurement of Lay Length of Metallic Wire Ropes Using Computer Vision and Image Phase Correlation Techniques,2024,10.1109/tim.2024.3376703,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Modified YOLOv8 Detection Network with Attention Mechanism for Tobacco Stalk-to-Filament Ratio,2024,10.1109/iseeie62461.2024.00064,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Towards Autonomous Industrial Warehouse Inspection,2021,10.23919/icac50006.2021.9594180,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+In-Hand Pose Estimation and Pin Inspection for Insertion of Through-Hole Components,2022,10.1109/case49997.2022.9926508,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Unsupervised Joint 3D Object Model Learning and 6D Pose Estimation for Depth-Based Instance Segmentation,2019,10.1109/iccvw.2019.00339,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+HistoNet: Predicting size histograms of object instances,2020,10.1109/wacv45572.2020.9093484,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+SAR-ShipDetNet: A Multi-Scale Speckle-Robust Oriented Detection Network for Ship Detection in SAR Images,2026,10.1109/icspcc70129.2026.11754379,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Multi-Class Waste Segmentation on the TACO Dataset using UNet++,2026,10.1109/icssit69151.2026.11656551,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Can we trust bounding box annotations for object detection?,2022,10.1109/cvprw56347.2022.00528,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+The DeepScoresV2 Dataset and Benchmark for Music Object Detection,2021,10.1109/icpr48806.2021.9412290,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Traffic Sign Instances Segmentation Using Aliased Residual Structure and Adaptive Focus Localizer,2022,10.1109/icpr56361.2022.9956293,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Review of Visual SLAM for Dynamic Objects,2022,10.1109/iciea54703.2022.10006191,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Aggregation with Feature Detection,2021,10.1109/iccv48922.2021.00057,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+PS6D: Point Cloud Based Symmetry-Aware 6D Object Pose Estimation in Robot Bin-Picking,2024,10.1109/iros58592.2024.10802046,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Efficient Triple Output Network for Vertebral Segmentation and Identification,2019,10.1109/access.2019.2934325,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Locating the Fruit to Be Harvested and Estimating Cut Positions from RGBD Images Acquired by a Camera Moved along Fixed Paths Using a Mask-R-CNN Based Method,2024,10.1109/ro-man60168.2024.10731141,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"Advances in Deep Learning-Based Ore Particle Size Detection: A Review of Methods, Challenges, and Trends",2025,10.23919/metar.2025.000006,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+An improved lightweight model based on Mask R-CNN for satellite component recognition,2020,10.1109/iai50351.2020.9262224,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Transformer in Computer Vision,2021,10.1109/cei52496.2021.9574462,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Segmenting Unknown 3D Objects from Real Depth Images using Mask R-CNN Trained on Synthetic Data,2019,10.1109/icra.2019.8793744,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Structural Knowledge-Based Anomaly Detection to Inspect Ball-Based Lens Actuators,2025,10.1109/access.2025.3622686,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Mask R-CNN-based bushing segmentation with refined feature extraction and precise localization,2025,10.1109/ciycee67631.2025.11308833,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hierarchical Lovász Embeddings for Proposal-free Panoptic Segmentation,2021,10.1109/cvpr46437.2021.01418,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Development of New Efficient Transposed Convolution Techniques for Flame Segmentation from UAV-captured Images,2021,10.1109/iai53119.2021.9619442,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+Optimizing Data Annotation Strategies for Overlapping Objects in AI-Based Waste Sorting Systems,2025,10.1109/icac69156.2025.11361470,IEEE,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Road Target Detection Method Based on Improved YOLOv8,2024,10.1109/icpeca60615.2024.10471106,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+In-Situ Metrology for Roll-to-Roll Microcontact Printing via Condensation Figures and YOLOv8,2026,10.1109/tii.2025.3614216,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Segmentation of Pulverized Coal Loading Image Based on Improved SOLOv2,2024,10.1109/iccece61317.2024.10504194,IEEE,False,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+Automated Real-Time Estimation of Severity and Early Diagnosis of Infestations Produced by Tetranychus spp. in Strawberry Crops,2026,10.1109/access.2026.3703228,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+LiDAR Point Cloud Data Augmentation Under the Influence of Large-Scale Smoke Diffusion in Autonomous Driving,2025,10.1109/jiot.2025.3625382,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+AI Solutions for Grilled Eggplants Sorting: A Comparative Analysis of Image-Based Techniques,2024,10.1109/metroind4.0iot61288.2024.10584227,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+Unsupervised Fault Detection Method via Time-Series Segmentation and Contrastive Masking Learning,2025,10.1109/tim.2025.3568963,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Augmented LiDAR Simulator for Autonomous Driving,2020,10.1109/lra.2020.2969927,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Attention-Based Lightweight Network for Aircraft Part Grasping Detection Method,2024,10.1109/icsmd64214.2024.10920606,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A High-Speed Roller Tank Lug Wear Measurement Method Integrating Curriculum Learning and Shape Constraints,2026,10.1109/tim.2026.3728985,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Real-Time Automated Inspection of Printed Plastic Caps Using YOLOv11 and Ellipse Fitting Analysis,2026,10.1109/sas70013.2026.11744192,IEEE,False,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Research on Lightweight Water Surface Segmentation Algorithm for Unmanned Surface Vessels,2025,10.1109/icairc68035.2025.11384847,IEEE,False,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Predictive intention recognition using deep learning for collaborative assembly,2024,10.1109/codit62066.2024.10708459,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+"A Physics-Constrained, Design-Driven Methodology for Defect Dataset Generation in Optical Lithography",2026,10.1109/tsm.2026.3729945,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+A Rotation and Scale Invariant Map Matching Method for UAV Visual Geolocalization,2026,10.1109/jstars.2025.3639900,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Urban Building Classification (UBC) – A Dataset for Individual Building Detection and Classification from Satellite Imagery,2022,10.1109/cvprw56347.2022.00147,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+FashionFail: Addressing Failure Cases in Fashion Object Detection and Segmentation,2024,10.1109/ijcnn60899.2024.10651287,IEEE,False,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+BTDGNet: A Dual-Guided Camouflaged Object Detection Network Leveraging Boundary and Texture Information,2025,10.1109/tmm.2025.3613150,IEEE,False,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Weakly-Supervised Chromosome Segmentation via SAM and Uncertainty-Guided Pseudo-Labeling,2025,10.1109/icbip66535.2025.11284451,IEEE,False,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0
