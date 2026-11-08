@@ -1,0 +1,7 @@
+# Tabla de contenido del Jupyter Book del Entregable 1.
+format: jb-book
+root: notebooks/entrega_E1_instancias
+parts:
+  - caption: Anexos
+    chapters:
+      - file: notebooks/01_eda_wdsd

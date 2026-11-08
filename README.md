@@ -15,6 +15,15 @@ Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (W
 
 Las secciones 3 a 5 también están por separado en [`notebooks/03_modelos_base_instancias.ipynb`](notebooks/03_modelos_base_instancias.ipynb).
 
+El mismo informe se publica como **Jupyter Book** (`_config.yml` y `_toc.yml` en la raíz), con el EDA general [`01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) como anexo. Para construirlo:
+
+```bash
+pip install "jupyter-book<2"
+jupyter-book build .
+```
+
+El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los notebooks, así que no hace falta el dataset ni una GPU.
+
 [`notebooks/01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) es el EDA anterior, orientado a píxeles. Sigue siendo la referencia para lo que no depende del tipo de salida: inventario y huella del dataset, casi duplicados, grupos de escena, partición, intensidad y normalización. Su métrica primaria (Dice de píxel) queda sustituida.
 
 ## Estado del entregable

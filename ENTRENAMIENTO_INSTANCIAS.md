@@ -65,7 +65,7 @@ powershell -ExecutionPolicy Bypass -File .\cola_terna.ps1 -Hasta 18:00 -EpMaskRc
 ## Protocolo (igual para los modelos)
 
 - Partición agrupada congelada `results/eda/particion.csv` (columna `split`): 744/93/108 imágenes, 14 grupos en test.
-- Pesos preentrenados en COCO. Imagen completa 1280×720, sin reescalar ni recortar, porque el diámetro mediano del tornillo es 10.6 px (EDA de instancias, sección 5). Volteo horizontal como aumento.
+- Pesos preentrenados en COCO. Imagen completa 1280×720, sin reescalar ni recortar, porque el diámetro mediano del tornillo es 10.6 px (EDA de instancias, sección 5). Aumentos: volteo horizontal en Mask R-CNN y SOLOv2; los de ultralytics por defecto en YOLOv8-seg (mosaico, HSV, traslación, escala y volteo).
 - Mask R-CNN:
   - ResNet-50-FPN.
   - Anclas de 8–128 px, porque las de torchvision por defecto van de 32 a 512 y el 98,8 % de los tornillos son *small* según COCO (menos de 32×32 px).

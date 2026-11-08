@@ -17,3 +17,6 @@ datos_inst/
 *.pt
 *.pth
 results/instancias/**/ultra/weights/
+
+# Jupyter Book
+_build/

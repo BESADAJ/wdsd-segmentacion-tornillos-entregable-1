@@ -1,0 +1,22 @@
+# Configuración del Jupyter Book del Entregable 1.
+# Construir desde la raíz del repo:  jupyter-book build .
+title: "WDSD: segmentación de instancias de tornillos (Entregable 1)"
+author: Ivan Berrio, Jose David Castillo y Jaime Besada
+copyright: "2026"
+only_build_toc_files: true
+
+# Los notebooks ya están ejecutados: el libro usa las salidas guardadas y no reentrena nada.
+execute:
+  execute_notebooks: "off"
+
+repository:
+  url: https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1
+  branch: main
+
+html:
+  use_repository_button: true
+
+sphinx:
+  config:
+    language: es
+    html_show_copyright: false
