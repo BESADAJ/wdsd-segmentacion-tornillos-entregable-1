@@ -92,6 +92,7 @@ $PYM = "C:\Users\ivanj\miniconda3\envs\wdsd_mmdet\python.exe"
 & $PYM -m pip install "numpy<2" mmengine==0.10.4 pycocotools pandas scipy
 & $PYM -m pip install mmcv==2.1.0 -f https://download.openmmlab.com/mmcv/dist/cu121/torch2.1/index.html
 & $PYM -m pip install mmdet==3.3.0
+& $PYM -m pip install "setuptools<70"   # torch 2.1 usa pkg_resources, que setuptools nuevo ya no trae
 & $PYM -c "import torch, mmcv, mmdet; from mmcv.ops import nms; print(torch.cuda.is_available(), mmcv.__version__, mmdet.__version__)"
 ```
 

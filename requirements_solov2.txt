@@ -7,3 +7,4 @@ mmdet==3.3.0
 pycocotools
 pandas
 scipy
+setuptools<70
