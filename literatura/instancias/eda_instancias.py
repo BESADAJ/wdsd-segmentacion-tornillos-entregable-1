@@ -1,15 +1,19 @@
 """EDA de segmentación de instancias de WDSD (solo anotaciones COCO + partición agrupada).
 
-No necesita las imágenes. Uso, desde la raíz del repo:
+by Jaime Besada, Jose Castillo y compañía
+
+Se usa desde la raíz del repo:
     python eda_instancias.py --raiz . --salida results/eda_instancias
 Lee:
     <raiz>/Annotations/Object Detection & Instance Segmentation COCO-format/{Training,Validation,Test}_set.json
     <raiz>/results/eda/particion.csv  (columnas archivo, split_oficial, split, grupo)
 Escribe tablas CSV y un resumen JSON en --salida.
 """
-from __future__ import annotations
 
-import argparse
+
+from __future__ import annotations #Para indicar el type
+
+import argparse 
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -25,11 +29,11 @@ ORDEN = ["train", "val", "test"]
 
 
 def rasterizar(seg: list[list[float]]) -> np.ndarray:
-    lienzo = Image.new("L", (W, H), 0)
-    d = ImageDraw.Draw(lienzo)
-    for poli in seg:
-        d.polygon(poli, fill=1, outline=1)
-    return np.asarray(lienzo, dtype=bool)
+    lienzo = Image.new("L", (W, H), 0) #Creamos una objeto tipo Image que es una imagen en blanco
+    d = ImageDraw.Draw(lienzo) #Este objeto dibuja sobre el lienzo
+    for poli in seg: #Iteramos sobre la lista de poligonos "seg" 
+        d.polygon(poli, fill=1, outline=1) #dibuja y rellena un polígono geométrico sobre el lienzo digital
+    return np.asarray(lienzo, dtype=bool) #Convertimos a bool que es estado logio de donde hay pixel y donde no 
 
 
 def dilatar(m: np.ndarray) -> np.ndarray:
