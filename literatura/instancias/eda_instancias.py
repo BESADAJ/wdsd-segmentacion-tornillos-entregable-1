@@ -1,15 +1,22 @@
-"""EDA de segmentación de instancias de WDSD (solo anotaciones COCO + partición agrupada).
+"""Análisis exploratorio auxiliar de instancias de WDSD.
 
-by Jaime Besada, Jose Castillo y compañía
+Lee las anotaciones COCO y la partición agrupada, y escribe tablas CSV y un
+resumen JSON. No contiene el EDA completo ni genera las tablas del informe final.
 
-Se usa desde la raíz del repo:
-    python eda_instancias.py --raiz . --salida results/eda_instancias
-Lee:
-    <raiz>/Annotations/Object Detection & Instance Segmentation COCO-format/{Training,Validation,Test}_set.json
-    <raiz>/results/eda/particion.csv  (columnas archivo, split_oficial, split, grupo)
-Escribe tablas CSV y un resumen JSON en --salida.
+La función rasterizar usa PIL.ImageDraw.polygon con contorno. Esa máscara puede
+tener más píxeles que el campo `area` de COCO; no es la referencia del benchmark.
+El análisis final rasteriza por centros de píxel con
+`src/wdsd_e1/instancias.py::etiqueta_coco`.
+
+Uso desde la raíz del repositorio:
+    python literatura/instancias/eda_instancias.py --raiz . --salida results/eda_instancias
+
+Lee los tres JSON COCO bajo `Annotations/Object Detection & Instance
+Segmentation COCO-format` y `results/eda/particion.csv`.
+
+
+
 """
-
 
 from __future__ import annotations #Para indicar el type
 
@@ -29,6 +36,10 @@ ORDEN = ["train", "val", "test"]
 
 
 def rasterizar(seg: list[list[float]]) -> np.ndarray:
+    """Máscara exploratoria con Pillow; incluye el contorno del polígono.
+
+    No usar como verdad de referencia: el EDA final usa N.etiqueta_coco.
+    """
     lienzo = Image.new("L", (W, H), 0) #Creamos una objeto tipo Image que es una imagen en blanco
     d = ImageDraw.Draw(lienzo) #Este objeto dibuja sobre el lienzo
     for poli in seg: #Iteramos sobre la lista de poligonos "seg" 

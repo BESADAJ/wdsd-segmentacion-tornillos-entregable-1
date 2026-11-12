@@ -99,6 +99,8 @@ El notebook 02 tarda unos 5 minutos la primera vez; el 01, unos 20. Los cálculo
 
 Los notebooks 03 y de entrega no entrenan nada: leen las corridas guardadas en `results/instancias/corridas/`. Para reentrenar, sigue `ENTRENAMIENTO_INSTANCIAS.md`.
 
+El script exploratorio `literatura/instancias/eda_instancias.py` resume conteos y geometría a partir de COCO y la partición, pero no contiene el EDA completo ni se usa para los resultados del informe. Su rasterización con `PIL.ImageDraw.polygon` incluye el contorno y puede inflar el área en píxeles. El análisis final usa `N.etiqueta_coco`, que rasteriza por centros de píxel y reproduce el campo `area` de COCO.
+
 ## Uso de la partición y de la métrica
 
 ```python
