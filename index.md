@@ -39,8 +39,7 @@ YOLOv8-seg alcanza la media más alta por imagen. En la comparación estadístic
 
 ### Datos
 
-- {doc}`notebooks/01_eda_wdsd`: inventario, integridad y características generales del dataset. Este análisis considera la segmentación semántica y las propiedades que son comunes a ambos planteamientos.
-- {doc}`notebooks/02_eda_instancias`: estructura, geometría y separación de cada tornillo como instancia; de aquí salen las decisiones específicas para el problema de manipulación.
+- {doc}`eda`: un recorrido por las imágenes y sus particiones, seguido del análisis de los tornillos y sus máscaras.
 
 ### Modelos y resultados
 

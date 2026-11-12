@@ -4,10 +4,13 @@ root: index
 parts:
   - caption: Datos
     chapters:
-      - file: notebooks/01_eda_wdsd
-        title: 1. Análisis general del dataset
-      - file: notebooks/02_eda_instancias
-        title: 2. EDA de instancias
+      - file: eda
+        title: Análisis exploratorio
+        sections:
+          - file: notebooks/01_eda_wdsd
+            title: EDA 1 · Imágenes y particiones
+          - file: notebooks/02_eda_instancias
+            title: EDA 2 · Tornillos y máscaras
   - caption: Modelos y resultados
     chapters:
       - file: notebooks/03_modelos_base_instancias
