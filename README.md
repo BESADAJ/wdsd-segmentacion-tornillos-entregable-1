@@ -2,7 +2,7 @@
 
 **Autores:** Ivan Berrio, Jose David Castillo y Jaime Besada.
 
-Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (WDSD): cada tornillo es un objeto que hay que encontrar y delimitar. El entregable 1 está completo: EDA, revisión de literatura, tres modelos base (Mask R-CNN, YOLOv8-seg y SOLOv2, con 5 semillas cada uno) y línea base estadística.
+Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (WDSD): cada tornillo es un objeto que hay que encontrar y delimitar. El informe reúne el EDA, una revisión de literatura, tres modelos base (Mask R-CNN, YOLOv8-seg y SOLOv2, con 5 semillas cada uno) y su comparación estadística. También declara sus limitaciones y los pendientes de licencia y auditoría de anotaciones.
 
 **Empieza por [`notebooks/entrega_E1_instancias.ipynb`](notebooks/entrega_E1_instancias.ipynb).** Es el informe completo en un solo notebook, ya ejecutado, así que se puede leer sin descargar los datos:
 
@@ -15,14 +15,16 @@ Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (W
 
 Las secciones 3 a 5 también están por separado en [`notebooks/03_modelos_base_instancias.ipynb`](notebooks/03_modelos_base_instancias.ipynb).
 
-El mismo informe se publica como **Jupyter Book** (`_config.yml` y `_toc.yml` en la raíz), con el EDA general [`01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) como anexo. Para construirlo:
+El proyecto también está organizado como **Jupyter Book**: la portada resume la pregunta y los resultados, y el menú separa el análisis general del dataset, el EDA por instancias y la revisión de modelos y resultados. El notebook integrado anterior sigue disponible para leer el informe completo de una sola vez.
+
+Para construir el libro localmente:
 
 ```bash
 pip install "jupyter-book<2"
 jupyter-book build .
 ```
 
-El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los notebooks, así que no hace falta el dataset ni una GPU.
+El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los notebooks, así que no hace falta el dataset ni una GPU. El flujo [`deploy.yml`](.github/workflows/deploy.yml) construye el libro en cada cambio en `main` y lo publica en GitHub Pages. Para activar la publicación inicial, una persona con permisos de administración del repositorio debe seleccionar **Settings → Pages → Build and deployment → GitHub Actions**.
 
 [`notebooks/01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) es el EDA anterior, orientado a píxeles. Sigue siendo la referencia para lo que no depende del tipo de salida: inventario y huella del dataset, casi duplicados, grupos de escena, partición, intensidad y normalización. Su métrica primaria (Dice de píxel) queda sustituida.
 

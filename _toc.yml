@@ -1,7 +1,18 @@
 # Tabla de contenido del Jupyter Book del Entregable 1.
 format: jb-book
-root: notebooks/entrega_E1_instancias
+root: index
 parts:
-  - caption: Anexos
+  - caption: Datos
     chapters:
       - file: notebooks/01_eda_wdsd
+        title: 1. Análisis general del dataset
+      - file: notebooks/02_eda_instancias
+        title: 2. EDA de instancias
+  - caption: Modelos y resultados
+    chapters:
+      - file: notebooks/03_modelos_base_instancias
+        title: 3–5. Modelos, resultados y análisis estadístico
+  - caption: Anexos
+    chapters:
+      - file: cumplimiento
+        title: Correspondencia con el enunciado
