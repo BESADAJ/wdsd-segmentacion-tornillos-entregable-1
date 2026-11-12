@@ -64,15 +64,15 @@ Por grupos de prueba, SOLOv2 queda por debajo de los otros dos (Holm p ≤ 0,001
 
 ## Pendientes
 
-- [ ] Confirmar la licencia con los autores: la página oficial no la declara.
+- [ ] Pedir a los autores que aclaren las condiciones de uso y redistribución: la página oficial, el repositorio de los autores y el artículo del dataset no publican una licencia.
 - [x] Conseguir el DOI del artículo de referencia (Kalitsios et al., ICRCV 2022): 10.1109/ICRCV55858.2022.9953178.
-- [ ] Auditar una muestra para estimar tornillos sin anotar.
+- [ ] Auditar una muestra para estimar tornillos visibles sin etiqueta; no forman parte del objetivo etiquetado, pero podrían influir en los falsos positivos si aparecen en imágenes de evaluación.
 - [x] Comprobar qué métricas y particiones usa la literatura: ninguno de los 9 estudios repite corridas ni hace pruebas estadísticas, y solo uno usa partición agrupada (sección 3 del informe).
 - [x] Preparar un entorno con GPU: ver `ENTRENAMIENTO_INSTANCIAS.md`.
 
 ## Datos
 
-El dataset no está en este repositorio porque pesa 2,7 GB y no tiene licencia declarada.
+El dataset no está en este repositorio: pesa 2,7 GB y las fuentes públicas consultadas no especifican una licencia de uso o redistribución. La disponibilidad para descarga no aclara por sí sola esas condiciones.
 
 1. Descarga la carpeta `WDSD` desde la [página oficial](https://vcl.iti.gr/dataset/weee-disassembly-screw-dataset/). Google Drive la entrega en dos archivos zip, y **hacen falta los dos**: cada uno trae cerca de la mitad de las imágenes y de las máscaras, y el COCO de train viene en el segundo.
 2. Extrae ambos junto a este repositorio:
