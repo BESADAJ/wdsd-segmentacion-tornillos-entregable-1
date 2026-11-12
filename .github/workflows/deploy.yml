@@ -6,14 +6,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
-  group: github-pages
+  group: book-site
   cancel-in-progress: true
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Descargar el repositorio
@@ -30,24 +30,12 @@ jobs:
       - name: Construir el libro
         run: jupyter-book build .
 
-      - name: Preparar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Cargar el sitio construido
-        uses: actions/upload-pages-artifact@v4
+      - name: Publicar los archivos HTML en la rama book-site
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: _build/html
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publicar en GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: book-site
+          publish_dir: _build/html
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

@@ -17,6 +17,8 @@ Las secciones 3 a 5 también están por separado en [`notebooks/03_modelos_base_
 
 El proyecto también está organizado como **Jupyter Book**: la portada resume la pregunta y los resultados, y el menú separa el análisis general del dataset, el EDA por instancias y la revisión de modelos y resultados. El notebook integrado anterior sigue disponible para leer el informe completo de una sola vez.
 
+**[Abrir la versión web del libro](https://raw.githack.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1/book-site/index.html).** El libro se sirve desde la rama `book-site`; GitHub Actions la actualiza cuando cambia `main`.
+
 Para construir el libro localmente:
 
 ```bash
@@ -24,7 +26,7 @@ pip install "jupyter-book<2"
 jupyter-book build .
 ```
 
-El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los notebooks, así que no hace falta el dataset ni una GPU. El flujo [`deploy.yml`](.github/workflows/deploy.yml) construye el libro en cada cambio en `main` y lo publica en GitHub Pages. Para activar la publicación inicial, una persona con permisos de administración del repositorio debe seleccionar **Settings → Pages → Build and deployment → GitHub Actions**.
+El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los notebooks, así que no hace falta el dataset ni una GPU. El flujo [`deploy.yml`](.github/workflows/deploy.yml) construye el libro en cada cambio en `main` y publica sus archivos en la rama `book-site`.
 
 [`notebooks/01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) es el EDA anterior, orientado a píxeles. Sigue siendo la referencia para lo que no depende del tipo de salida: inventario y huella del dataset, casi duplicados, grupos de escena, partición, intensidad y normalización. Su métrica primaria (Dice de píxel) queda sustituida.
 
