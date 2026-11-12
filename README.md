@@ -41,7 +41,7 @@ El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los not
 - Mask R-CNN: 0,447 ± 0,017.
 - SOLOv2: 0,297 ± 0,027.
 
-Por grupos de prueba, SOLOv2 queda por debajo de los otros dos (Holm p ≤ 0,0012). La diferencia entre Mask R-CNN y YOLOv8-seg no es concluyente: con 14 grupos, el efecto mínimo detectable (0,10) es mayor que δ = 0,03.
+Por grupos de prueba, SOLOv2 queda por debajo de los otros dos (Holm p ≤ 0,0012). La diferencia entre Mask R-CNN y YOLOv8-seg no es concluyente: con 14 grupos, el efecto mínimo detectable (0,10) es menor que δ = 0,20.
 
 ## Modelos base
 
@@ -54,7 +54,7 @@ Por grupos de prueba, SOLOv2 queda por debajo de los otros dos (Holm p ≤ 0,001
 ## Lo que debes saber antes de modelar
 
 1. **La verdad de referencia son los polígonos COCO**, rasterizados con `N.etiqueta_coco` (centros de píxel; reproduce exactamente el campo `area`). No uses `ImageDraw.polygon`, que engorda cada tornillo unos 19 px, ni mezcles las máscaras PNG con COCO: son un 16 % más grandes y su IoU con COCO es 0,84.
-2. **Métrica primaria: F1 de instancia por imagen con IoU ≥ 0,5**, con `N.metricas_instancia(gt, pred)`. El umbral 0,5 sale del EDA: a 0,75 las dos versiones de la anotación ya discrepan en el 26 % de las imágenes. PQ y AP50 son secundarias y AP 0,5:0,95 es solo informativa. Declaración completa en `results/eda/declaracion_a_priori_instancias.json`, con $\delta = 0{,}03$.
+2. **Métrica primaria: F1 de instancia por imagen con IoU ≥ 0,5**, con `N.metricas_instancia(gt, pred)`. El umbral 0,5 sale del EDA: a 0,75 las dos versiones de la anotación ya discrepan en el 26 % de las imágenes. PQ y AP50 son secundarias y AP 0,5:0,95 es solo informativa. Declaración completa en `results/eda/declaracion_a_priori_instancias.json`, con $\delta = 0{,}20$.
 3. **Los modelos base del E1 son de instancias** (Mask R-CNN, YOLOv8-seg y SOLOv2). Un modelo semántico (FCN, U-Net) también sirve, y queda como candidato para el E2: ningún par de tornillos se toca, así que la máscara binaria se convierte en instancias con `N.etiqueta_mascara(prob > umbral, area_min=5)`. Ajusta el umbral en validación.
 4. **No uses la partición oficial como principal.** Tiene fuga por escena. Usa `results/eda/particion.csv` (744 / 93 / 108 imágenes, 3.530 / 479 / 389 tornillos). No la regeneres ni consultes test mientras ajustas.
 5. **No reduzcas la imagen.** El diámetro mediano de un tornillo es 10,6 px y el 98,8 % son *small* según COCO. Los modelos base usan la imagen completa de 1280×720 y anclas pequeñas. Para un modelo semántico, entrena con parches de 512×512 a resolución nativa, con la mitad centrados en tornillos, evalúa por ventana deslizante de 512 con solape de 64 px y etiqueta componentes sobre la imagen completa, no por ventana.

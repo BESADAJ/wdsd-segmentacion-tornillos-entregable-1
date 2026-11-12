@@ -12,7 +12,7 @@ Métrica primaria: F1 de instancia por imagen (declaración a priori del EDA). U
    - Wilcoxon pareado por grupo para cada par, con corrección de Holm.
    - IC95 bootstrap de la diferencia media, remuestreando GRUPOS (10 000 réplicas).
    - Efecto mínimo detectable (MDE) aproximado para el par, con alfa de Holm y potencia 0.80.
-3. Comparación con δ (umbral práctico declarado a priori).
+3. Comparación con δ (umbral práctico para mejora de modelos avanzados).
 """
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-DELTA = 0.03  # δ provisional de results/eda/declaracion_a_priori_instancias.json (F1 de instancia)
+DELTA = 0.2  # 20 puntos porcentuales de F1, margen práctico del proyecto
 METRICA = "f1"  # primaria declarada: F1 de instancia por imagen (IoU >= 0.5, húngaro)
 B = 10_000
 

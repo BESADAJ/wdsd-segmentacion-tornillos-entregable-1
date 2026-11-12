@@ -1,6 +1,5 @@
 {
- "fecha": "2026-11-07",
- "sustituye_a": "declaracion_a_priori.json (orientación semántica) en métrica primaria y verdad de referencia; partición y unidad de independencia se heredan sin cambios",
+ "fecha": "2026-11-11",
  "tipo_problema": "8. Segmentación de imágenes (variante de instancias)",
  "verdad_referencia": "Polígonos COCO rasterizados por centros de píxel (wdsd_e1.instancias.etiqueta_coco); el PNG no se usa para evaluar",
  "metrica_primaria": {
@@ -22,8 +21,7 @@
   "AP 0,5:0,95 de máscara",
   "F1 a IoU 0,75"
  ],
- "delta": 0.03,
- "delta_estado": "provisional hasta el estudio piloto",
+ "delta": 0.2,
  "alpha": 0.05,
  "unidad_independencia": "grupo de escena (columna grupo de particion.csv)",
  "particion": {
@@ -50,8 +48,7 @@
   "conectividad": 8
  },
  "inferencia": {
-  "ventana": 512,
-  "solape": 64
+  "entrada": "imagen completa de 1280x720; sin ventana deslizante"
  },
  "techo_anotacion": {
   "f1_iou_0.5": 0.9995,

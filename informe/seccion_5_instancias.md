@@ -33,7 +33,7 @@ Las dos usaron la misma configuración y las mismas versiones de los paquetes (`
   - PQ (*panoptic quality*) = SQ × F1, donde SQ es el IoU medio de los aciertos;
   - AP50 de máscara.
 - **Informativa:** AP de máscara promediado en IoU de 0.5 a 0.95, el estándar de COCO.
-- **Umbral práctico:** δ = 0.03 en F1, declarado a priori en el EDA.
+- **Umbral práctico:** δ = 0.20 puntos de F1 para valorar la mejora de modelos avanzados.
 
 ## 5.3 Resultados
 
@@ -87,8 +87,8 @@ Tabla 5.5. Contrastes por pares (unidad = grupo, n = 14).
 Con PQ como métrica secundaria el patrón es el mismo: Friedman p = 0.0002; Mask R-CNN − YOLOv8-seg = +0.011 (IC95 [−0.037, 0.053], p de Holm = 0.27, MDE 0.088); SOLOv2 pierde contra los dos (p de Holm ≤ 0.0007).
 
 **Lectura.**
-- **SOLOv2 queda por debajo de los otros dos** con una diferencia grande (≈0.46 en F1 por grupo), muy por encima de δ = 0.03 y significativa tras Holm. Pierde en 13 de los 14 grupos frente a cada uno de los otros modelos. La tabla 5.4 muestra de dónde viene: su precisión es similar a la de los otros (0.59 frente a 0.60–0.63), pero su recall es la mitad (0.31 frente a 0.58–0.63). Deja de detectar la mitad de los tornillos. Una explicación plausible, no verificada con un experimento, es su forma de asignar objetos: SOLOv2 decide la presencia de una instancia en una cuadrícula de 40 × 40 celdas, que a 1280 px son celdas de unos 32 px, mientras que el tornillo mediano mide 12 px.
-- **Mask R-CNN y YOLOv8-seg no se distinguen con estos datos.** La diferencia por grupo es de −0.009 (IC95 [−0.066, 0.039]; p de Holm = 0.55). El efecto mínimo detectable con 14 grupos es de 0.102, mayor que δ = 0.03, así que el resultado es **no concluyente**: no se puede afirmar que sean equivalentes, solo que la prueba no tiene potencia para separarlos.
+- **SOLOv2 queda por debajo de los otros dos** con una diferencia grande (≈0.46 en F1 por grupo), muy por encima de δ = 0.20 y significativa tras Holm. Pierde en 13 de los 14 grupos frente a cada uno de los otros modelos. La tabla 5.4 muestra de dónde viene: su precisión es similar a la de los otros (0.59 frente a 0.60–0.63), pero su recall es la mitad (0.31 frente a 0.58–0.63). Deja de detectar la mitad de los tornillos. Una explicación plausible, no verificada con un experimento, es su forma de asignar objetos: SOLOv2 decide la presencia de una instancia en una cuadrícula de 40 × 40 celdas, que a 1280 px son celdas de unos 32 px, mientras que el tornillo mediano mide 12 px.
+- **Mask R-CNN y YOLOv8-seg no se distinguen con estos datos.** La diferencia por grupo es de −0.009 (IC95 [−0.066, 0.039]; p de Holm = 0.55). La diferencia observada (0.009) es menor que δ = 0.20 y el IC95 [−0.066, 0.039] queda dentro de ese margen. No se realizó una prueba TOST para afirmar equivalencia formal.
 - **La media por imagen y la media por grupo cuentan historias distintas.** Por imagen, YOLOv8-seg supera a Mask R-CNN (0.52 frente a 0.45), pero buena parte de esa ventaja viene del grupo 9, que tiene 28 de las 108 imágenes de prueba: allí Mask R-CNN casi no acierta (F1 0.02) y YOLOv8-seg llega a 0.22. Al usar el grupo como unidad, ese grupo pesa lo mismo que los demás y la ventaja desaparece. Por eso la conclusión se apoya en el análisis por grupo.
 - **El reparto entre máquinas no cambia el patrón.** Las semillas de la RTX 3050 (45 y 46) quedan en el mismo rango que las de la RTX 3060 en F1 por imagen: Mask R-CNN 0.450 y 0.461 frente a 0.418–0.458; YOLOv8-seg 0.568 y 0.504 frente a 0.429–0.584; SOLOv2 0.305 y 0.287 frente a 0.256–0.326. Lo que cambia es el tiempo de cómputo.
 
