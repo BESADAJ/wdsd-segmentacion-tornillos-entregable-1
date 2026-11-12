@@ -44,7 +44,6 @@ YOLOv8-seg alcanza la media más alta por imagen. En la comparación estadístic
 ### Modelos y resultados
 
 - {doc}`notebooks/03_modelos_base_instancias`: revisión de literatura, protocolo de entrenamiento, métricas, resultados y análisis estadístico.
-- {doc}`cumplimiento`: correspondencia de cada requisito con la evidencia y los pendientes que siguen abiertos.
 
 El [notebook integrado del entregable](https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1/blob/main/notebooks/entrega_E1_instancias.ipynb) reúne el mismo recorrido en un único documento ejecutado. El [repositorio de origen](https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1) contiene además los scripts, las tablas y las salidas guardadas.
 
@@ -56,4 +55,4 @@ El margen práctico es δ = 0,20 puntos de F1 y se propone para juzgar modelos a
 
 La guía del curso presenta FCN, codificador–decodificador y U-Net reducida como ejemplos generales de segmentación. Aquí se eligieron modelos de segmentación de instancias porque la salida distingue cada tornillo; por eso la terna no coincide literalmente con esos ejemplos generales.
 
-La comparación no incluye búsqueda equivalente de hiperparámetros para las tres familias ni medición separada del tiempo de inferencia. Tampoco se afirma que el éxito de segmentación garantice que un robot pueda retirar el tornillo: eso requiere validación física. La página pública del dataset no especifica condiciones de uso y redistribución, y queda pendiente auditar tornillos visibles sin anotación.
+La comparación no incluye búsqueda equivalente de hiperparámetros para las tres familias ni medición separada del tiempo de inferencia. Tampoco se afirma que el éxito de segmentación garantice que un robot pueda retirar el tornillo: eso requiere validación física. Las métricas se calculan respecto a las anotaciones disponibles; los tornillos visibles que carezcan de etiqueta pueden afectar su interpretación.

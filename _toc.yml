@@ -15,7 +15,3 @@ parts:
     chapters:
       - file: notebooks/03_modelos_base_instancias
         title: 3–5. Modelos, resultados y análisis estadístico
-  - caption: Anexos
-    chapters:
-      - file: cumplimiento
-        title: Correspondencia con el enunciado

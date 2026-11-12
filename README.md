@@ -2,7 +2,7 @@
 
 **Autores:** Ivan Berrio, Jose David Castillo y Jaime Besada.
 
-Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (WDSD): cada tornillo es un objeto que hay que encontrar y delimitar. El informe reúne el EDA, una revisión de literatura, tres modelos base (Mask R-CNN, YOLOv8-seg y SOLOv2, con 5 semillas cada uno) y su comparación estadística. También declara sus limitaciones y los pendientes de licencia y auditoría de anotaciones.
+Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (WDSD): cada tornillo es un objeto que hay que encontrar y delimitar. El informe reúne el EDA, una revisión de literatura, tres modelos base (Mask R-CNN, YOLOv8-seg y SOLOv2, con 5 semillas cada uno) y su comparación estadística.
 
 **Empieza por [`notebooks/entrega_E1_instancias.ipynb`](notebooks/entrega_E1_instancias.ipynb).** Es el informe completo en un solo notebook, ya ejecutado, así que se puede leer sin descargar los datos:
 
@@ -30,15 +30,7 @@ El libro queda en `_build/html/index.html`. Usa las salidas guardadas en los not
 
 [`notebooks/01_eda_wdsd.ipynb`](notebooks/01_eda_wdsd.ipynb) es el EDA anterior, orientado a píxeles. Sigue siendo la referencia para lo que no depende del tipo de salida: inventario y huella del dataset, casi duplicados, grupos de escena, partición, intensidad y normalización. Su métrica primaria (Dice de píxel) queda sustituida.
 
-## Estado del entregable
-
-| Sección del enunciado | Peso | Estado |
-|---|---|---|
-| 1. Problema y dataset | parte del EDA | Hecho, con pendientes abajo |
-| 2. EDA | 30 % | Hecho (02 por instancias, 01 para lo general) |
-| 3. Literatura y tres modelos base | 30 % | Hecho: 9 estudios incluidos (`literatura/instancias/`) |
-| 4. Implementación de los modelos | 20 % | Hecho: 15 corridas (`results/instancias/corridas/`) |
-| 5. Benchmark, baseline y estadística | 20 % | Hecho (`informe/seccion_5_instancias.md`) |
+## Resultados
 
 **Línea base (prueba, 5 semillas, F1 de instancia por imagen):**
 - YOLOv8-seg: 0,521 ± 0,061.
@@ -65,14 +57,6 @@ Por grupos de prueba, SOLOv2 queda por debajo de los otros dos (Holm p ≤ 0,001
 6. **Da peso a los tornillos pequeños en la pérdida** (Dice + entropía cruzada o focal, con peso por instancia): la mitad más pequeña de los tornillos solo aporta el 17 % de los píxeles.
 7. **Normaliza con** `results/eda/normalizacion_train.json`.
 8. **Ten cuidado con la inferencia.** Test solo tiene 14 grupos de escena, así que el bootstrap debe remuestrear grupos. Además, test tiene menos tornillos por imagen que train (3,6 frente a 4,7).
-
-## Pendientes
-
-- [ ] Pedir a los autores que aclaren las condiciones de uso y redistribución: la página oficial, el repositorio de los autores y el artículo del dataset no publican una licencia.
-- [x] Conseguir el DOI del artículo de referencia (Kalitsios et al., ICRCV 2022): 10.1109/ICRCV55858.2022.9953178.
-- [ ] Auditar una muestra para estimar tornillos visibles sin etiqueta; no forman parte del objetivo etiquetado, pero podrían influir en los falsos positivos si aparecen en imágenes de evaluación.
-- [x] Comprobar qué métricas y particiones usa la literatura: ninguno de los 9 estudios repite corridas ni hace pruebas estadísticas, y solo uno usa partición agrupada (sección 3 del informe).
-- [x] Preparar un entorno con GPU: ver `ENTRENAMIENTO_INSTANCIAS.md`.
 
 ## Datos
 
