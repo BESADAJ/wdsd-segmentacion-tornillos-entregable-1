@@ -1,0 +1,1304 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5. Línea base estadística &#8212; WDSD: segmentación de instancias de tornillos (Entregable 1)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/05_linea_base_estadistica';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="6. Conclusiones" href="../conclusiones.html" />
+    <link rel="prev" title="4. Implementación de los modelos base" href="04_modelos_base.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">WDSD: segmentación de instancias de tornillos (Entregable 1)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Segmentación de instancias de tornillos en WDSD
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Datos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../eda.html">Análisis exploratorio</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_eda_wdsd.html">EDA 1 · Imágenes y particiones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_eda_instancias.html">EDA 2 · Tornillos y máscaras</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_revision_literatura.html">3. Revisión de literatura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_modelos_base.html">4. Modelos base</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resultados</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. Línea base estadística</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conclusiones.html">6. Conclusiones</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Anexos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../reproducibilidad.html">Reproducibilidad</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/05_linea_base_estadistica.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5. Línea base estadística</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas">5.1 Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-por-modelo">5.2 Resultados por modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-estadistica">5.3 Comparación estadística</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supuestos-tamano-de-efecto-y-diferencia-relativa">Supuestos, tamaño de efecto y diferencia relativa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-y-margen-de-mejora">5.4 Baseline y margen de mejora</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitaciones">5.5 Limitaciones</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="linea-base-estadistica">
+<h1>5. Línea base estadística<a class="headerlink" href="#linea-base-estadistica" title="Link to this heading">#</a></h1>
+<p>Con las 15 corridas terminadas, el siguiente paso fue evaluar las redes Mask R-CNN, YOLOv8-seg y SOLOv2. Aquí se presentan las métricas utilizadas, el desempeño de cada una en el conjunto de prueba y su comparación mediante pruebas estadísticas que toman el grupo de escena como unidad de análisis.</p>
+<p>En la celda siguiente se cargan las rutas y funciones del proyecto. No se entrena nada: las tablas y figuras se obtienen de los resultados guardados de las 15 corridas.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ROOT</span><span class="p">))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">estadistica_instancias</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">EI</span>
+
+<span class="n">LIT</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'literatura'</span> <span class="o">/</span> <span class="s1">'instancias'</span>
+<span class="n">CORR</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'results'</span> <span class="o">/</span> <span class="s1">'instancias'</span> <span class="o">/</span> <span class="s1">'corridas'</span>
+<span class="n">MODELOS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'maskrcnn'</span><span class="p">:</span> <span class="s1">'Mask R-CNN'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">:</span> <span class="s1">'YOLOv8-seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">:</span> <span class="s1">'SOLOv2'</span><span class="p">}</span>
+<span class="n">orden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'maskrcnn'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_colwidth'</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Corridas encontradas:'</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*_s*'</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'metricas.json'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Corridas encontradas: ['maskrcnn_s42', 'maskrcnn_s43', 'maskrcnn_s44', 'maskrcnn_s45', 'maskrcnn_s46', 'solov2_s42', 'solov2_s43', 'solov2_s44', 'solov2_s45', 'solov2_s46', 'yolov8seg_s42', 'yolov8seg_s43', 'yolov8seg_s44', 'yolov8seg_s45', 'yolov8seg_s46']
+</pre></div>
+</div>
+</div>
+</div>
+<section id="metricas">
+<h2>5.1 Métricas<a class="headerlink" href="#metricas" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Métrica primaria: F1 de instancia por imagen.</strong> En cada imagen se emparejan predicciones y tornillos reales con el algoritmo húngaro. Una pareja cuenta como acierto (TP) si su IoU de máscara es de al menos 0.5. La métrica se calcula como $<span class="math notranslate nohighlight">\(F1 = \frac{2TP}{2TP + FP + FN},\)</span>$ donde FP son las predicciones sin pareja y FN los tornillos reales sin detectar.</p></li>
+<li><p><strong>Secundarias:</strong></p>
+<ul>
+<li><p>PQ (<em>panoptic quality</em>) = SQ × F1, donde SQ es el IoU medio de los aciertos;</p></li>
+<li><p>AP50 de máscara.</p></li>
+</ul>
+</li>
+<li><p><strong>Informativa:</strong> AP de máscara promediado en IoU de 0.5 a 0.95, el estándar de COCO.</p></li>
+<li><p><strong>Umbral práctico:</strong> δ = 0.20 puntos de F1.</p></li>
+</ul>
+<p><strong>Referencia física para el margen.</strong> Ku y Chen estudian el atornillado robótico de un tornillo M6. Su análisis estima un error mecánico de posicionamiento de aproximadamente 0,2 mm; en las pruebas, el mecanismo permitió compensar desalineaciones iniciales y completar más del 80 % de las secuencias cuando el desajuste era menor de 3 mm (<a class="reference external" href="https://doi.org/10.5194/ms-13-701-2022">Ku y Chen, 2022</a>). El caso de un solo tornillo muestra por qué la alineación y el acoplamiento entre herramienta y cabeza importan físicamente.</p>
+<p>Tomamos ese análisis como referencia para fijar δ = 0.20 como una barrera exigente de mejora en la detección antes de considerar un modelo más complejo. Las magnitudes no son equivalentes: el estudio expresa error de posición en milímetros, mientras que aquí δ representa 0,20 puntos de F1. El paper motiva la relevancia práctica de localizar bien un tornillo, pero no establece una conversión entre milímetros, F1 y éxito de desmontaje. Esa relación requeriría calibración píxel–milímetro y pruebas de extremo a extremo con el robot y la herramienta.</p>
+</section>
+<section id="resultados-por-modelo">
+<h2>5.2 Resultados por modelo<a class="headerlink" href="#resultados-por-modelo" title="Link to this heading">#</a></h2>
+<p><strong>Tabla 5.1.</strong> Desempeño en prueba: media, desviación estándar e intervalo de confianza del 95 % (t de Student) sobre las 5 semillas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">EI</span><span class="o">.</span><span class="n">analizar</span><span class="p">(</span><span class="n">CORR</span><span class="p">)</span>  <span class="c1"># imprime también el detalle; se resume abajo</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>== Resumen por modelo (test, sobre semillas)
+            n_semillas  F1_img_media  F1_img_de  F1_grupo_media  PQ_img_media  PQ_img_de  PQ_grupo_media  PQ_grupo_de  AP_media   AP_de  AP50_media  F1_img_ic95  PQ_img_ic95  AP_ic95
+modelo                                                                                                                                                                               
+maskrcnn            5        0.4467     0.0173          0.7259        0.3133     0.0108          0.5250       0.0116    0.2168  0.0039      0.5871       0.0215       0.0134   0.0048
+solov2              5        0.2967     0.0267          0.2692        0.2104     0.0170          0.1950       0.0162    0.1127  0.0053      0.2849       0.0332       0.0211   0.0066
+yolov8seg           5        0.5208     0.0613          0.7345        0.3652     0.0398          0.5138       0.0194    0.2344  0.0082      0.6373       0.0761       0.0494   0.0101 
+
+== f1 por grupo (n = 14 grupos)
+ modelo  maskrcnn  solov2  yolov8seg
+grupo                              
+6          0.291   0.000      0.239
+9          0.018   0.000      0.224
+12         0.681   0.648      0.665
+27         0.725   0.733      0.760
+32         0.560   0.328      0.823
+45         0.764   0.000      0.705
+58         0.941   0.105      0.933
+69         0.948   0.715      0.918
+77         0.882   0.164      0.764
+99         0.987   0.106      0.964
+105        0.537   0.490      0.440
+150        0.904   0.206      0.933
+178        1.000   0.000      1.000
+179        0.925   0.275      0.915 
+
+Friedman (3 modelos, 14 grupos): chi2 = 16.618, p = 0.0002
+
+== Pares (unidad = grupo; Holm sobre 3 contrastes)
+                  par  dif_media  de_dif   ic95_boot_grupos  wilcoxon_W      p  gana_a_en_grupos  p_holm    MDE  supera_delta
+   maskrcnn - solov2     0.4567  0.3679   (0.2683, 0.6393)         1.0 0.0002                13  0.0007 0.3556          True
+maskrcnn - yolov8seg    -0.0086  0.1052  (-0.0655, 0.0389)        37.0 0.5525                 9  0.5525 0.1017         False
+  solov2 - yolov8seg    -0.4653  0.3491 (-0.6408, -0.2846)         3.0 0.0006                 1  0.0012 0.3374          True
+
+δ = 0.2. MDE con alfa de Holm 0.0167 y potencia 0.80. Si MDE &gt; δ, el test no tiene potencia para detectar una diferencia práctica: se reporta como no concluyente, no como empate.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">runs</span> <span class="o">=</span> <span class="n">EI</span><span class="o">.</span><span class="n">cargar</span><span class="p">(</span><span class="n">CORR</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ic</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> [</span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">h</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">h</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">]'</span>
+<span class="n">tabla51</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'modelo'</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="p">(</span><span class="s1">'semilla'</span><span class="p">,</span> <span class="s1">'nunique'</span><span class="p">),</span> <span class="n">F1_img</span><span class="o">=</span><span class="p">(</span><span class="s1">'F1_img'</span><span class="p">,</span> <span class="n">ic</span><span class="p">),</span> <span class="n">PQ_img</span><span class="o">=</span><span class="p">(</span><span class="s1">'PQ_img'</span><span class="p">,</span> <span class="n">ic</span><span class="p">),</span>
+                                      <span class="n">AP50</span><span class="o">=</span><span class="p">(</span><span class="s1">'AP50'</span><span class="p">,</span> <span class="n">ic</span><span class="p">),</span> <span class="n">AP</span><span class="o">=</span><span class="p">(</span><span class="s1">'AP'</span><span class="p">,</span> <span class="n">ic</span><span class="p">))</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">MODELOS</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">tabla51</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>n</th>
+      <th>F1_img</th>
+      <th>PQ_img</th>
+      <th>AP50</th>
+      <th>AP</th>
+    </tr>
+    <tr>
+      <th>modelo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mask R-CNN</th>
+      <td>5</td>
+      <td>0.447 ± 0.017 [0.425, 0.468]</td>
+      <td>0.313 ± 0.011 [0.300, 0.327]</td>
+      <td>0.587 ± 0.010 [0.575, 0.599]</td>
+      <td>0.217 ± 0.004 [0.212, 0.222]</td>
+    </tr>
+    <tr>
+      <th>SOLOv2</th>
+      <td>5</td>
+      <td>0.297 ± 0.027 [0.263, 0.330]</td>
+      <td>0.210 ± 0.017 [0.189, 0.231]</td>
+      <td>0.285 ± 0.017 [0.264, 0.306]</td>
+      <td>0.113 ± 0.005 [0.106, 0.119]</td>
+    </tr>
+    <tr>
+      <th>YOLOv8-seg</th>
+      <td>5</td>
+      <td>0.521 ± 0.061 [0.445, 0.597]</td>
+      <td>0.365 ± 0.040 [0.316, 0.415]</td>
+      <td>0.637 ± 0.019 [0.614, 0.661]</td>
+      <td>0.234 ± 0.008 [0.224, 0.245]</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Tabla 5.2.</strong> Conteos agregados en prueba (5 semillas × 108 imágenes): de dónde sale cada F1.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">imgs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">EI</span><span class="o">.</span><span class="n">cargar</span><span class="p">(</span><span class="n">CORR</span><span class="p">)</span>
+<span class="n">cont</span> <span class="o">=</span> <span class="n">imgs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'modelo'</span><span class="p">)[[</span><span class="s1">'tp'</span><span class="p">,</span> <span class="s1">'fp'</span><span class="p">,</span> <span class="s1">'fn'</span><span class="p">,</span> <span class="s1">'n_gt'</span><span class="p">,</span> <span class="s1">'n_pred'</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">cont</span><span class="p">[</span><span class="s1">'precisión'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cont</span><span class="o">.</span><span class="n">tp</span> <span class="o">/</span> <span class="n">cont</span><span class="o">.</span><span class="n">n_pred</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">cont</span><span class="p">[</span><span class="s1">'recall'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">cont</span><span class="o">.</span><span class="n">tp</span> <span class="o">/</span> <span class="n">cont</span><span class="o">.</span><span class="n">n_gt</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">cont</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">MODELOS</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tp</th>
+      <th>fp</th>
+      <th>fn</th>
+      <th>n_gt</th>
+      <th>n_pred</th>
+      <th>precisión</th>
+      <th>recall</th>
+    </tr>
+    <tr>
+      <th>modelo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mask R-CNN</th>
+      <td>1132</td>
+      <td>742</td>
+      <td>813</td>
+      <td>1945</td>
+      <td>1874</td>
+      <td>0.604</td>
+      <td>0.582</td>
+    </tr>
+    <tr>
+      <th>SOLOv2</th>
+      <td>595</td>
+      <td>410</td>
+      <td>1350</td>
+      <td>1945</td>
+      <td>1005</td>
+      <td>0.592</td>
+      <td>0.306</td>
+    </tr>
+    <tr>
+      <th>YOLOv8-seg</th>
+      <td>1220</td>
+      <td>706</td>
+      <td>725</td>
+      <td>1945</td>
+      <td>1926</td>
+      <td>0.633</td>
+      <td>0.627</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="comparacion-estadistica">
+<h2>5.3 Comparación estadística<a class="headerlink" href="#comparacion-estadistica" title="Link to this heading">#</a></h2>
+<p><strong>Unidad de análisis.</strong> La unidad de independencia es el grupo, no la imagen, porque las imágenes de una misma sesión están correlacionadas. Para cada modelo y grupo de prueba se promedia el F1 de las imágenes del grupo y luego el de las semillas. Resulta una tabla de 14 grupos × 3 modelos.</p>
+<p><strong>Pruebas.</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Friedman</strong> sobre los tres modelos, con los grupos como bloques. Prueba si al menos un modelo difiere de los otros.</p></li>
+<li><p><strong>Wilcoxon pareado por grupo</strong> para cada par de modelos, con corrección de Holm por los 3 contrastes.</p></li>
+<li><p><strong>Intervalo bootstrap del 95 %</strong> de la diferencia media por par, remuestreando grupos (10 000 réplicas).</p></li>
+<li><p><strong>Efecto mínimo detectable (MDE)</strong> de cada par, con el alfa de Holm y potencia 0.80. Si el MDE es mayor que δ, la prueba no tiene potencia para detectar una diferencia práctica, y un resultado no significativo se reporta como no concluyente, no como empate.</p></li>
+</ol>
+<p><strong>Tabla 5.3.</strong> F1 medio por grupo de prueba (promedio de las imágenes del grupo y luego de las 5 semillas).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">'por_grupo'</span><span class="p">]</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">MODELOS</span><span class="p">)</span>
+<span class="n">n_img</span> <span class="o">=</span> <span class="n">imgs</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s1">'archivo'</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'grupo'</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="s1">'imágenes'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">n_img</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Friedman: chi2 = </span><span class="si">{</span><span class="n">res</span><span class="p">[</span><span class="s1">'friedman'</span><span class="p">][</span><span class="s1">'estadistico'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, p = </span><span class="si">{</span><span class="n">res</span><span class="p">[</span><span class="s1">'friedman'</span><span class="p">][</span><span class="s1">'p'</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Mask R-CNN</th>
+      <th>SOLOv2</th>
+      <th>YOLOv8-seg</th>
+      <th>imágenes</th>
+    </tr>
+    <tr>
+      <th>grupo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>0.291</td>
+      <td>0.000</td>
+      <td>0.239</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>0.018</td>
+      <td>0.000</td>
+      <td>0.224</td>
+      <td>28</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.681</td>
+      <td>0.648</td>
+      <td>0.665</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>0.725</td>
+      <td>0.733</td>
+      <td>0.760</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>0.560</td>
+      <td>0.328</td>
+      <td>0.823</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>0.764</td>
+      <td>0.000</td>
+      <td>0.705</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>0.941</td>
+      <td>0.105</td>
+      <td>0.933</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>0.948</td>
+      <td>0.715</td>
+      <td>0.918</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>0.882</td>
+      <td>0.164</td>
+      <td>0.764</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>0.987</td>
+      <td>0.106</td>
+      <td>0.964</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>0.537</td>
+      <td>0.490</td>
+      <td>0.440</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>0.904</td>
+      <td>0.206</td>
+      <td>0.933</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>1.000</td>
+      <td>0.000</td>
+      <td>1.000</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>0.925</td>
+      <td>0.275</td>
+      <td>0.915</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Friedman: chi2 = 16.62, p = 0.0002
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Figura 5.1.</strong> F1 por grupo de prueba. Cada línea une los tres modelos en un mismo grupo; el tamaño del punto es proporcional al número de imágenes del grupo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">orden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'maskrcnn'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">]</span>
+<span class="n">gg</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">'por_grupo'</span><span class="p">][</span><span class="n">orden</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">orden</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">grupo</span><span class="p">,</span> <span class="n">fila</span> <span class="ow">in</span> <span class="n">gg</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fila</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'0.75'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fila</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">12</span> <span class="o">+</span> <span class="mi">6</span> <span class="o">*</span> <span class="n">n_img</span><span class="p">[</span><span class="n">grupo</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#3b6ea8'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">gg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#c44e2b'</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">'D'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'media de los 14 grupos'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">orden</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'F1 de instancia (media del grupo)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.03</span><span class="p">,</span> <span class="mf">1.03</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'lower left'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/22bb6dd5cbc956eb6d0c9756683e634120fc60f2fd3a4f80b376812f91bc58d8.png" src="../_images/22bb6dd5cbc956eb6d0c9756683e634120fc60f2fd3a4f80b376812f91bc58d8.png" />
+</div>
+</div>
+<p><strong>Tabla 5.4.</strong> Contrastes por pares (unidad = grupo, n = 14; Wilcoxon pareado con corrección de Holm, IC95 bootstrap remuestreando grupos, MDE con potencia 0.80).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pares</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">'pares'</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">MODELOS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">pares</span><span class="p">[</span><span class="s1">'par'</span><span class="p">]</span> <span class="o">=</span> <span class="n">pares</span><span class="p">[</span><span class="s1">'par'</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pares</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>par</th>
+      <th>dif_media</th>
+      <th>de_dif</th>
+      <th>ic95_boot_grupos</th>
+      <th>wilcoxon_W</th>
+      <th>p</th>
+      <th>gana_a_en_grupos</th>
+      <th>p_holm</th>
+      <th>MDE</th>
+      <th>supera_delta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mask R-CNN - SOLOv2</td>
+      <td>0.4567</td>
+      <td>0.3679</td>
+      <td>(0.2683, 0.6393)</td>
+      <td>1.0</td>
+      <td>0.0002</td>
+      <td>13</td>
+      <td>0.0007</td>
+      <td>0.3556</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mask R-CNN - YOLOv8-seg</td>
+      <td>-0.0086</td>
+      <td>0.1052</td>
+      <td>(-0.0655, 0.0389)</td>
+      <td>37.0</td>
+      <td>0.5525</td>
+      <td>9</td>
+      <td>0.5525</td>
+      <td>0.1017</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOLOv2 - YOLOv8-seg</td>
+      <td>-0.4653</td>
+      <td>0.3491</td>
+      <td>(-0.6408, -0.2846)</td>
+      <td>3.0</td>
+      <td>0.0006</td>
+      <td>1</td>
+      <td>0.0012</td>
+      <td>0.3374</td>
+      <td>True</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Con PQ como métrica secundaria:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res_pq</span> <span class="o">=</span> <span class="n">EI</span><span class="o">.</span><span class="n">analizar</span><span class="p">(</span><span class="n">CORR</span><span class="p">,</span> <span class="n">metrica</span><span class="o">=</span><span class="s1">'pq'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>== Resumen por modelo (test, sobre semillas)
+            n_semillas  F1_img_media  F1_img_de  F1_grupo_media  PQ_img_media  PQ_img_de  PQ_grupo_media  PQ_grupo_de  AP_media   AP_de  AP50_media  F1_img_ic95  PQ_img_ic95  AP_ic95
+modelo                                                                                                                                                                               
+maskrcnn            5        0.4467     0.0173          0.7259        0.3133     0.0108          0.5250       0.0116    0.2168  0.0039      0.5871       0.0215       0.0134   0.0048
+solov2              5        0.2967     0.0267          0.2692        0.2104     0.0170          0.1950       0.0162    0.1127  0.0053      0.2849       0.0332       0.0211   0.0066
+yolov8seg           5        0.5208     0.0613          0.7345        0.3652     0.0398          0.5138       0.0194    0.2344  0.0082      0.6373       0.0761       0.0494   0.0101 
+
+== pq por grupo (n = 14 grupos)
+ modelo  maskrcnn  solov2  yolov8seg
+grupo                              
+6          0.186   0.000      0.148
+9          0.011   0.000      0.146
+12         0.492   0.469      0.485
+27         0.524   0.526      0.549
+32         0.376   0.223      0.581
+45         0.534   0.000      0.459
+58         0.696   0.060      0.658
+69         0.727   0.584      0.702
+77         0.607   0.130      0.508
+99         0.696   0.065      0.651
+105        0.371   0.336      0.316
+150        0.635   0.142      0.662
+178        0.827   0.000      0.680
+179        0.669   0.193      0.649 
+
+Friedman (3 modelos, 14 grupos): chi2 = 16.714, p = 0.0002
+
+== Pares (unidad = grupo; Holm sobre 3 contrastes)
+                  par  dif_media  de_dif   ic95_boot_grupos  wilcoxon_W      p  gana_a_en_grupos  p_holm    MDE  supera_delta
+   maskrcnn - solov2     0.3300  0.2805    (0.188, 0.4699)         1.0 0.0002                13  0.0007 0.2711          True
+maskrcnn - yolov8seg     0.0111  0.0905   (-0.037, 0.0529)        34.0 0.2676                10  0.2676 0.0875         False
+  solov2 - yolov8seg    -0.3189  0.2413 (-0.4396, -0.1952)         2.0 0.0004                 1  0.0007 0.2332          True
+
+δ = 0.2. MDE con alfa de Holm 0.0167 y potencia 0.80. Si MDE &gt; δ, el test no tiene potencia para detectar una diferencia práctica: se reporta como no concluyente, no como empate.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="supuestos-tamano-de-efecto-y-diferencia-relativa">
+<h3>Supuestos, tamaño de efecto y diferencia relativa<a class="headerlink" href="#supuestos-tamano-de-efecto-y-diferencia-relativa" title="Link to this heading">#</a></h3>
+<p><strong>Tabla 5.5.</strong> Por par y sobre los 14 grupos:</p>
+<ul class="simple">
+<li><p>Shapiro–Wilk de las diferencias pareadas;</p></li>
+<li><p>t pareado, como contraste paramétrico de referencia;</p></li>
+<li><p>d de Cohen pareada (media/DE de las diferencias);</p></li>
+<li><p>r biserial de rangos (el tamaño de efecto del Wilcoxon);</p></li>
+<li><p>probabilidad de superioridad (fracción de grupos donde gana el primero, con empates a la mitad);</p></li>
+<li><p>diferencia relativa respecto al segundo modelo del par.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="s1">'por_grupo'</span><span class="p">]</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">dif</span> <span class="o">=</span> <span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">nz</span> <span class="o">=</span> <span class="n">dif</span><span class="p">[</span><span class="n">dif</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">];</span> <span class="n">rk</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">rankdata</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">nz</span><span class="p">))</span>
+    <span class="n">wp</span><span class="p">,</span> <span class="n">wm</span> <span class="o">=</span> <span class="n">rk</span><span class="p">[</span><span class="n">nz</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">rk</span><span class="p">[</span><span class="n">nz</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'par'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="si">}</span><span class="s1"> − </span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'dif. media'</span><span class="p">:</span> <span class="n">dif</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                  <span class="s1">'dif. relativa (%)'</span><span class="p">:</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">dif</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">/</span> <span class="n">g</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                  <span class="s1">'Shapiro–Wilk p'</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">dif</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span> <span class="s1">'t pareado p'</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">a</span><span class="p">],</span> <span class="n">g</span><span class="p">[</span><span class="n">b</span><span class="p">])</span><span class="o">.</span><span class="n">pvalue</span><span class="p">,</span>
+                  <span class="s1">'d de Cohen pareada'</span><span class="p">:</span> <span class="n">dif</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">/</span> <span class="n">dif</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="s1">'r biserial'</span><span class="p">:</span> <span class="p">(</span><span class="n">wp</span> <span class="o">-</span> <span class="n">wm</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">wp</span> <span class="o">+</span> <span class="n">wm</span><span class="p">),</span>
+                  <span class="s1">'P(superioridad)'</span><span class="p">:</span> <span class="p">((</span><span class="n">dif</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">dif</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">dif</span><span class="p">)})</span>
+<span class="n">efectos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">efectos</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>par</th>
+      <th>dif. media</th>
+      <th>dif. relativa (%)</th>
+      <th>Shapiro–Wilk p</th>
+      <th>t pareado p</th>
+      <th>d de Cohen pareada</th>
+      <th>r biserial</th>
+      <th>P(superioridad)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mask R-CNN − SOLOv2</td>
+      <td>0.4567</td>
+      <td>169.6418</td>
+      <td>0.0586</td>
+      <td>0.0005</td>
+      <td>1.2412</td>
+      <td>0.9810</td>
+      <td>0.9286</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mask R-CNN − YOLOv8-seg</td>
+      <td>-0.0086</td>
+      <td>-1.1762</td>
+      <td>0.0085</td>
+      <td>0.7635</td>
+      <td>-0.0821</td>
+      <td>0.1868</td>
+      <td>0.6786</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOLOv2 − YOLOv8-seg</td>
+      <td>-0.4653</td>
+      <td>-63.3500</td>
+      <td>0.2970</td>
+      <td>0.0002</td>
+      <td>-1.3331</td>
+      <td>-0.9429</td>
+      <td>0.0714</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Figura 5.2.</strong> Gráficos Q–Q de las diferencias por grupo de cada par.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="mi">2</span><span class="p">)):</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-</span> <span class="n">g</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">dist</span><span class="o">=</span><span class="s1">'norm'</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="si">}</span><span class="s1"> − </span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">get_lines</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">markersize</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'#3b6ea8'</span><span class="p">);</span> <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">get_lines</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">'#c44e2b'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'cuantiles teóricos'</span><span class="p">);</span> <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'diferencias ordenadas'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4dd72592f4decd5b2c6925b49df58b213e6b7058592998dbab62ffe3e29ce62c.png" src="../_images/4dd72592f4decd5b2c6925b49df58b213e6b7058592998dbab62ffe3e29ce62c.png" />
+</div>
+</div>
+<p><strong>Descomposición de la varianza.</strong> Hay dos niveles:</p>
+<ul class="simple">
+<li><p><strong>Entre las 15 corridas:</strong> qué parte de la varianza del F1 por imagen en prueba se debe al modelo y qué parte a la semilla.</p></li>
+<li><p><strong>En la tabla de 14 grupos × 3 modelos:</strong> qué parte se debe al grupo (la escena), qué parte al modelo y qué parte a la interacción con el residuo.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gm</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">F1_img</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">ss_tot</span> <span class="o">=</span> <span class="p">((</span><span class="n">runs</span><span class="o">.</span><span class="n">F1_img</span> <span class="o">-</span> <span class="n">gm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ss_mod</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'modelo'</span><span class="p">)</span><span class="o">.</span><span class="n">F1_img</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">gm</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Corridas: modelo </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ss_mod</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ss_tot</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> %, semilla </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ss_mod</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ss_tot</span><span class="p">)</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> % de la suma de cuadrados'</span><span class="p">)</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">();</span> <span class="n">m0</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mean</span><span class="p">();</span> <span class="n">n_g</span><span class="p">,</span> <span class="n">k_m</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">ss_t</span> <span class="o">=</span> <span class="p">((</span><span class="n">G</span> <span class="o">-</span> <span class="n">m0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">ss_g</span> <span class="o">=</span> <span class="n">k_m</span> <span class="o">*</span> <span class="p">((</span><span class="n">G</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">m0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">();</span> <span class="n">ss_m</span> <span class="o">=</span> <span class="n">n_g</span> <span class="o">*</span> <span class="p">((</span><span class="n">G</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">m0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Grupos x modelos: grupo </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ss_g</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ss_t</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> %, modelo </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ss_m</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ss_t</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> %, '</span>
+      <span class="sa">f</span><span class="s1">'interacción y residuo </span><span class="si">{</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">ss_t</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ss_g</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ss_m</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">ss_t</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1"> %'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Corridas: modelo 87.2 %, semilla 12.8 % de la suma de cuadrados
+Grupos x modelos: grupo 36.0 %, modelo 40.3 %, interacción y residuo 23.6 %
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Lectura de los supuestos y efectos.</strong></p>
+<ul class="simple">
+<li><p><strong>Mask R-CNN − YOLOv8-seg.</strong> Shapiro–Wilk rechaza la normalidad (p = 0.009). En el Q–Q hay dos grupos donde YOLOv8-seg gana por mucho (diferencias de −0.21 y −0.26) y que se salen de la recta. Eso justifica usar Wilcoxon como prueba principal en vez de t pareado; el t pareado da la misma conclusión (p = 0.76).</p></li>
+<li><p><strong>Efecto pequeño y de signo ambiguo.</strong> La d pareada es −0.08 (casi nula), pero el r biserial es +0.19 y la probabilidad de superioridad 0.68. Mask R-CNN gana en más grupos, pero por poco, mientras que YOLOv8-seg gana por más en los grupos donde gana. Las dos lecturas apuntan a lo mismo: ninguno domina.</p></li>
+<li><p><strong>Los contrastes con SOLOv2</strong> tienen efectos grandes en cualquier escala: |d| ≥ 1.2, |r| ≥ 0.94, probabilidad de superioridad de 0.93 y 0.07. En diferencia relativa, SOLOv2 queda un 63 % por debajo de YOLOv8-seg en F1 por grupo.</p></li>
+<li><p><strong>Varianza entre corridas.</strong> El modelo explica la mayor parte (≈ 87 %); la semilla aporta poco.</p></li>
+<li><p><strong>Varianza por grupo.</strong> El grupo pesa casi tanto como el modelo (36 % frente a 40 %): la escena cambia el resultado tanto como cambiar de arquitectura. Es otra razón para usar el grupo como unidad de inferencia y para ampliar la prueba con más escenas en el E2.</p></li>
+</ul>
+<p>No se afirma equivalencia entre Mask R-CNN y YOLOv8-seg. Para hacerlo haría falta un TOST con margen δ, y con un MDE de 0.10 no tendría potencia.</p>
+<p><strong>Lectura.</strong></p>
+<ul class="simple">
+<li><p><strong>SOLOv2 queda por debajo de los otros dos</strong> con una diferencia grande (≈0.46 en F1 por grupo), muy por encima de δ = 0.20 y significativa tras Holm. Pierde en 13 de los 14 grupos frente a cada uno de los otros modelos. La tabla 5.2 muestra de dónde viene: su precisión es similar a la de los otros (0.59 frente a 0.60–0.63), pero su recall es la mitad (0.31 frente a 0.58–0.63). Deja de detectar la mitad de los tornillos. Una explicación plausible, no verificada con un experimento, es su forma de asignar objetos: SOLOv2 decide la presencia de una instancia en una cuadrícula de 40 × 40 celdas, que a 1280 px son celdas de unos 32 px, mientras que el tornillo mediano mide 12 px.</p></li>
+<li><p><strong>Mask R-CNN y YOLOv8-seg no se distinguen con estos datos.</strong> La diferencia por grupo es de −0.009 (IC95 [−0.066, 0.039]; p de Holm = 0.55). La diferencia observada (0.009) es menor que δ = 0.20. El IC95 [−0.066, 0.039] también queda dentro de ese margen; no se realizó una prueba TOST para afirmar equivalencia formal.</p></li>
+<li><p><strong>La media por imagen y la media por grupo cuentan historias distintas.</strong> Por imagen, YOLOv8-seg supera a Mask R-CNN (0.52 frente a 0.45), pero buena parte de esa ventaja viene del grupo 9, que tiene 28 de las 108 imágenes de prueba: allí Mask R-CNN casi no acierta (F1 0.02) y YOLOv8-seg llega a 0.22. Al usar el grupo como unidad, ese grupo pesa lo mismo que los demás y la ventaja desaparece. Por eso la conclusión se apoya en el análisis por grupo.</p></li>
+<li><p><strong>El reparto entre máquinas no cambia el patrón.</strong> Las semillas de la RTX 3050 (45 y 46) quedan en el mismo rango que las de la RTX 3060 en F1 por imagen: Mask R-CNN 0.450 y 0.461 frente a 0.418–0.458; YOLOv8-seg 0.568 y 0.504 frente a 0.429–0.584; SOLOv2 0.305 y 0.287 frente a 0.256–0.326. Lo que cambia es el tiempo de cómputo.</p></li>
+</ul>
+</section>
+</section>
+<section id="baseline-y-margen-de-mejora">
+<h2>5.4 Baseline y margen de mejora<a class="headerlink" href="#baseline-y-margen-de-mejora" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>Baseline de referencia.</strong> Por imagen, el mejor modelo base es <strong>YOLOv8-seg</strong>: F1 de instancia de 0.521 ± 0.061, IC95 [0.445, 0.597] con t de Student sobre 5 semillas. Por grupo no se distingue de Mask R-CNN (0.735 frente a 0.726). El baseline que hereda el E2 es, por lo tanto, el nivel de los dos mejores modelos base:</p>
+<ul class="simple">
+<li><p><strong>F1 por imagen ≈ 0.52</strong> (YOLOv8-seg);</p></li>
+<li><p><strong>F1 por grupo ≈ 0.73</strong>.</p></li>
+</ul>
+<p>Se toma YOLOv8-seg como modelo de referencia porque tiene el mejor F1 por imagen y la menor complejidad: 3.3 M parámetros frente a 44 M de Mask R-CNN, y el menor tiempo por corrida.</p>
+</li>
+<li><p><strong>Umbral de mejora para un modelo avanzado.</strong> La mejora debe ser de al menos δ = 0.20 puntos de F1. Con el baseline por imagen de 0.521, esto corresponde a un F1 de al menos 0.721. El MDE actual por grupos es ≈ 0.10; en el E2 debe recalcularse con sus comparaciones y grupos.</p></li>
+<li><p><strong>Cota de referencia.</strong> El acuerdo entre las dos versiones de la anotación del dataset (máscaras PNG frente a polígonos COCO) da un F1 de instancia de 0.9995 a IoU 0.5 (<code class="docutils literal notranslate"><span class="pre">techo_anotacion</span></code> en la declaración a priori). Con esto, el ruido de etiqueta no limita la métrica primaria, y el margen disponible sobre el baseline es amplio: ≈ 0.48 en F1 por imagen.</p></li>
+<li><p><strong>Complejidad frente a desempeño.</strong> Mayor complejidad no da mejor resultado. El modelo más pequeño (YOLOv8-seg, 3.3 M) iguala o supera al de dos etapas (Mask R-CNN, 44 M) y supera con amplitud a SOLOv2 (46 M). Lo que pesa es si la arquitectura resuelve objetos de unos 11 px, no el tamaño del modelo.</p></li>
+</ul>
+</section>
+<section id="limitaciones">
+<h2>5.5 Limitaciones<a class="headerlink" href="#limitaciones" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Pocos grupos en prueba.</strong> Hay 14, y 8 de ellos tienen una o dos imágenes (7 con una sola). Eso limita la potencia: con Wilcoxon exacto y 14 pares, el p más pequeño posible es del orden de 10⁻⁴, pero detectar diferencias moderadas exige que un modelo gane en casi todos los grupos.</p></li>
+<li><p><strong>Marcos distintos.</strong> SOLOv2 corre en MMDetection, con torch 2.1.2, porque mmcv 2.1 solo tiene versiones precompiladas para Windows con torch 2.1. Mask R-CNN y YOLOv8-seg usan torch 2.11. La evaluación es idéntica para los tres (el mismo código de métricas sobre las predicciones exportadas en formato COCO), pero las rutinas de entrenamiento no son idénticas.</p></li>
+<li><p><strong>Aumento de datos distinto.</strong> Cada modelo conserva el aumento de datos de su receta, y YOLOv8-seg entrena con aumentos más fuertes que los otros dos. Parte de su ventaja por imagen puede venir de ahí.</p></li>
+<li><p><strong>Presupuesto fijo de épocas.</strong> 12/40/12 épocas por limitaciones de tiempo y GPU (6 GB). Un modelo que converja más lento queda en desventaja.</p></li>
+<li><p><strong>No determinismo de GPU.</strong> Con la misma semilla, cuDNN no garantiza resultados idénticos. La variación entre semillas incluye ese ruido.</p></li>
+<li><p><strong>Piloto a posteriori.</strong> El dimensionamiento de la sección 4.5 se hizo con las corridas definitivas, no antes, y no hubo prerregistro fechado previo a la ejecución. El margen práctico δ = 0.20 se seleccionó tras las corridas base para evaluar modelos avanzados; no se fijó antes de comparar los tres modelos base.</p></li>
+<li><p><strong>Pruebas que comparten el conjunto de prueba.</strong> Las 5 semillas de un modelo se evalúan en las mismas 108 imágenes, así que no son observaciones independientes. Por eso la inferencia se hace sobre grupos y no sobre corridas.</p></li>
+<li><p><strong>Tiempo de inferencia no medido.</strong> Solo se registró el tiempo total por corrida (tabla 4.3), que incluye la validación de cada época.</p></li>
+<li><p><strong>Sin análisis cualitativo ni de robustez por tamaño.</strong> No se incluye la visualización de predicciones frente a la verdad ni el desempeño por tamaño de tornillo. Las predicciones están guardadas (<code class="docutils literal notranslate"><span class="pre">preds_test.json</span></code>), así que el análisis se puede hacer sin reentrenar; queda para el E2.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_modelos_base.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">4. Implementación de los modelos base</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../conclusiones.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">6. Conclusiones</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metricas">5.1 Métricas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resultados-por-modelo">5.2 Resultados por modelo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-estadistica">5.3 Comparación estadística</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supuestos-tamano-de-efecto-y-diferencia-relativa">Supuestos, tamaño de efecto y diferencia relativa</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-y-margen-de-mejora">5.4 Baseline y margen de mejora</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#limitaciones">5.5 Limitaciones</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Ivan Berrio, Jose David Castillo y Jaime Besada
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

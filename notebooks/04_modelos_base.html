@@ -1,0 +1,1195 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4. Implementación de los modelos base &#8212; WDSD: segmentación de instancias de tornillos (Entregable 1)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/04_modelos_base';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="5. Línea base estadística" href="05_linea_base_estadistica.html" />
+    <link rel="prev" title="3. Revisión de literatura" href="03_revision_literatura.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">WDSD: segmentación de instancias de tornillos (Entregable 1)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Segmentación de instancias de tornillos en WDSD
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Datos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../eda.html">Análisis exploratorio</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_eda_wdsd.html">EDA 1 · Imágenes y particiones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_eda_instancias.html">EDA 2 · Tornillos y máscaras</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_revision_literatura.html">3. Revisión de literatura</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Modelos base</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resultados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_linea_base_estadistica.html">5. Línea base estadística</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conclusiones.html">6. Conclusiones</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Anexos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../reproducibilidad.html">Reproducibilidad</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/04_modelos_base.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>4. Implementación de los modelos base</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-experimental">4.1 Protocolo experimental</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-hiperparametros">Selección de hiperparámetros</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#corridas">4.2 Corridas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#costo-computacional">4.3 Costo computacional</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-de-entrenamiento-y-validacion">4.4 Curvas de entrenamiento y validación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estudio-piloto-y-dimensionamiento-a-posteriori">4.5 Estudio piloto y dimensionamiento (a posteriori)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="implementacion-de-los-modelos-base">
+<h1>4. Implementación de los modelos base<a class="headerlink" href="#implementacion-de-los-modelos-base" title="Link to this heading">#</a></h1>
+<p>En esta sección del trabajo se describe cómo fue el proceso de entrenamiento de las redes Mask R-CNN, YOLOv8-seg y SOLOv2: el protocolo común, la selección de hiperparámetros, las 15 corridas, su costo computacional, las curvas de entrenamiento y el estudio piloto.</p>
+<p>En la celda siguiente se cargan las rutas y funciones del proyecto. No se entrena nada: las tablas y figuras se obtienen de los resultados guardados de las 15 corridas.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ROOT</span><span class="p">))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">estadistica_instancias</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">EI</span>
+
+<span class="n">LIT</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'literatura'</span> <span class="o">/</span> <span class="s1">'instancias'</span>
+<span class="n">CORR</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'results'</span> <span class="o">/</span> <span class="s1">'instancias'</span> <span class="o">/</span> <span class="s1">'corridas'</span>
+<span class="n">MODELOS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'maskrcnn'</span><span class="p">:</span> <span class="s1">'Mask R-CNN'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">:</span> <span class="s1">'YOLOv8-seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">:</span> <span class="s1">'SOLOv2'</span><span class="p">}</span>
+<span class="n">orden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'maskrcnn'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_colwidth'</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Corridas encontradas:'</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*_s*'</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'metricas.json'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Corridas encontradas: ['maskrcnn_s42', 'maskrcnn_s43', 'maskrcnn_s44', 'maskrcnn_s45', 'maskrcnn_s46', 'solov2_s42', 'solov2_s43', 'solov2_s44', 'solov2_s45', 'solov2_s46', 'yolov8seg_s42', 'yolov8seg_s43', 'yolov8seg_s44', 'yolov8seg_s45', 'yolov8seg_s46']
+</pre></div>
+</div>
+</div>
+</div>
+<section id="protocolo-experimental">
+<h2>4.1 Protocolo experimental<a class="headerlink" href="#protocolo-experimental" title="Link to this heading">#</a></h2>
+<p>Se entrenaron los tres modelos base (Mask R-CNN, YOLOv8-seg y SOLOv2) con cinco semillas cada uno (42 a 46): 15 corridas en total. Todas las corridas comparten el mismo protocolo:</p>
+<ul class="simple">
+<li><p><strong>Partición.</strong> La partición agrupada congelada del EDA (<code class="docutils literal notranslate"><span class="pre">results/eda/particion.csv</span></code>): 744 imágenes de entrenamiento, 93 de validación y 108 de prueba. En prueba hay 14 grupos (sesiones o escenas de captura). Ninguna sesión aparece en más de un conjunto.</p></li>
+<li><p><strong>Entrada.</strong> Imagen completa de 1280×720, sin reescalar ni recortar, porque el diámetro mediano de un tornillo es de 10.6 px (sección 2.5). Mask R-CNN y SOLOv2 usan solo volteo horizontal. YOLOv8-seg usa los aumentos por defecto de ultralytics: mosaico (apagado en las últimas 10 épocas), variación de color HSV, traslación de ±10 %, escala de ±50 % y volteo horizontal.</p></li>
+<li><p><strong>Inicialización.</strong> Pesos preentrenados en COCO para los tres modelos.</p></li>
+<li><p><strong>Selección del modelo.</strong> Se guarda la mejor época según el conjunto de validación: AP de máscara en Mask R-CNN y SOLOv2, y el <em>fitness</em> de ultralytics en YOLOv8-seg. El conjunto de prueba se evalúa una sola vez por corrida.</p></li>
+<li><p><strong>Confianza mínima para aceptar una detección.</strong> Para calcular F1 y PQ, se descartan las predicciones cuyo puntaje de confianza queda por debajo de este corte. El corte se elige en validación para maximizar el F1 medio por imagen y se mantiene fijo en prueba. AP se calcula con todos los puntajes, sin fijar un corte.</p></li>
+</ul>
+<p>Tabla 4.1. Configuración por modelo.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Tipo</p></th>
+<th class="head"><p>Parámetros</p></th>
+<th class="head"><p>Épocas</p></th>
+<th class="head"><p>Lote</p></th>
+<th class="head"><p>Optimizador</p></th>
+<th class="head"><p>Marco</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN (ResNet-50-FPN)</p></td>
+<td><p>Dos etapas, con cajas</p></td>
+<td><p>43 922 395</p></td>
+<td><p>12</p></td>
+<td><p>2</p></td>
+<td><p>SGD, momento 0.9, calentamiento + coseno, lr 0.0025 × lote</p></td>
+<td><p>torchvision 0.26</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8n-seg</p></td>
+<td><p>Una etapa, con cajas</p></td>
+<td><p>3 263 811</p></td>
+<td><p>40</p></td>
+<td><p>4</p></td>
+<td><p>Valores por defecto de ultralytics</p></td>
+<td><p>ultralytics 8.4.207</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2 (ResNet-50-FPN)</p></td>
+<td><p>Una etapa, sin cajas</p></td>
+<td><p>46 228 801</p></td>
+<td><p>12</p></td>
+<td><p>2</p></td>
+<td><p>SGD, lr 0.01 × lote/16 (receta oficial <code class="docutils literal notranslate"><span class="pre">solov2_r50_fpn_1x_coco</span></code>)</p></td>
+<td><p>MMDetection 3.3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Mask R-CNN usa anclas de 8 a 128 px en lugar de las de 32 a 512 px que trae torchvision por defecto, porque el 98,8 % de los tornillos son <em>small</em> según COCO (menos de 32×32 px) (sección 2.5).</p>
+<p><strong>Hardware y reparto.</strong> Las corridas se repartieron entre dos máquinas por semilla, no por modelo:</p>
+<ul class="simple">
+<li><p>semillas 42, 43 y 44 en una RTX 3060 Laptop de 6 GB;</p></li>
+<li><p>semillas 45 y 46 en una RTX 3050 Laptop de 6 GB.</p></li>
+</ul>
+<p>Las dos usaron la misma configuración y las mismas versiones de los paquetes (<code class="docutils literal notranslate"><span class="pre">requirements_wdsd_dl_congelado.txt</span></code>). Así, cualquier efecto de la máquina cae por igual sobre los tres modelos.</p>
+<section id="seleccion-de-hiperparametros">
+<h3>Selección de hiperparámetros<a class="headerlink" href="#seleccion-de-hiperparametros" title="Link to this heading">#</a></h3>
+<p>Los hiperparámetros se fijaron con tres criterios: partir de la receta oficial de cada implementación, que ya está validada en COCO; adaptarla a lo que mostró el EDA sobre el tamaño de los tornillos; y ajustarla a la memoria de una GPU de 6 GB. Las elecciones que dependen de los datos de WDSD, es decir, la época que se conserva y la confianza mínima de las detecciones, se toman con el conjunto de validación. El conjunto de prueba no interviene en ninguna elección.</p>
+<p><strong>Tabla 4.1b.</strong> Hiperparámetros y su justificación.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Hiperparámetro</p></th>
+<th class="head"><p>Valor</p></th>
+<th class="head"><p>Justificación</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Resolución de entrada</p></td>
+<td><p>1280×720, sin reescalar ni recortar, en los tres modelos (<code class="docutils literal notranslate"><span class="pre">imgsz</span></code> = 1280 en YOLOv8-seg; <code class="docutils literal notranslate"><span class="pre">min_size</span></code> = 720 y <code class="docutils literal notranslate"><span class="pre">max_size</span></code> = 1280 en Mask R-CNN)</p></td>
+<td><p>El diámetro mediano de un tornillo es de 10,6 px. Reducir la imagen a la mitad lo dejaría en unos 6 px, demasiado poco para delimitar su máscara (sección 2.9 del EDA).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Anclas de Mask R-CNN</p></td>
+<td><p>8, 16, 32, 64 y 128 px, con proporciones 0,5, 1 y 2</p></td>
+<td><p>Las anclas por defecto de torchvision van de 32 a 512 px y están pensadas para objetos medianos y grandes. El 98,8 % de los tornillos es <em>small</em> según COCO (menos de 32×32 px).</p></td>
+</tr>
+<tr class="row-even"><td><p>Pesos iniciales</p></td>
+<td><p>Preentrenados en COCO</p></td>
+<td><p>Con 744 imágenes de entrenamiento, partir de características ya aprendidas acelera la convergencia y reduce el sobreajuste.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tamaño de lote</p></td>
+<td><p>2 en Mask R-CNN y SOLOv2; 4 en YOLOv8n-seg</p></td>
+<td><p>Cabe a resolución completa en las dos GPU de 6 GB, con un pico medido de unos 2,7 GB (tabla 4.3). YOLOv8n-seg es mucho más liviano y admite un lote mayor.</p></td>
+</tr>
+<tr class="row-even"><td><p>Tasa de aprendizaje</p></td>
+<td><p>Mask R-CNN: 0,0025 × lote = 0,005. SOLOv2: 0,01 × lote / 16 = 0,00125. YOLOv8-seg: la de ultralytics</p></td>
+<td><p>Se parte de la tasa de la receta oficial y se escala en proporción al tamaño del lote (regla de escalado lineal), para que cada paso tenga un tamaño comparable al de la receta original.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Optimizador y calendario</p></td>
+<td><p>SGD con momento 0,9, decaimiento de pesos 10⁻⁴, calentamiento lineal y decaimiento coseno en Mask R-CNN y SOLOv2; optimizador automático de ultralytics en YOLOv8-seg</p></td>
+<td><p>Es la configuración con la que se publicaron estos modelos. El calentamiento evita pasos grandes al inicio, cuando la cabeza nueva de una sola clase todavía es aleatoria, y el coseno reduce la tasa de forma suave hasta el final.</p></td>
+</tr>
+<tr class="row-even"><td><p>Número de épocas</p></td>
+<td><p>12 en Mask R-CNN y SOLOv2; 40 en YOLOv8-seg</p></td>
+<td><p>12 épocas es el calendario estándar «1x» de estos detectores. Un piloto de tiempos, con una época de cada modelo, midió cuántas épocas cabían en el tiempo de cómputo disponible; YOLOv8n-seg es más rápido por época y admite más.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Época que se conserva</p></td>
+<td><p>La de mejor AP de máscara en validación (<em>fitness</em> de ultralytics en YOLOv8-seg)</p></td>
+<td><p>Evita quedarse con una época sobreajustada. La figura 4.1 muestra que Mask R-CNN alcanza su máximo en las épocas 8 y 9.</p></td>
+</tr>
+<tr class="row-even"><td><p>Confianza mínima de una detección</p></td>
+<td><p>La que maximiza el F1 medio por imagen en validación (columna «umbral (val)» de la tabla 4.2)</p></td>
+<td><p>F1 y PQ dependen de qué detecciones se aceptan. Elegir el corte en validación y fijarlo en prueba evita ajustarlo con los datos de evaluación.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Aumento de datos</p></td>
+<td><p>Volteo horizontal en Mask R-CNN y SOLOv2; mosaico, HSV, traslación, escala y volteo en YOLOv8-seg</p></td>
+<td><p>Los tornillos no tienen una orientación preferente, así que el volteo no altera su apariencia. En YOLOv8-seg se conservan los aumentos con los que ultralytics entrena sus modelos.</p></td>
+</tr>
+<tr class="row-even"><td><p>Semillas</p></td>
+<td><p>42, 43, 44, 45 y 46</p></td>
+<td><p>Cinco repeticiones de cada configuración miden cuánto cambia el resultado por la inicialización y el orden de los datos (sección 4.5).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Con estas elecciones, cada modelo trabaja a la escala de objetos de unos 10 px y dentro de los recursos disponibles, y los tres se comparan bajo el mismo protocolo de partición, selección y evaluación.</p>
+</section>
+</section>
+<section id="corridas">
+<h2>4.2 Corridas<a class="headerlink" href="#corridas" title="Link to this heading">#</a></h2>
+<p>Cada corrida deja en <code class="docutils literal notranslate"><span class="pre">results/instancias/corridas/&lt;modelo&gt;_s&lt;semilla&gt;/</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">resumen.json</span></code>: entorno, tiempo, memoria y métricas;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">metricas.json</span></code>: AP, F1 y PQ en validación y prueba, y el umbral elegido en validación;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test_por_imagen.csv</span></code>: una fila por imagen de prueba (TP, FP, FN, F1, PQ), entrada de la sección 5;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">preds_val.json</span></code> y <code class="docutils literal notranslate"><span class="pre">preds_test.json</span></code>: predicciones en formato COCO, para recalcular cualquier métrica sin reentrenar.</p></li>
+</ul>
+<p><strong>Tabla 4.2.</strong> Las 15 corridas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*_s*'</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="s1">'resumen.json'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">continue</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">d</span> <span class="o">/</span> <span class="s1">'resumen.json'</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'utf8'</span><span class="p">))</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">r</span><span class="p">[</span><span class="s1">'metricas'</span><span class="p">]</span>
+    <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'modelo'</span><span class="p">:</span> <span class="n">MODELOS</span><span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">'modelo'</span><span class="p">]],</span> <span class="s1">'semilla'</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'semilla'</span><span class="p">],</span> <span class="s1">'GPU'</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'entorno'</span><span class="p">][</span><span class="s1">'gpu'</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'NVIDIA GeForce '</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span>
+                  <span class="s1">'épocas'</span><span class="p">:</span> <span class="n">r</span><span class="p">[</span><span class="s1">'epocas'</span><span class="p">],</span> <span class="s1">'min'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s1">'s_total'</span><span class="p">]</span> <span class="o">/</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">'umbral (val)'</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="s1">'umbral_score'</span><span class="p">],</span>
+                  <span class="s1">'val AP'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">'val'</span><span class="p">][</span><span class="s1">'AP'</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span> <span class="s1">'test F1 img'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">'test'</span><span class="p">][</span><span class="s1">'F1_img'</span><span class="p">],</span> <span class="mi">3</span><span class="p">),</span>
+                  <span class="s1">'test AP'</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">'test'</span><span class="p">][</span><span class="s1">'AP'</span><span class="p">],</span> <span class="mi">3</span><span class="p">)})</span>
+<span class="n">corridas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">corridas</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>modelo</th>
+      <th>semilla</th>
+      <th>GPU</th>
+      <th>épocas</th>
+      <th>min</th>
+      <th>umbral (val)</th>
+      <th>val AP</th>
+      <th>test F1 img</th>
+      <th>test AP</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mask R-CNN</td>
+      <td>42</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>33.7</td>
+      <td>0.70</td>
+      <td>0.294</td>
+      <td>0.458</td>
+      <td>0.214</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Mask R-CNN</td>
+      <td>43</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>33.0</td>
+      <td>0.50</td>
+      <td>0.284</td>
+      <td>0.447</td>
+      <td>0.217</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Mask R-CNN</td>
+      <td>44</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>33.7</td>
+      <td>0.60</td>
+      <td>0.289</td>
+      <td>0.418</td>
+      <td>0.217</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Mask R-CNN</td>
+      <td>45</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>12</td>
+      <td>76.0</td>
+      <td>0.60</td>
+      <td>0.282</td>
+      <td>0.450</td>
+      <td>0.214</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Mask R-CNN</td>
+      <td>46</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>12</td>
+      <td>70.9</td>
+      <td>0.60</td>
+      <td>0.288</td>
+      <td>0.461</td>
+      <td>0.223</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>SOLOv2</td>
+      <td>42</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>32.6</td>
+      <td>0.25</td>
+      <td>0.124</td>
+      <td>0.326</td>
+      <td>0.104</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>SOLOv2</td>
+      <td>43</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>31.3</td>
+      <td>0.20</td>
+      <td>0.133</td>
+      <td>0.310</td>
+      <td>0.117</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>SOLOv2</td>
+      <td>44</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>12</td>
+      <td>31.3</td>
+      <td>0.15</td>
+      <td>0.132</td>
+      <td>0.256</td>
+      <td>0.116</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>SOLOv2</td>
+      <td>45</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>12</td>
+      <td>56.3</td>
+      <td>0.20</td>
+      <td>0.132</td>
+      <td>0.305</td>
+      <td>0.111</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>SOLOv2</td>
+      <td>46</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>12</td>
+      <td>55.5</td>
+      <td>0.20</td>
+      <td>0.131</td>
+      <td>0.287</td>
+      <td>0.116</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>YOLOv8-seg</td>
+      <td>42</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>40</td>
+      <td>20.9</td>
+      <td>0.15</td>
+      <td>0.265</td>
+      <td>0.519</td>
+      <td>0.234</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>YOLOv8-seg</td>
+      <td>43</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>40</td>
+      <td>21.0</td>
+      <td>0.20</td>
+      <td>0.271</td>
+      <td>0.584</td>
+      <td>0.233</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>YOLOv8-seg</td>
+      <td>44</td>
+      <td>RTX 3060 Laptop GPU</td>
+      <td>40</td>
+      <td>21.1</td>
+      <td>0.35</td>
+      <td>0.267</td>
+      <td>0.429</td>
+      <td>0.223</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>YOLOv8-seg</td>
+      <td>45</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>40</td>
+      <td>63.7</td>
+      <td>0.25</td>
+      <td>0.269</td>
+      <td>0.568</td>
+      <td>0.245</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>YOLOv8-seg</td>
+      <td>46</td>
+      <td>RTX 3050 6GB Laptop GPU</td>
+      <td>40</td>
+      <td>61.0</td>
+      <td>0.25</td>
+      <td>0.267</td>
+      <td>0.504</td>
+      <td>0.237</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="costo-computacional">
+<h2>4.3 Costo computacional<a class="headerlink" href="#costo-computacional" title="Link to this heading">#</a></h2>
+<p><strong>Tabla 4.3.</strong> Costo computacional por corrida (entrenamiento + evaluación).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Minutos, RTX 3060 (3 semillas)</p></th>
+<th class="head"><p>Minutos, RTX 3050 (2 semillas)</p></th>
+<th class="head"><p>Memoria GPU pico (GB)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN</p></td>
+<td><p>33.5</p></td>
+<td><p>73.5</p></td>
+<td><p>2.7</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8-seg</p></td>
+<td><p>21.0</p></td>
+<td><p>62.4</p></td>
+<td><p>2.6</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2</p></td>
+<td><p>31.7</p></td>
+<td><p>55.9</p></td>
+<td><p>~2.6*</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>* Para SOLOv2 se toma el pico del registro de MMDetection durante el entrenamiento; el contador de PyTorch del script se reinicia dentro de MMDetection y da un valor menor que no corresponde al entrenamiento.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corridas</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'modelo'</span><span class="p">,</span> <span class="s1">'GPU'</span><span class="p">])[</span><span class="s1">'min'</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>mean</th>
+      <th>count</th>
+    </tr>
+    <tr>
+      <th>modelo</th>
+      <th>GPU</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="2" valign="top">Mask R-CNN</th>
+      <th>RTX 3050 6GB Laptop GPU</th>
+      <td>73.4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>RTX 3060 Laptop GPU</th>
+      <td>33.5</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">SOLOv2</th>
+      <th>RTX 3050 6GB Laptop GPU</th>
+      <td>55.9</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>RTX 3060 Laptop GPU</th>
+      <td>31.7</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th rowspan="2" valign="top">YOLOv8-seg</th>
+      <th>RTX 3050 6GB Laptop GPU</th>
+      <td>62.4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>RTX 3060 Laptop GPU</th>
+      <td>21.0</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="curvas-de-entrenamiento-y-validacion">
+<h2>4.4 Curvas de entrenamiento y validación<a class="headerlink" href="#curvas-de-entrenamiento-y-validacion" title="Link to this heading">#</a></h2>
+<p><strong>Figura 4.1.</strong> Pérdida de entrenamiento (arriba) y AP de máscara en validación (abajo) por época, una línea por semilla. Cada marco reporta su propia pérdida total, así que las escalas no se comparan entre modelos. El AP de YOLOv8-seg es el que calcula ultralytics; el de Mask R-CNN y SOLOv2 sale de COCOeval. En las tres columnas se guarda la época con mejor AP de validación.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">curvas</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="s1">'maskrcnn'</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="s1">'historial.csv'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">epoca</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">perdida</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">epoca</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">val_AP</span>
+    <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="s1">'yolov8seg'</span><span class="p">:</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="s1">'ultra'</span> <span class="o">/</span> <span class="s1">'results.csv'</span><span class="p">);</span> <span class="n">h</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">perd</span> <span class="o">=</span> <span class="n">h</span><span class="p">[[</span><span class="s1">'train/box_loss'</span><span class="p">,</span> <span class="s1">'train/seg_loss'</span><span class="p">,</span> <span class="s1">'train/cls_loss'</span><span class="p">,</span> <span class="s1">'train/dfl_loss'</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">h</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">perd</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="s1">'metrics/mAP50-95(M)'</span><span class="p">]</span>
+    <span class="n">escal</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*/vis_data/scalars.json'</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">p</span><span class="p">:</span> <span class="n">p</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span><span class="p">)</span>
+    <span class="n">filas</span> <span class="o">=</span> <span class="p">[</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">escal</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'utf8'</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="n">tr</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filas</span> <span class="k">if</span> <span class="s1">'loss'</span> <span class="ow">in</span> <span class="n">f</span><span class="p">])</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'epoch'</span><span class="p">)</span><span class="o">.</span><span class="n">loss</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">va</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filas</span> <span class="k">if</span> <span class="s1">'coco/segm_mAP'</span> <span class="ow">in</span> <span class="n">f</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">tr</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">tr</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">va</span><span class="o">.</span><span class="n">step</span><span class="p">,</span> <span class="n">va</span><span class="p">[</span><span class="s1">'coco/segm_mAP'</span><span class="p">]</span>
+
+<span class="n">orden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'maskrcnn'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">]</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="s1">'col'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">orden</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1">_s*'</span><span class="p">)):</span>
+        <span class="n">e1</span><span class="p">,</span> <span class="n">perd</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">ap</span> <span class="o">=</span> <span class="n">curvas</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'_s'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">perd</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'s</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">e2</span><span class="p">,</span> <span class="n">ap</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">'s</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">m</span><span class="p">]);</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">'época'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">ax</span><span class="p">[:,</span> <span class="n">j</span><span class="p">]:</span>
+        <span class="n">a</span><span class="o">.</span><span class="n">spines</span><span class="p">[[</span><span class="s1">'top'</span><span class="p">,</span> <span class="s1">'right'</span><span class="p">]]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'pérdida de entrenamiento'</span><span class="p">);</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">'AP de máscara (validación)'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">'lower right'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/754526e5fb80fcdc27d4dad5aeebb875b423575c4b6fd23fb134748ffa1a6cb9.png" src="../_images/754526e5fb80fcdc27d4dad5aeebb875b423575c4b6fd23fb134748ffa1a6cb9.png" />
+</div>
+</div>
+<p><strong>Lectura (observada en la figura).</strong></p>
+<ul class="simple">
+<li><p><strong>Pérdida de entrenamiento.</strong> Baja de forma monótona en los tres modelos, y las 5 semillas siguen trayectorias casi idénticas.</p></li>
+<li><p><strong>Mask R-CNN.</strong> El AP de validación sube hasta las épocas 8 y 9 (≈ 0.29) y después se aplana o cae un poco (≈ 0.27), mientras la pérdida sigue bajando: es un sobreajuste leve al final. La selección por validación se queda con la mejor época.</p></li>
+<li><p><strong>YOLOv8-seg.</strong> El AP de validación sigue subiendo en la época 40 y oscila bastante de una época a otra. Con más épocas probablemente mejoraría, así que el presupuesto fijo lo deja en desventaja (ver limitaciones).</p></li>
+<li><p><strong>SOLOv2.</strong> Llega a ≈ 0.12 hacia la época 5 y después se queda entre 0.11 y 0.13. Más épocas no parecen capaces de cerrar la distancia con los otros dos.</p></li>
+</ul>
+<p>No hay métricas en el conjunto de entrenamiento, así que la brecha entre entrenamiento y validación se juzga por la forma de las curvas, no con un número.</p>
+</section>
+<section id="estudio-piloto-y-dimensionamiento-a-posteriori">
+<h2>4.5 Estudio piloto y dimensionamiento (a posteriori)<a class="headerlink" href="#estudio-piloto-y-dimensionamiento-a-posteriori" title="Link to this heading">#</a></h2>
+<p>El enunciado pide un estudio piloto con al menos 5 semillas por modelo sobre validación, previo a la ejecución definitiva. <strong>No se hizo antes.</strong> Por el calendario, las 5 semillas definitivas se lanzaron directamente. Se reporta aquí el mismo cálculo hecho con esas 5 semillas, sobre validación, como dimensionamiento a posteriori y como punto de partida para el número de semillas del E2. Las corridas se emparejan por semilla, como pide el enunciado.</p>
+<p><strong>Tabla 4.4.</strong> F1 de instancia por imagen en validación: media, desviación estándar y coeficiente de variación sobre las 5 semillas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+<span class="n">DELTA</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*_s*'</span><span class="p">)):</span>
+    <span class="n">mod</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">'_s'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">d</span> <span class="o">/</span> <span class="s1">'metricas.json'</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s1">'utf8'</span><span class="p">))</span>
+    <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'modelo'</span><span class="p">:</span> <span class="n">mod</span><span class="p">,</span> <span class="s1">'semilla'</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">),</span> <span class="s1">'F1_val'</span><span class="p">:</span> <span class="n">m</span><span class="p">[</span><span class="s1">'val'</span><span class="p">][</span><span class="s1">'F1_img'</span><span class="p">]})</span>
+<span class="n">val</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">'semilla'</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">'modelo'</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">'F1_val'</span><span class="p">)[</span><span class="n">orden</span><span class="p">]</span>
+<span class="n">piloto</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'mean'</span><span class="p">:</span> <span class="s1">'media'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">:</span> <span class="s1">'DE'</span><span class="p">})</span>
+<span class="n">piloto</span><span class="p">[</span><span class="s1">'CV (%)'</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">piloto</span><span class="p">[</span><span class="s1">'DE'</span><span class="p">]</span> <span class="o">/</span> <span class="n">piloto</span><span class="p">[</span><span class="s1">'media'</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">piloto</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">MODELOS</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>media</th>
+      <th>DE</th>
+      <th>CV (%)</th>
+    </tr>
+    <tr>
+      <th>modelo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mask R-CNN</th>
+      <td>0.6584</td>
+      <td>0.0224</td>
+      <td>3.3993</td>
+    </tr>
+    <tr>
+      <th>YOLOv8-seg</th>
+      <td>0.6842</td>
+      <td>0.0356</td>
+      <td>5.1956</td>
+    </tr>
+    <tr>
+      <th>SOLOv2</th>
+      <td>0.4019</td>
+      <td>0.0106</td>
+      <td>2.6463</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><strong>Tabla 4.5.</strong> Dimensionamiento por par: <span class="math notranslate nohighlight">\(\hat\sigma_d\)</span> es la desviación estándar de las diferencias pareadas por semilla; <span class="math notranslate nohighlight">\(R \approx (z_{0.975} + z_{0.80})^2\, \hat\sigma_d^2 / \delta^2\)</span> es el número de corridas necesario para detectar δ = 0.20 con potencia 0.80 y α = 0.05; el MDE es la menor diferencia detectable con las 5 corridas hechas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.975</span><span class="p">)</span> <span class="o">+</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">0.80</span><span class="p">)</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">orden</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="n">dif</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="n">a</span><span class="p">]</span> <span class="o">-</span> <span class="n">val</span><span class="p">[</span><span class="n">b</span><span class="p">];</span> <span class="n">sd</span> <span class="o">=</span> <span class="n">dif</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s1">'par'</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="si">}</span><span class="s1"> − </span><span class="si">{</span><span class="n">MODELOS</span><span class="p">[</span><span class="n">b</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'dif. media (val)'</span><span class="p">:</span> <span class="n">dif</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="s1">'σd'</span><span class="p">:</span> <span class="n">sd</span><span class="p">,</span>
+                  <span class="s1">'δ/σd'</span><span class="p">:</span> <span class="n">DELTA</span> <span class="o">/</span> <span class="n">sd</span><span class="p">,</span> <span class="s1">'R necesarias'</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">z</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sd</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="n">DELTA</span><span class="o">**</span><span class="mi">2</span><span class="p">)),</span>
+                  <span class="s1">'MDE con 5 corridas'</span><span class="p">:</span> <span class="n">z</span> <span class="o">*</span> <span class="n">sd</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dif</span><span class="p">)),</span> <span class="s1">'Shapiro–Wilk p'</span><span class="p">:</span> <span class="n">stats</span><span class="o">.</span><span class="n">shapiro</span><span class="p">(</span><span class="n">dif</span><span class="p">)</span><span class="o">.</span><span class="n">pvalue</span><span class="p">})</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table><thead><tr><th>par</th><th>dif. media (val)</th><th>σd</th><th>δ/σd</th><th>R necesarias</th><th>MDE con 5 corridas</th><th>Shapiro–Wilk p</th></tr></thead><tbody><tr><td>Mask R-CNN − YOLOv8-seg</td><td>-0.0259</td><td>0.0260</td><td>7.6796</td><td>1</td><td>0.0326</td><td>0.4090</td></tr><tr><td>Mask R-CNN − SOLOv2</td><td>0.2564</td><td>0.0181</td><td>11.0596</td><td>1</td><td>0.0227</td><td>0.3702</td></tr><tr><td>YOLOv8-seg − SOLOv2</td><td>0.2823</td><td>0.0282</td><td>7.0999</td><td>1</td><td>0.0353</td><td>0.1479</td></tr></tbody></table></div></div>
+</div>
+<p><strong>Lectura del piloto.</strong></p>
+<ul class="simple">
+<li><p>La variabilidad entre semillas es baja (CV de 2,6 % a 5,2 %). Con δ = 0,20, la aproximación normal de la tabla 4.5 da menos de una corrida para cada par; al redondear hacia arriba resulta R = 1. Este cálculo no reemplaza las cinco semillas usadas para estimar la variabilidad.</p></li>
+<li><p>El MDE entre semillas queda entre 0,023 y 0,035, menor que δ.</p></li>
+<li><p>Shapiro–Wilk no rechaza la normalidad de las diferencias (p ≥ 0,15), aunque con cinco valores tiene poca potencia.</p></li>
+</ul>
+<p><strong>La unidad de inferencia son los grupos de prueba.</strong> Con 14 grupos, el MDE de Mask R-CNN frente a YOLOv8-seg es ≈ 0,10, menor que δ = 0,20. Aumentar el número de escenas en el E2 permitirá generalizar a más situaciones y compensar la corrección por comparaciones múltiples.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_revision_literatura.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">3. Revisión de literatura</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_linea_base_estadistica.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">5. Línea base estadística</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-experimental">4.1 Protocolo experimental</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-hiperparametros">Selección de hiperparámetros</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#corridas">4.2 Corridas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#costo-computacional">4.3 Costo computacional</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#curvas-de-entrenamiento-y-validacion">4.4 Curvas de entrenamiento y validación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estudio-piloto-y-dimensionamiento-a-posteriori">4.5 Estudio piloto y dimensionamiento (a posteriori)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Ivan Berrio, Jose David Castillo y Jaime Besada
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

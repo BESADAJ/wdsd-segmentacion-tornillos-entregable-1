@@ -1,0 +1,1250 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Revisión de literatura &#8212; WDSD: segmentación de instancias de tornillos (Entregable 1)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/03_revision_literatura';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" />
+    <link rel="next" title="4. Implementación de los modelos base" href="04_modelos_base.html" />
+    <link rel="prev" title="EDA 2 · Tornillos y máscaras" href="02_eda_instancias.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">WDSD: segmentación de instancias de tornillos (Entregable 1)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    Segmentación de instancias de tornillos en WDSD
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Datos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../eda.html">Análisis exploratorio</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="01_eda_wdsd.html">EDA 1 · Imágenes y particiones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_eda_instancias.html">EDA 2 · Tornillos y máscaras</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. Revisión de literatura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_modelos_base.html">4. Modelos base</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resultados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_linea_base_estadistica.html">5. Línea base estadística</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../conclusiones.html">6. Conclusiones</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Anexos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../reproducibilidad.html">Reproducibilidad</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/03_revision_literatura.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3. Revisión de literatura</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-busqueda-prisma-2020">3.1 Protocolo de búsqueda (PRISMA 2020)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-los-modelos-base-y-tabla-de-sintesis">3.2 Selección de los modelos base y tabla de síntesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-base">3.3 Modelos base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mask-r-cnn-dos-etapas-con-cajas">Mask R-CNN: dos etapas, con cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yolov8-seg-una-etapa-con-cajas-y-prototipos">YOLOv8-seg: una etapa, con cajas y prototipos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solov2-una-etapa-sin-cajas">SOLOv2: una etapa, sin cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametros-y-costo">Parámetros y costo</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-critica-y-vacio">3.4 Comparación crítica y vacío</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-critica-detallada">3.5 Lectura crítica detallada</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cuantos-estudios-usan-cada-modelo-como-comparacion">Cuántos estudios usan cada modelo como comparación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-terna-cubre-tres-familias-distintas">La terna cubre tres familias distintas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ningun-orden-es-estable-entre-los-modelos">Ningún orden es estable entre los modelos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-metodologica">Calidad metodológica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antecedentes-sobre-wdsd">Antecedentes sobre WDSD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vacio">Vacío</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="revision-de-literatura">
+<h1>3. Revisión de literatura<a class="headerlink" href="#revision-de-literatura" title="Link to this heading">#</a></h1>
+<p>Para este capítulo se realizó una búsqueda sistemática de estudios previos con el fin de elegir los modelos base. A partir de ella se explica por qué se escogieron las redes Mask R-CNN, YOLOv8-seg y SOLOv2, cómo funciona cada una y qué muestra la lectura crítica de los trabajos anteriores.</p>
+<p>En la celda siguiente se cargan las rutas y funciones del proyecto. No se entrena nada: las tablas y figuras se obtienen de los resultados guardados de las 15 corridas.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="n">ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">ROOT</span><span class="p">))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Markdown</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">estadistica_instancias</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">EI</span>
+
+<span class="n">LIT</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'literatura'</span> <span class="o">/</span> <span class="s1">'instancias'</span>
+<span class="n">CORR</span> <span class="o">=</span> <span class="n">ROOT</span> <span class="o">/</span> <span class="s1">'results'</span> <span class="o">/</span> <span class="s1">'instancias'</span> <span class="o">/</span> <span class="s1">'corridas'</span>
+<span class="n">MODELOS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'maskrcnn'</span><span class="p">:</span> <span class="s1">'Mask R-CNN'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">:</span> <span class="s1">'YOLOv8-seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">:</span> <span class="s1">'SOLOv2'</span><span class="p">}</span>
+<span class="n">orden</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'maskrcnn'</span><span class="p">,</span> <span class="s1">'yolov8seg'</span><span class="p">,</span> <span class="s1">'solov2'</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_colwidth'</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Corridas encontradas:'</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">CORR</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">'*_s*'</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">/</span> <span class="s1">'metricas.json'</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Corridas encontradas: ['maskrcnn_s42', 'maskrcnn_s43', 'maskrcnn_s44', 'maskrcnn_s45', 'maskrcnn_s46', 'solov2_s42', 'solov2_s43', 'solov2_s44', 'solov2_s45', 'solov2_s46', 'yolov8seg_s42', 'yolov8seg_s43', 'yolov8seg_s44', 'yolov8seg_s45', 'yolov8seg_s46']
+</pre></div>
+</div>
+</div>
+</div>
+<section id="protocolo-de-busqueda-prisma-2020">
+<h2>3.1 Protocolo de búsqueda (PRISMA 2020)<a class="headerlink" href="#protocolo-de-busqueda-prisma-2020" title="Link to this heading">#</a></h2>
+<ul>
+<li><p><strong>Bases:</strong> Web of Science (<code class="docutils literal notranslate"><span class="pre">TS=</span></code>), Scopus (<code class="docutils literal notranslate"><span class="pre">TITLE-ABS-KEY</span></code>) e IEEE Xplore («All Metadata»).</p></li>
+<li><p><strong>Fecha:</strong> 2026-11-07. <strong>Años:</strong> 2018–2026.</p></li>
+<li><p><strong>Cadena C4 (Scopus):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">TITLE</span><span class="o">-</span><span class="n">ABS</span><span class="o">-</span><span class="n">KEY</span><span class="p">(</span><span class="s2">"instance segmentation"</span><span class="p">)</span> <span class="n">AND</span> <span class="n">TITLE</span><span class="o">-</span><span class="n">ABS</span><span class="o">-</span><span class="n">KEY</span><span class="p">(</span><span class="n">screw</span><span class="o">*</span> <span class="n">OR</span> <span class="n">bolt</span><span class="o">*</span> <span class="n">OR</span> <span class="n">fastener</span><span class="o">*</span> <span class="n">OR</span> <span class="n">disassembl</span><span class="o">*</span> <span class="n">OR</span> <span class="s2">"e-waste"</span> <span class="n">OR</span> <span class="n">weee</span> <span class="n">OR</span> <span class="n">remanufactur</span><span class="o">*</span> <span class="n">OR</span> <span class="s2">"industrial part*"</span> <span class="n">OR</span> <span class="s2">"small object*"</span><span class="p">)</span> <span class="n">AND</span> <span class="n">TITLE</span><span class="o">-</span><span class="n">ABS</span><span class="o">-</span><span class="n">KEY</span><span class="p">(</span><span class="s2">"deep learning"</span> <span class="n">OR</span> <span class="n">CNN</span> <span class="n">OR</span> <span class="s2">"neural network*"</span><span class="p">)</span> <span class="n">AND</span> <span class="n">TITLE</span><span class="o">-</span><span class="n">ABS</span><span class="o">-</span><span class="n">KEY</span><span class="p">(</span><span class="n">compar</span><span class="o">*</span> <span class="n">OR</span> <span class="n">baseline</span><span class="o">*</span><span class="p">)</span> <span class="n">AND</span> <span class="n">PUBYEAR</span> <span class="o">&gt;</span> <span class="mi">2017</span>
+</pre></div>
+</div>
+<p>En WoS se usa la misma cadena con <code class="docutils literal notranslate"><span class="pre">TS=</span></code> y <code class="docutils literal notranslate"><span class="pre">PY=(2018-2026)</span></code>.</p>
+</li>
+<li><p><strong>Inclusión:</strong></p>
+<ul class="simple">
+<li><p>segmentación de instancias con aprendizaje profundo;</p></li>
+<li><p>dominio de tornillos, sujetadores, desmontaje o remanufactura;</p></li>
+<li><p>compara al menos dos modelos de segmentación de instancias.</p></li>
+</ul>
+</li>
+<li><p><strong>Exclusión:</strong></p>
+<ul class="simple">
+<li><p>solo detección por cajas;</p></li>
+<li><p>un solo modelo, sin comparación;</p></li>
+<li><p>sin texto completo.</p></li>
+</ul>
+</li>
+<li><p><strong>Otras fuentes:</strong></p>
+<ul class="simple">
+<li><p>el artículo original del dataset (Kalitsios et al., 2022);</p></li>
+<li><p>el único trabajo posterior que usa WDSD (Chao et al., 2025).</p></li>
+</ul>
+</li>
+<li><p><strong>Proceso:</strong></p>
+<ul class="simple">
+<li><p>Duplicados por DOI o, sin DOI, por título normalizado.</p></li>
+<li><p>Primer cribado de título y resumen con un filtro de términos del dominio, registrado en el archivo de cribado del proyecto.</p></li>
+<li><p>Revisión manual de los 17 registros del dominio y lectura de texto completo por el equipo.</p></li>
+</ul>
+</li>
+</ul>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Etapa</p></th>
+<th class="head"><p>n</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Identificados (WoS 43, Scopus 62, IEEE 166)</p></td>
+<td><p>271</p></td>
+</tr>
+<tr class="row-odd"><td><p>Duplicados eliminados</p></td>
+<td><p>52</p></td>
+</tr>
+<tr class="row-even"><td><p>Cribados por título y resumen</p></td>
+<td><p>219</p></td>
+</tr>
+<tr class="row-odd"><td><p>Excluidos por no tratar el dominio</p></td>
+<td><p>202</p></td>
+</tr>
+<tr class="row-even"><td><p>Registros del dominio</p></td>
+<td><p>17</p></td>
+</tr>
+<tr class="row-odd"><td><p>Excluidos por resumen (fuera de dominio)</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>Buscados en texto completo</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p>No recuperados (sin acceso al texto completo)</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>Evaluados en texto completo</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-odd"><td><p>Excluidos por usar un solo modelo</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>Incluidos de la búsqueda</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-odd"><td><p>Incluidos de otras fuentes</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Incluidos en la síntesis</strong></p></td>
+<td><p><strong>9</strong></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Excluidos por resumen, por estar fuera de dominio: vértebras en rayos X (10.1007/s10278-026-02343-x) y huellas de edificios (10.12082/dqxxkx.2025.240628).</p>
+<p>No recuperados:</p>
+<ul class="simple">
+<li><p>Bolt Sorting (10.1109/case59546.2024.10711806);</p></li>
+<li><p>grietas en remaches de tren (10.1038/s41598-024-61396-6);</p></li>
+<li><p>componentes de vía férrea (10.13382/j.jemi.b2407985);</p></li>
+<li><p>estado de sujetadores de vía con Mask R-CNN mejorada (10.3969/j.issn.1001-4632.2022.01.06).</p></li>
+</ul>
+<p><strong>Estudios incluidos.</strong> Los identificadores I1 a I7 se usan en las tablas de este capítulo:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Id</p></th>
+<th class="head"><p>Estudio</p></th>
+<th class="head"><p>Dominio</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>I1</p></td>
+<td><p>YOLACT para tornillos</p></td>
+<td><p>Tornillos</p></td>
+</tr>
+<tr class="row-odd"><td><p>I2</p></td>
+<td><p>BlendMask para sujetadores densos</p></td>
+<td><p>Conteo de sujetadores</p></td>
+</tr>
+<tr class="row-even"><td><p>I3</p></td>
+<td><p>LPHD</p></td>
+<td><p>Tornillos hexagonales</p></td>
+</tr>
+<tr class="row-odd"><td><p>I4</p></td>
+<td><p>YOLOv8n-BAseg</p></td>
+<td><p>Segmentación ligera con YOLOv8</p></td>
+</tr>
+<tr class="row-even"><td><p>I5</p></td>
+<td><p>AF-YOLO</p></td>
+<td><p>Alambres de seguridad, objetos de menos del 1 % de la imagen</p></td>
+</tr>
+<tr class="row-odd"><td><p>I6</p></td>
+<td><p>SPGNet</p></td>
+<td><p>Piezas de vehículos fuera de uso (desmontaje)</p></td>
+</tr>
+<tr class="row-even"><td><p>I7</p></td>
+<td><p>Calzado para remanufactura</p></td>
+<td><p>Remanufactura</p></td>
+</tr>
+<tr class="row-odd"><td><p>—</p></td>
+<td><p>Kalitsios et al. (2022)</p></td>
+<td><p>Artículo original de WDSD</p></td>
+</tr>
+<tr class="row-even"><td><p>—</p></td>
+<td><p>Chao et al. (2025)</p></td>
+<td><p>Único trabajo posterior que usa WDSD</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Excluidos tras leer el texto completo</strong> por evaluar un solo modelo de instancias: YOLO26 PSPE, <em>Bolt Loosening</em> con YOLOv8, <em>Damage Detection Overhaul</em> (Mask R-CNN frente a un clasificador) y <em>EV Battery</em> (YOLOv8s-seg, que compara aumentos de datos y no modelos).</p>
+<p><strong>Figura 3.1.</strong> Diagrama PRISMA 2020 de la búsqueda.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">LIT</span> <span class="o">/</span> <span class="s1">'prisma_instancias.png'</span><span class="p">),</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="../_images/34be88ecbbdb3c36c417058a49eac71ac64fec910a672e3a13fe9653f9994a3e.png"><img alt="../_images/34be88ecbbdb3c36c417058a49eac71ac64fec910a672e3a13fe9653f9994a3e.png" src="../_images/34be88ecbbdb3c36c417058a49eac71ac64fec910a672e3a13fe9653f9994a3e.png" style="width: 700px;" />
+</a>
+</div>
+</div>
+</section>
+<section id="seleccion-de-los-modelos-base-y-tabla-de-sintesis">
+<h2>3.2 Selección de los modelos base y tabla de síntesis<a class="headerlink" href="#seleccion-de-los-modelos-base-y-tabla-de-sintesis" title="Link to this heading">#</a></h2>
+<p><strong>Criterios:</strong></p>
+<ol class="arabic simple">
+<li><p>Frecuencia como comparador en la literatura.</p></li>
+<li><p>Complejidad distinta entre sí.</p></li>
+<li><p>No redundancia: cada modelo obtiene las instancias de una forma distinta.</p></li>
+<li><p>Viables en una GPU de 6 GB.</p></li>
+</ol>
+<p><strong>Frecuencia:</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Resúmenes de la búsqueda (219)</p></th>
+<th class="head"><p>Estudios de la síntesis (9)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>YOLO (cualquier versión)</p></td>
+<td><p>64</p></td>
+<td><p>—</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mask R-CNN</p></td>
+<td><p>59</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>YOLO-seg</p></td>
+<td><p>25</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-odd"><td><p>SOLO / SOLOv2</p></td>
+<td><p>10</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-even"><td><p>YOLACT</p></td>
+<td><p>7</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Terna elegida: Mask R-CNN, YOLOv8-seg y SOLOv2.</strong> Cubre las tres familias:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Familia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN</p></td>
+<td><p>Dos etapas con cajas</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8-seg</p></td>
+<td><p>Una etapa con cajas y prototipos</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2</p></td>
+<td><p>Una etapa sin cajas</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Limitación declarada.</strong> En texto completo YOLACT supera a SOLOv2 (3 estudios contra 2), pero en los resúmenes el orden se invierte (7 contra 10). Además, YOLACT comparte con YOLOv8-seg el mecanismo de prototipos, así que sería redundante.</p>
+<p><strong>Equivalencia con la regresión logística.</strong> Las tres cabezas de máscara terminan en una sigmoide por píxel sobre características aprendidas, es decir, en una regresión logística por píxel:</p>
+<ul class="simple">
+<li><p>Mask R-CNN y YOLOv8-seg la entrenan con entropía cruzada binaria, que es la verosimilitud de la regresión logística.</p></li>
+<li><p>SOLOv2 la entrena con pérdida Dice.</p></li>
+</ul>
+<p>Con estos criterios se eligieron tres líneas base de segmentación de instancias. La guía del curso también presenta FCN, codificador–decodificador y U-Net reducida como ejemplos generales de segmentación; esas arquitecturas no forman parte de las corridas de este entregable. La terna aquí evaluada se orienta a producir una máscara independiente por tornillo y no constituye una comparación directa con aquellos ejemplos semánticos.</p>
+<p><strong>Tabla 3.4.</strong> Tabla de síntesis de los 9 estudios incluidos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tabla</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">LIT</span> <span class="o">/</span> <span class="s1">'tabla_sintesis_instancias.csv'</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">tabla</span><span class="p">[[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'referencia'</span><span class="p">,</span> <span class="s1">'problema'</span><span class="p">,</span> <span class="s1">'dataset'</span><span class="p">,</span> <span class="s1">'modelos_DL_de_referencia'</span><span class="p">,</span> <span class="s1">'metricas'</span><span class="p">,</span>
+               <span class="s1">'valores_modelos_base'</span><span class="p">,</span> <span class="s1">'particion'</span><span class="p">,</span> <span class="s1">'repeticiones'</span><span class="p">,</span> <span class="s1">'prueba_estadistica'</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>referencia</th>
+      <th>problema</th>
+      <th>dataset</th>
+      <th>modelos_DL_de_referencia</th>
+      <th>metricas</th>
+      <th>valores_modelos_base</th>
+      <th>particion</th>
+      <th>repeticiones</th>
+      <th>prueba_estadistica</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>I1</td>
+      <td>Chen W.-Y. et al. (2022). Real-Time Instance Segmentation of Metal Screw Defects Based...</td>
+      <td>Segmentación de instancias de defectos en cabezas de tornillo</td>
+      <td>Propio: 3200 imgs microscopio (2880 train / 320 val)</td>
+      <td>YOLACT vs Mask R-CNN</td>
+      <td>AP caja y máscara (IoU 0.5–0.95)</td>
+      <td>YOLACT mAP máscara 41.37, caja 40.11; Mask R-CNN solo comparado por curvas de entrenam...</td>
+      <td>Aleatoria 90/10 tras aumentar datos (posible fuga)</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>I2</td>
+      <td>Qi K. et al. (2022). Fastener counting method with an improved Blendmask. ASCC 2022.</td>
+      <td>Conteo de sujetadores por segmentación de instancias (densos/dispersos)</td>
+      <td>Propio: 413 imgs, 9589 instancias</td>
+      <td>Mask R-CNN, SOLO, BlendMask (+ propuesta)</td>
+      <td>Error de cantidad, distancia media al centro de gravedad</td>
+      <td>Denso error 0.3/0.5: Mask R-CNN 8.84/10.40 %; SOLO 2.21/7.54 %; BlendMask 1.95/5.46 %....</td>
+      <td>Fija train/val (366/47), sin test</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>I3</td>
+      <td>Ma J. et al. (2023). LPHD: Line Perspective Hexagonal Screw Detection. CCC 2023.</td>
+      <td>Contorno de tornillos hexagonales para atornillado robótico</td>
+      <td>Propio: 1115 imgs (1015 train / 100 test)</td>
+      <td>Mask R-CNN (control) vs YOLOv5 + geometría (LPHD)</td>
+      <td>IoU medio, recall, tiempo</td>
+      <td>Mask R-CNN IoU 92.9 %, recall 98 %, 0.141 s; LPHD IoU 91.4 %, recall 100 %, 0.057 s</td>
+      <td>Fija 1015/100</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>I4</td>
+      <td>Wang Y. et al. (2024). YOLOv8n-BAseg Instance Segmentation Network for Angle Tower Bol...</td>
+      <td>Segmentación de instancias de grupos de pernos y placas en torres</td>
+      <td>Propio: 1050 imgs (aumentadas desde 210 por clase)</td>
+      <td>YOLOv8n-seg, YOLOv8s-seg, Fast-SAM (+ propuesta)</td>
+      <td>mAP50, parámetros, ms/img</td>
+      <td>YOLOv8n-seg 94.9 % (3.26 M); YOLOv8s-seg 99.3 % (11.78 M); Fast-SAM sin mAP</td>
+      <td>7:1:2 tras aumentar datos (posible fuga)</td>
+      <td>1 corrida</td>
+      <td>No (dice "significantly")</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>I5</td>
+      <td>AF-YOLO (2026). A High-Precision Aircraft Safety Wire Segmentation Network for Assembl...</td>
+      <td>Segmentación de instancias de alambres/fusibles de seguridad en ensamble aeronáutico (...</td>
+      <td>Propio</td>
+      <td>Mask R-CNN, YOLACT, SOLOv2, YOLOv8-seg, BlendMask (+ propuesta)</td>
+      <td>mAP, AP50, AP75, AR</td>
+      <td>mAP: Mask R-CNN 83.2; YOLACT 84.7; SOLOv2 86.1; YOLOv8-seg 87.3; BlendMask 89.6</td>
+      <td>Aleatoria 7:2:1</td>
+      <td>1 corrida</td>
+      <td>No (dice "significantly")</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>I6</td>
+      <td>Engineering Applications of AI 133 (2024) 108318. Instance segmentation algorithm for ...</td>
+      <td>Segmentación de instancias de piezas desmontadas de vehículos fuera de uso</td>
+      <td>Propio: 385 imgs originales → 4235 aumentadas</td>
+      <td>Mask R-CNN, YOLACT, YOLOv5s-seg (+ SPGNet)</td>
+      <td>mAP@0.5 y 0.5:0.95 caja/máscara, GFLOPs, ms</td>
+      <td>mAP@0.5 máscara: Mask R-CNN 78.3; YOLACT 90.5; YOLOv5s-seg 90.1</td>
+      <td>7:3 train/val</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>I7</td>
+      <td>Footwear Damage Assessment for Remanufacturing: A Multi-View RGB Dataset and Instance ...</td>
+      <td>Segmentación de instancias de daños en calzado para remanufactura</td>
+      <td>Propio: 3858 imgs multivista</td>
+      <td>YOLOv8s-seg, YOLOv11n-seg, Roboflow 3.0, RF-DETR</td>
+      <td>mAP@50, P, R, F1</td>
+      <td>mAP@50 global: YOLOv8s-seg 0.284; YOLOv11n-seg 0.308; Roboflow3 0.345; RF-DETR 0.339</td>
+      <td>80/10/10 agrupada por zapato (sin fuga)</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>WDSD-1</td>
+      <td>Kalitsios G. et al. (2022). Vision-Enhanced System for Human-Robot Disassembly Factory...</td>
+      <td>Segmentación de instancias de tornillos en desmontaje de RAEE</td>
+      <td>WDSD (nuestro dataset)</td>
+      <td>Mask R-CNN</td>
+      <td>AP COCO</td>
+      <td>Ver tabla anterior (sintesis/tabla_sintesis.csv)</td>
+      <td>Oficial 765/90/90 (fuga por casi-duplicados)</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>WDSD-2</td>
+      <td>Chao et al. (2025). Digital Twin.</td>
+      <td>Segmentación de instancias de tornillos y agujeros</td>
+      <td>387 imgs WDSD + propias</td>
+      <td>YOLOv8-seg (variante SM-Seg)</td>
+      <td>mAP</td>
+      <td>Ver tabla anterior</td>
+      <td>Aleatoria tras aumentar datos</td>
+      <td>1 corrida</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="modelos-base">
+<h2>3.3 Modelos base<a class="headerlink" href="#modelos-base" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Artículo original</p></th>
+<th class="head"><p>DOI o referencia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN</p></td>
+<td><p>He, Gkioxari, Dollár y Girshick (2017), ICCV, pp. 2980–2988</p></td>
+<td><p>10.1109/ICCV.2017.322. Versión TPAMI 42(2):386–397, 2020: 10.1109/TPAMI.2018.2844175</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8-seg</p></td>
+<td><p>Jocher, Chaurasia y Qiu (2023), <em>Ultralytics YOLOv8</em>, versión 8.0.0, licencia AGPL-3.0</p></td>
+<td><p>No tiene artículo ni DOI; se cita como software: <a class="github reference external" href="https://github.com/ultralytics/ultralytics">ultralytics/ultralytics</a>. Mecanismo de prototipos: YOLACT, Bolya et al. (2019), ICCV, 10.1109/ICCV.2019.00925</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2</p></td>
+<td><p>Wang, Zhang, Kong, Li y Shen (2020), NeurIPS 33</p></td>
+<td><p>arXiv 2003.10152, 10.48550/arXiv.2003.10152. Las páginas del volumen no se verificaron. Base SOLO: Wang et al. (2020), ECCV, pp. 649–665, 10.1007/978-3-030-58523-5_38</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="mask-r-cnn-dos-etapas-con-cajas">
+<h3>Mask R-CNN: dos etapas, con cajas<a class="headerlink" href="#mask-r-cnn-dos-etapas-con-cajas" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Una red de propuestas (RPN) sugiere regiones sobre un pirámide de características (ResNet-50-FPN).</p></li>
+<li><p>RoIAlign recorta las características de cada región con interpolación bilineal, sin redondear coordenadas.</p></li>
+<li><p>Tres cabezas en paralelo predicen clase, caja y una máscara de <span class="math notranslate nohighlight">\(m\times m\)</span>. En torchvision, <span class="math notranslate nohighlight">\(m=28\)</span>: RoIAlign de 14×14 seguido de una convolución transpuesta ×2.</p></li>
+</ol>
+<p><strong>Pérdida por región</strong>:</p>
+<div class="math notranslate nohighlight">
+\[L = L_{cls} + L_{box} + L_{mask}, \qquad L_{mask} = -\frac{1}{m^2}\sum_{i,j}\big[y_{ij}\log\sigma(z_{ij}) + (1-y_{ij})\log(1-\sigma(z_{ij}))\big]\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L_{mask}\)</span> se calcula solo sobre el canal de la clase verdadera.</p></li>
+<li><p>torchvision suma además las dos pérdidas de la RPN (objetividad y regresión de la caja).</p></li>
+</ul>
+</section>
+<section id="yolov8-seg-una-etapa-con-cajas-y-prototipos">
+<h3>YOLOv8-seg: una etapa, con cajas y prototipos<a class="headerlink" href="#yolov8-seg-una-etapa-con-cajas-y-prototipos" title="Link to this heading">#</a></h3>
+<p>En una sola pasada, la cabeza predice para cada posición:</p>
+<ul class="simple">
+<li><p>la caja;</p></li>
+<li><p>la clase;</p></li>
+<li><p><span class="math notranslate nohighlight">\(k=32\)</span> coeficientes de máscara.</p></li>
+</ul>
+<p>En paralelo, una rama <em>Proto</em> genera 32 máscaras prototipo <span class="math notranslate nohighlight">\(P_k\)</span> a 1/4 de la resolución de entrada. Toma P3 (paso 8) y lo sobremuestrea ×2.</p>
+<p><strong>Máscara de una detección:</strong></p>
+<div class="math notranslate nohighlight">
+\[\hat m = \sigma\Big(\sum_{k=1}^{32} c_k P_k\Big)\]</div>
+<p>recortada a su caja.</p>
+<p><strong>Pérdida</strong>:</p>
+<div class="math notranslate nohighlight">
+\[L = 7.5\,L_{CIoU} + 7.5\,L_{seg} + 0.5\,L_{cls} + 1.5\,L_{DFL}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(L_{seg}\)</span> es entropía cruzada binaria por píxel, recortada a la caja y normalizada por su área.</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_{cls}\)</span> es entropía cruzada binaria.</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_{DFL}\)</span> es la <em>distribution focal loss</em> de la caja.</p></li>
+</ul>
+</section>
+<section id="solov2-una-etapa-sin-cajas">
+<h3>SOLOv2: una etapa, sin cajas<a class="headerlink" href="#solov2-una-etapa-sin-cajas" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>La imagen se divide en una rejilla de <span class="math notranslate nohighlight">\(S\times S\)</span> por nivel de la pirámide (<span class="math notranslate nohighlight">\(S\)</span> = 40, 36, 24, 16, 12).</p></li>
+<li><p>La celda que contiene el centro de un objeto es la responsable de ese objeto.</p></li>
+<li><p>La rama de categoría predice un mapa <span class="math notranslate nohighlight">\(S\times S\times C\)</span>.</p></li>
+<li><p>La rama de <em>kernel</em> predice, para cada celda, un filtro <span class="math notranslate nohighlight">\(G_{ij}\)</span>.</p></li>
+<li><p>La máscara sale de una convolución dinámica, <span class="math notranslate nohighlight">\(M_{ij} = G_{ij} * F\)</span>, donde <span class="math notranslate nohighlight">\(F\)</span> es una característica de máscara unificada a 1/4 de escala.</p></li>
+<li><p>Las máscaras duplicadas se suprimen con Matrix NMS, que decae los scores en forma matricial con <span class="math notranslate nohighlight">\(f(\mathrm{iou}) = \exp(-\mathrm{iou}^2/\sigma)\)</span>.</p></li>
+</ol>
+<p><strong>Pérdida</strong>:</p>
+<div class="math notranslate nohighlight">
+\[L = L_{cate} + \lambda L_{mask},\quad \lambda = 3,\qquad L_{mask} = \frac{1}{N_{pos}}\sum_k \mathbb{1}\{p^*_{k} &gt; 0\}\,\big(1 - D(p_k, q_k)\big),\qquad D(p,q) = \frac{2\sum p_{xy}q_{xy}}{\sum p_{xy}^2 + \sum q_{xy}^2}\]</div>
+<p><span class="math notranslate nohighlight">\(L_{cate}\)</span> es una <em>focal loss</em> con <span class="math notranslate nohighlight">\(\gamma = 2\)</span> y <span class="math notranslate nohighlight">\(\alpha = 0.25\)</span>.</p>
+</section>
+<section id="parametros-y-costo">
+<h3>Parámetros y costo<a class="headerlink" href="#parametros-y-costo" title="Link to this heading">#</a></h3>
+<p>Conteo hecho con el código del proyecto, con 1 clase:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Parámetros</p></th>
+<th class="head"><p>Referencia publicada</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN R50-FPN (torchvision 0.29)</p></td>
+<td><p>43 922 395</p></td>
+<td><p>Con 91 clases da 44 401 393, igual a la documentación de torchvision (134.4 GFLOPs a 800 px)</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8n-seg (ultralytics 8.4.207)</p></td>
+<td><p>3 263 811</p></td>
+<td><p>11.3 GFLOPs a 640 px, fusionado</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2 R50-FPN (MMDetection 3.3)</p></td>
+<td><p>46 228 801</p></td>
+<td><p>Comparte con Mask R-CNN el mismo ResNet-50-FPN (26.8 M parámetros)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Complejidad</strong>. Para una imagen de <span class="math notranslate nohighlight">\(H\times W\)</span>:</p>
+<ul class="simple">
+<li><p>Cada convolución <span class="math notranslate nohighlight">\(k\times k\)</span> de <span class="math notranslate nohighlight">\(C_{in}\)</span> a <span class="math notranslate nohighlight">\(C_{out}\)</span> cuesta <span class="math notranslate nohighlight">\(O(HW\,k^2C_{in}C_{out})\)</span> en su resolución. Con la pirámide, el costo del extractor es <span class="math notranslate nohighlight">\(O(HW)\)</span>, con constantes distintas por modelo.</p></li>
+<li><p><strong>Mask R-CNN</strong> suma un término por región: <span class="math notranslate nohighlight">\(O(HW + R\,m^2)\)</span>, con <span class="math notranslate nohighlight">\(R\)</span> propuestas (512 por imagen en entrenamiento, hasta 1000 en inferencia).</p></li>
+<li><p><strong>YOLOv8-seg</strong>: <span class="math notranslate nohighlight">\(O(HW + N\,k\,\tfrac{HW}{16})\)</span> para ensamblar <span class="math notranslate nohighlight">\(N\)</span> máscaras desde <span class="math notranslate nohighlight">\(k=32\)</span> prototipos.</p></li>
+<li><p><strong>SOLOv2</strong>: <span class="math notranslate nohighlight">\(O(HW + N\,E\,\tfrac{HW}{16})\)</span> para la convolución dinámica de <span class="math notranslate nohighlight">\(N\)</span> candidatos, más <span class="math notranslate nohighlight">\(O(N^2)\)</span> en Matrix NMS.</p></li>
+<li><p>Las tres son lineales en el número de píxeles. Difieren en la constante y en cómo crecen con el número de instancias. El tiempo medido por corrida está en la sección 4.</p></li>
+</ul>
+</section>
+</section>
+<section id="comparacion-critica-y-vacio">
+<h2>3.4 Comparación crítica y vacío<a class="headerlink" href="#comparacion-critica-y-vacio" title="Link to this heading">#</a></h2>
+<p>Resumen de la lectura crítica (el detalle por estudio está en la sección 3.5):</p>
+<ul class="simple">
+<li><p><strong>No hay un orden estable entre los modelos.</strong> En el único estudio con los tres modelos (AF-YOLO, objetos menores al 1 % de la imagen), el mAP de máscara queda en 83.2 (Mask R-CNN), 86.1 (SOLOv2) y 87.3 (YOLOv8-seg). En otro dominio, Mask R-CNN queda 12 puntos por debajo de los modelos de una etapa (SPGNet), y en conteo de sujetadores el orden cambia según la métrica.</p></li>
+<li><p><strong>Calidad metodológica de los 9 estudios:</strong></p>
+<ul>
+<li><p>0 usan más de una corrida;</p></li>
+<li><p>0 hacen prueba estadística;</p></li>
+<li><p>1 usa partición agrupada;</p></li>
+<li><p>3 aumentan datos antes de partir.</p></li>
+</ul>
+</li>
+<li><p><strong>Los dos trabajos sobre WDSD:</strong></p>
+<ul>
+<li><p>Kalitsios 2022: solo Mask R-CNN, partición oficial con fuga, AP 0.586.</p></li>
+<li><p>Chao 2025: YOLOv8-seg, partición aleatoria tras aumentar datos.</p></li>
+</ul>
+</li>
+<li><p><strong>Vacío:</strong> ningún estudio compara Mask R-CNN, YOLOv8-seg y SOLOv2 en segmentación de instancias de tornillos con partición agrupada, varias semillas e inferencia estadística. Este trabajo cubre ese vacío.</p></li>
+</ul>
+</section>
+<section id="lectura-critica-detallada">
+<h2>3.5 Lectura crítica detallada<a class="headerlink" href="#lectura-critica-detallada" title="Link to this heading">#</a></h2>
+<section id="cuantos-estudios-usan-cada-modelo-como-comparacion">
+<h3>Cuántos estudios usan cada modelo como comparación<a class="headerlink" href="#cuantos-estudios-usan-cada-modelo-como-comparacion" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Estudios (de 9)</p></th>
+<th class="head"><p>Cuáles</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN</p></td>
+<td><p>6</p></td>
+<td><p>I1, I2, I3, I5, I6, Kalitsios 2022</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLO-seg (v5/v8/v11)</p></td>
+<td><p>5</p></td>
+<td><p>I4, I5, I6, I7, Chao 2025</p></td>
+</tr>
+<tr class="row-even"><td><p>YOLACT</p></td>
+<td><p>3</p></td>
+<td><p>I1, I5, I6</p></td>
+</tr>
+<tr class="row-odd"><td><p>SOLO / SOLOv2</p></td>
+<td><p>2</p></td>
+<td><p>I2 (SOLO), I5 (SOLOv2)</p></td>
+</tr>
+<tr class="row-even"><td><p>BlendMask</p></td>
+<td><p>2</p></td>
+<td><p>I2, I5</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>En los 219 resúmenes únicos de la búsqueda los conteos son: YOLO (cualquier versión) 64, Mask R-CNN 59, YOLO-seg 25, SOLO/SOLOv2 10 y YOLACT 7.</p>
+<p><strong>Por qué SOLOv2 y no YOLACT.</strong> En texto completo YOLACT aparece en 3 estudios y SOLO/SOLOv2 en 2; en los resúmenes el orden se invierte (10 contra 7). Se eligió SOLOv2 por dos razones: es más frecuente en el universo de resúmenes y completa la no redundancia de la terna, porque es el único de los candidatos que segmenta sin cajas. Con solo 9 estudios en texto completo, una diferencia de 3 contra 2 no permite ordenar con confianza.</p>
+</section>
+<section id="la-terna-cubre-tres-familias-distintas">
+<h3>La terna cubre tres familias distintas<a class="headerlink" href="#la-terna-cubre-tres-familias-distintas" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Modelo</p></th>
+<th class="head"><p>Familia</p></th>
+<th class="head"><p>Cómo obtiene cada instancia</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Mask R-CNN</p></td>
+<td><p>Dos etapas, con cajas</p></td>
+<td><p>Propone regiones, recorta sus características y predice una máscara por región</p></td>
+</tr>
+<tr class="row-odd"><td><p>YOLOv8-seg</p></td>
+<td><p>Una etapa, con cajas</p></td>
+<td><p>Predice cajas y coeficientes en una pasada; la máscara es una combinación de prototipos compartidos</p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2</p></td>
+<td><p>Una etapa, sin cajas</p></td>
+<td><p>Divide la imagen en una rejilla; cada celda que contiene el centro de un objeto genera directamente su máscara</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="ningun-orden-es-estable-entre-los-modelos">
+<h3>Ningún orden es estable entre los modelos<a class="headerlink" href="#ningun-orden-es-estable-entre-los-modelos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>AF-YOLO, I5</strong> (alambres de seguridad, objetos de menos del 1 % de la imagen, como los tornillos de WDSD), mAP de máscara: Mask R-CNN 83.2 &lt; YOLACT 84.7 &lt; SOLOv2 86.1 &lt; YOLOv8-seg 87.3. Es la única comparación que incluye los tres modelos de la terna; quedan dentro de 4.1 puntos entre sí.</p></li>
+<li><p><strong>SPGNet, I6</strong> (piezas de vehículos fuera de uso), mAP&#64;0.5 de máscara: Mask R-CNN 78.3, YOLOv5s-seg 90.1, YOLACT 90.5. Mask R-CNN queda 12 puntos por debajo.</p></li>
+<li><p><strong>I2</strong> (conteo de sujetadores densos): SOLO tiene menos error de conteo que Mask R-CNN (2.21 % contra 8.84 % con umbral 0.3), pero mucho peor distancia al centro de gravedad (47.13 contra 4.38). El orden depende de la métrica, y el estudio respalda una métrica secundaria de localización por centroide.</p></li>
+<li><p><strong>LPHD, I3</strong> (tornillos hexagonales): Mask R-CNN tiene mayor IoU que la propuesta (92.9 % contra 91.4 %), pero es 2.5 veces más lento.</p></li>
+<li><p><strong>I4</strong> reporta YOLOv8n-seg con 3.26 M parámetros y YOLOv8s-seg con 11.78 M. El conteo de este proyecto con ultralytics 8.4.207 da 3.26 M (n) y 11.79 M (s) con una sola clase, así que coincide.</p></li>
+</ul>
+<p>El orden cambia con el dataset y con la métrica, y ningún estudio da la dispersión entre corridas que permitiría saber si las diferencias superan el ruido.</p>
+</section>
+<section id="calidad-metodologica">
+<h3>Calidad metodológica<a class="headerlink" href="#calidad-metodologica" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Criterio</p></th>
+<th class="head"><p>Resultado en los 9</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Más de una corrida o semilla</p></td>
+<td><p>0 de 9</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reporta dispersión (± DE o IC)</p></td>
+<td><p>0 de 9</p></td>
+</tr>
+<tr class="row-even"><td><p>Prueba estadística</p></td>
+<td><p>0 de 9. I4 e I5 dicen <em>significantly</em> sin prueba</p></td>
+</tr>
+<tr class="row-odd"><td><p>Partición agrupada por sesión u objeto</p></td>
+<td><p>1 de 9 (I7, agrupa por zapato)</p></td>
+</tr>
+<tr class="row-even"><td><p>Aumento de datos antes de partir (fuga)</p></td>
+<td><p>3 de 9 (I1, I4, Chao 2025)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sin conjunto de prueba separado</p></td>
+<td><p>I2 (366/47 sin prueba) e I6 (7:3 entrenamiento/validación)</p></td>
+</tr>
+<tr class="row-even"><td><p>Comparación incompleta</p></td>
+<td><p>I1 compara con Mask R-CNN solo por curvas de entrenamiento, sin métricas de prueba</p></td>
+</tr>
+<tr class="row-odd"><td><p>Partición con fuga conocida en WDSD</p></td>
+<td><p>Kalitsios 2022 usa la oficial 765/90/90: según el EDA, el 48.9 % de las imágenes de prueba tiene una casi gemela en entrenamiento</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="antecedentes-sobre-wdsd">
+<h3>Antecedentes sobre WDSD<a class="headerlink" href="#antecedentes-sobre-wdsd" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Kalitsios et al. (2022)</strong> (10.1109/ICRCV55858.2022.9953178): solo Mask R-CNN (ResNet-101, preentrenada en COCO), AP0.50:0.95 = 0.586 y AP0.50 = 0.849, una corrida, partición oficial.</p></li>
+<li><p><strong>Chao et al. (2025)</strong> (10.1080/27525783.2025.2551315): YOLOv8-SM-Seg para tornillos y agujeros, con 387 imágenes de WDSD más 301 propias, aumentadas a 903 antes de partir al azar; una corrida, mAP 96.4 %. Es otra tarea y otro conjunto, así que no es comparable con los resultados de este trabajo.</p></li>
+</ul>
+</section>
+<section id="vacio">
+<h3>Vacío<a class="headerlink" href="#vacio" title="Link to this heading">#</a></h3>
+<p>Ningún estudio incluido compara Mask R-CNN, YOLOv8-seg y SOLOv2 en segmentación de instancias de tornillos con una partición agrupada por sesión de captura, varias semillas e inferencia estadística. Los dos trabajos sobre WDSD usan un solo modelo cada uno, una sola corrida y particiones con riesgo de fuga.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./notebooks"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_eda_instancias.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">EDA 2 · Tornillos y máscaras</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_modelos_base.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">4. Implementación de los modelos base</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protocolo-de-busqueda-prisma-2020">3.1 Protocolo de búsqueda (PRISMA 2020)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#seleccion-de-los-modelos-base-y-tabla-de-sintesis">3.2 Selección de los modelos base y tabla de síntesis</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelos-base">3.3 Modelos base</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mask-r-cnn-dos-etapas-con-cajas">Mask R-CNN: dos etapas, con cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#yolov8-seg-una-etapa-con-cajas-y-prototipos">YOLOv8-seg: una etapa, con cajas y prototipos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solov2-una-etapa-sin-cajas">SOLOv2: una etapa, sin cajas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametros-y-costo">Parámetros y costo</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacion-critica-y-vacio">3.4 Comparación crítica y vacío</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-critica-detallada">3.5 Lectura crítica detallada</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cuantos-estudios-usan-cada-modelo-como-comparacion">Cuántos estudios usan cada modelo como comparación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#la-terna-cubre-tres-familias-distintas">La terna cubre tres familias distintas</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ningun-orden-es-estable-entre-los-modelos">Ningún orden es estable entre los modelos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calidad-metodologica">Calidad metodológica</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#antecedentes-sobre-wdsd">Antecedentes sobre WDSD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vacio">Vacío</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Ivan Berrio, Jose David Castillo y Jaime Besada
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

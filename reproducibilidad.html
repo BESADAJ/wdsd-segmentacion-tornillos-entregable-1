@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reproducibilidad &#8212; WDSD: segmentación de instancias de tornillos (Entregable 1)</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=6a604523" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script src="_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'reproducibilidad';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="6. Conclusiones" href="conclusiones.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">WDSD: segmentación de instancias de tornillos (Entregable 1)</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Segmentación de instancias de tornillos en WDSD
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Datos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="eda.html">Análisis exploratorio</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/01_eda_wdsd.html">EDA 1 · Imágenes y particiones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/02_eda_instancias.html">EDA 2 · Tornillos y máscaras</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks/03_revision_literatura.html">3. Revisión de literatura</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/04_modelos_base.html">4. Modelos base</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Resultados</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="notebooks/05_linea_base_estadistica.html">5. Línea base estadística</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conclusiones.html">6. Conclusiones</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Anexos</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reproducibilidad</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/reproducibilidad.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reproducibilidad</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particion-y-metrica">Partición y métrica</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entornos">Entornos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento">Entrenamiento</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-deja-cada-corrida">Qué deja cada corrida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construir-el-libro">Construir el libro</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reproducibilidad">
+<h1>Reproducibilidad<a class="headerlink" href="#reproducibilidad" title="Link to this heading">#</a></h1>
+<p>Para repetir el análisis y los entrenamientos, en este anexo se indica de dónde se obtienen los datos, qué entornos se usaron, qué comandos se ejecutan y qué deja cada corrida. Para leer el libro no hace falta nada de esto, porque sus páginas usan las salidas ya guardadas en los notebooks.</p>
+<section id="datos">
+<h2>Datos<a class="headerlink" href="#datos" title="Link to this heading">#</a></h2>
+<p>El dataset no está en el repositorio: pesa 2,7 GB y las fuentes públicas no especifican una licencia de uso o redistribución.</p>
+<ol class="arabic simple">
+<li><p>Descargar la carpeta <code class="docutils literal notranslate"><span class="pre">WDSD</span></code> desde la <a class="reference external" href="https://vcl.iti.gr/dataset/weee-disassembly-screw-dataset/">página oficial</a>. Llega en dos archivos zip y hacen falta los dos: cada uno trae cerca de la mitad de las imágenes y de las máscaras, y el COCO de entrenamiento viene en el segundo.</p></li>
+<li><p>Extraer ambos junto al repositorio:</p></li>
+</ol>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>carpeta_de_trabajo/
+├── WDSD-&lt;fecha&gt;-1-001/WDSD/
+├── WDSD-&lt;fecha&gt;-1-002/WDSD/
+└── wdsd-segmentacion-tornillos-entregable-1/
+</pre></div>
+</div>
+<p>Deben quedar 945 pares de imagen y máscara y 4.398 instancias COCO. La huella SHA-256 esperada del dataset está en <code class="docutils literal notranslate"><span class="pre">results/eda/declaracion_a_priori.json</span></code>.</p>
+</section>
+<section id="particion-y-metrica">
+<h2>Partición y métrica<a class="headerlink" href="#particion-y-metrica" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>La partición agrupada congelada está en <code class="docutils literal notranslate"><span class="pre">results/eda/particion.csv</span></code>: 744, 93 y 108 imágenes (3.530, 479 y 389 tornillos), con 146, 26 y 14 grupos de escena. No se regenera ni se consulta el conjunto de prueba durante el ajuste.</p></li>
+<li><p>La verdad de referencia son los polígonos COCO, rasterizados por centros de píxel para reproducir el campo <code class="docutils literal notranslate"><span class="pre">area</span></code>.</p></li>
+<li><p>La métrica primaria es el F1 de instancia por imagen con IoU ≥ 0,5. Su declaración, junto con δ = 0,20, está en <code class="docutils literal notranslate"><span class="pre">results/eda/declaracion_a_priori_instancias.json</span></code>.</p></li>
+<li><p>La normalización usa la media y la desviación de entrenamiento guardadas en <code class="docutils literal notranslate"><span class="pre">results/eda/normalizacion_train.json</span></code>.</p></li>
+</ul>
+</section>
+<section id="entornos">
+<h2>Entornos<a class="headerlink" href="#entornos" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Uso</p></th>
+<th class="head"><p>Python</p></th>
+<th class="head"><p>Paquetes principales</p></th>
+<th class="head"><p>Archivo de dependencias</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>EDA (capítulos 1 y 2)</p></td>
+<td><p>3.9</p></td>
+<td><p>numpy, pandas, scipy, scikit-image, pycocotools</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Mask R-CNN y YOLOv8-seg</p></td>
+<td><p>3.11</p></td>
+<td><p>torch 2.11 (CUDA 12.8), torchvision 0.26, ultralytics 8.4.207</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">requirements_wdsd_dl_congelado.txt</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>SOLOv2</p></td>
+<td><p>3.11</p></td>
+<td><p>torch 2.1.2 (CUDA 12.1), mmcv 2.1.0, MMDetection 3.3.0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">requirements_solov2.txt</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>SOLOv2 va en un entorno aparte porque mmcv 2.1 solo tiene versiones precompiladas para Windows con torch 2.1.</p>
+</section>
+<section id="entrenamiento">
+<h2>Entrenamiento<a class="headerlink" href="#entrenamiento" title="Link to this heading">#</a></h2>
+<p>Los scripts se niegan a entrenar si no detectan la GPU. Los pasos, en orden:</p>
+<ol class="arabic simple">
+<li><p><strong>Preparar los datos.</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">entrenar_instancias.py</span> <span class="pre">preparar</span> <span class="pre">--data-root</span> <span class="pre">&lt;carpeta</span> <span class="pre">de</span> <span class="pre">WDSD&gt;</span></code> reagrupa el COCO con la partición congelada y genera el formato YOLO. Debe imprimir 744/93/108 imágenes y 3530/479/389 instancias.</p></li>
+<li><p><strong>Piloto de tiempos.</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">entrenar_instancias.py</span> <span class="pre">piloto</span></code> y <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">solov2_instancias.py</span> <span class="pre">piloto</span></code> entrenan una época de cada modelo con la semilla 42 e informan los segundos por época, la memoria pico y cuántas épocas caben en el tiempo disponible. Con eso se fijaron 12, 40 y 12 épocas.</p></li>
+<li><p><strong>Cola de la terna.</strong> <code class="docutils literal notranslate"><span class="pre">cola_terna.ps1</span></code> entrena por rondas de semilla con los tres modelos (semilla 42 de los tres, luego 43, y así), de modo que si el tiempo se acaba todos quedan con el mismo número de semillas:</p></li>
+</ol>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">Bypass</span> <span class="o">-File</span> <span class="p">.\</span><span class="n">cola_terna</span><span class="p">.</span><span class="n">ps1</span> <span class="n">-Hasta</span> <span class="n">18</span><span class="p">:</span><span class="n">00</span> <span class="n">-EpMaskRcnn</span> <span class="n">12</span> <span class="n">-EpYolo</span> <span class="n">40</span> <span class="n">-EpSolo</span> <span class="n">12</span> <span class="n">-Semillas</span> <span class="n">42</span><span class="p">,</span><span class="n">43</span><span class="p">,</span><span class="n">44</span>
+</pre></div>
+</div>
+<p>Los lotes por defecto son 2, 4 y 2, iguales en todas las máquinas. El reparto se hizo por semilla: 42, 43 y 44 en una RTX 3060 Laptop de 6 GB; 45 y 46 en una RTX 3050 Laptop de 6 GB. Si la cola se corta, al relanzarla salta las corridas terminadas.</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Resumen y estadística.</strong> <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">entrenar_instancias.py</span> <span class="pre">resumen</span></code> escribe <code class="docutils literal notranslate"><span class="pre">results/instancias/resumen.csv</span></code>, y <code class="docutils literal notranslate"><span class="pre">estadistica_instancias.py</span></code> hace la comparación por grupos del capítulo 5 (Friedman, Wilcoxon con Holm, bootstrap y efecto mínimo detectable).</p></li>
+</ol>
+</section>
+<section id="que-deja-cada-corrida">
+<h2>Qué deja cada corrida<a class="headerlink" href="#que-deja-cada-corrida" title="Link to this heading">#</a></h2>
+<p>Cada corrida escribe en <code class="docutils literal notranslate"><span class="pre">results/instancias/corridas/&lt;modelo&gt;_s&lt;semilla&gt;/</span></code>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Archivo</p></th>
+<th class="head"><p>Contenido</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">resumen.json</span></code></p></td>
+<td><p>Entorno, tiempo, memoria GPU, número de parámetros y métricas</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">metricas.json</span></code></p></td>
+<td><p>AP, AP50, AP75 y AP <em>small</em> de máscara en validación y prueba; F1, PQ, SQ y RQ por imagen; confianza mínima elegida en validación</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">test_por_imagen.csv</span></code></p></td>
+<td><p>Una fila por imagen de prueba con su grupo, TP, FP, FN, F1 y PQ</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">preds_val.json</span></code>, <code class="docutils literal notranslate"><span class="pre">preds_test.json</span></code></p></td>
+<td><p>Predicciones en formato COCO (RLE), para recalcular cualquier métrica sin reentrenar</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Los pesos entrenados no se versionan.</p>
+</section>
+<section id="construir-el-libro">
+<h2>Construir el libro<a class="headerlink" href="#construir-el-libro" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"jupyter-book==1.0.4.post1"</span>
+jupyter-book<span class="w"> </span>build<span class="w"> </span>.
+</pre></div>
+</div>
+<p>El libro queda en <code class="docutils literal notranslate"><span class="pre">_build/html/index.html</span></code>. No necesita el dataset ni una GPU, porque los notebooks ya están ejecutados. Cada cambio en la rama <code class="docutils literal notranslate"><span class="pre">main</span></code> lo vuelve a construir y publicar automáticamente.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="conclusiones.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">6. Conclusiones</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#datos">Datos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#particion-y-metrica">Partición y métrica</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entornos">Entornos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entrenamiento">Entrenamiento</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#que-deja-cada-corrida">Qué deja cada corrida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#construir-el-libro">Construir el libro</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Ivan Berrio, Jose David Castillo y Jaime Besada
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
