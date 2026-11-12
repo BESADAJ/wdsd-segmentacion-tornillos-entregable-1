@@ -9,6 +9,14 @@ En el desmontaje automatizado de residuos de aparatos eléctricos y electrónico
 
 La pregunta que guía el trabajo es qué modelo localiza mejor los tornillos en escenas no vistas. Para responderla, se analiza el WEEE Disassembly Screw Dataset (WDSD), se revisa la literatura y se comparan tres modelos base de segmentación de instancias.
 
+```{figure} notebooks/segmentacion-aplicacion-robotica.png
+:alt: Diagrama de una imagen de entrada, una máscara de color por tornillo y un brazo robótico con su efector final.
+:width: 100%
+:name: esquema-segmentacion-robotica
+
+Esquema conceptual de la segmentación de instancias y su posible aplicación robótica. Cada máscara identifica un tornillo y delimita su forma visible para apoyar su localización antes de una posible acción del efector final.
+```
+
 ## Resultados principales
 
 La métrica primaria es el F1 de instancia por imagen. Se emparejan las máscaras predichas y reales con el algoritmo húngaro; una pareja cuenta como acierto cuando su IoU de máscara es al menos 0,5. Los valores son la media y la desviación estándar entre cinco semillas:
