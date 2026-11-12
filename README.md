@@ -13,11 +13,11 @@ Segmentación de instancias de tornillos en el WEEE Disassembly Screw Dataset (W
 5. Línea base estadística.
 6. Conclusiones.
 
-Las secciones 3 a 5 también están por separado en [`notebooks/03_modelos_base_instancias.ipynb`](notebooks/03_modelos_base_instancias.ipynb).
+En el libro, las secciones 3 a 5 están separadas en [`03_revision_literatura.ipynb`](notebooks/03_revision_literatura.ipynb), [`04_modelos_base.ipynb`](notebooks/04_modelos_base.ipynb) y [`05_linea_base_estadistica.ipynb`](notebooks/05_linea_base_estadistica.ipynb).
 
 El proyecto también está organizado como **Jupyter Book**: la portada resume la pregunta y los resultados, y el menú separa el análisis general del dataset, el EDA por instancias y la revisión de modelos y resultados. El notebook integrado anterior sigue disponible para leer el informe completo de una sola vez.
 
-**[Abrir la versión web del libro](https://raw.githack.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1/book-site/index.html).** El libro se sirve desde la rama `book-site`; GitHub Actions la actualiza cuando cambia `main`.
+**[Abrir la versión web del libro](https://besadaj.github.io/wdsd-segmentacion-tornillos-entregable-1/).** El libro se sirve desde la rama `book-site`; GitHub Actions la actualiza cuando cambia `main`.
 
 Para construir el libro localmente:
 
@@ -85,7 +85,7 @@ jupyter notebook notebooks/02_eda_instancias.ipynb
 
 El notebook 02 tarda unos 5 minutos la primera vez; el 01, unos 20. Los cálculos por imagen e instancia quedan en caché en `results/eda/` y no se versionan.
 
-Los notebooks 03 y de entrega no entrenan nada: leen las corridas guardadas en `results/instancias/corridas/`. Para reentrenar, sigue `ENTRENAMIENTO_INSTANCIAS.md`.
+Los notebooks 03, 04, 05 y de entrega no entrenan nada: leen las corridas guardadas en `results/instancias/corridas/`. Para reentrenar, sigue `ENTRENAMIENTO_INSTANCIAS.md`.
 
 El script exploratorio `literatura/instancias/eda_instancias.py` resume conteos y geometría a partir de COCO y la partición, pero no contiene el EDA completo ni se usa para los resultados del informe. Su rasterización con `PIL.ImageDraw.polygon` incluye el contorno y puede inflar el área en píxeles. El análisis final usa `N.etiqueta_coco`, que rasteriza por centros de píxel y reproduce el campo `area` de COCO.
 

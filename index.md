@@ -17,6 +17,12 @@ La pregunta que guía el trabajo es qué modelo localiza mejor los tornillos en 
 Esquema conceptual de la segmentación de instancias y su posible aplicación robótica. Cada máscara identifica un tornillo y delimita su forma visible para apoyar su localización antes de una posible acción del efector final.
 ```
 
+## Datos
+
+Se usa el WEEE Disassembly Screw Dataset (WDSD; Kalitsios et al., 2022, ICRCV, 10.1109/ICRCV55858.2022.9953178): 945 imágenes de 1280 × 720 con 4.398 tornillos anotados. Las anotaciones siguen el formato COCO (*Common Objects in Context*): para cada tornillo incluyen su categoría, un polígono de segmentación, una caja delimitadora y el área. La partición agrupa las imágenes por sesión de captura (744/93/108 imágenes; 14 grupos en prueba) para evitar fuga por casi duplicados.
+
+La [página oficial](https://vcl.iti.gr/dataset/weee-disassembly-screw-dataset/) permite descargar WDSD, pero no publica una licencia, y tampoco la publican el repositorio ni el artículo de los autores. Por eso el dataset no se incluye en el repositorio del proyecto.
+
 ## Resultados principales
 
 Para evaluar los modelos, se compara cada máscara predicha con las máscaras de referencia, que delimitan los tornillos anotados en el dataset. La **intersección sobre unión (IoU)** mide cuánto coinciden dos máscaras: divide el área que comparten entre el área total que ocupan juntas. Su valor va de 0, cuando no se superponen, a 1, cuando coinciden por completo. Aquí se exige una IoU de al menos 0,5 para considerar una coincidencia válida.
@@ -37,15 +43,12 @@ YOLOv8-seg alcanza la media más alta por imagen. En la comparación estadístic
 
 ## Cómo recorrer el libro
 
-### Datos
+Cada capítulo contiene sus tablas, figuras y explicaciones completas, así que el informe se lee entero desde estas páginas.
 
-- {doc}`eda`: un recorrido por las imágenes y sus particiones, seguido del análisis de los tornillos y sus máscaras.
-
-### Modelos y resultados
-
-- {doc}`notebooks/03_modelos_base_instancias`: revisión de literatura, protocolo de entrenamiento, métricas, resultados y análisis estadístico.
-
-El [notebook integrado del entregable](https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1/blob/main/notebooks/entrega_E1_instancias.ipynb) reúne el mismo recorrido en un único documento ejecutado. El [repositorio de origen](https://github.com/BESADAJ/wdsd-segmentacion-tornillos-entregable-1) contiene además los scripts, las tablas y las salidas guardadas.
+1. **Datos:** {doc}`eda`, con las imágenes y su partición (EDA 1) y los tornillos y sus máscaras (EDA 2).
+2. **Modelos:** {doc}`notebooks/03_revision_literatura`, que explica por qué se eligieron los tres modelos, y {doc}`notebooks/04_modelos_base`, con el protocolo de entrenamiento y la selección de hiperparámetros.
+3. **Resultados:** {doc}`notebooks/05_linea_base_estadistica` y {doc}`conclusiones`.
+4. **Anexo:** {doc}`reproducibilidad`, con los datos, los entornos y los comandos para repetir el trabajo.
 
 ## Alcance y límites de la evidencia
 
@@ -55,4 +58,4 @@ El margen práctico es δ = 0,20 puntos de F1 y se propone para juzgar modelos a
 
 La guía del curso presenta FCN, codificador–decodificador y U-Net reducida como ejemplos generales de segmentación. Aquí se eligieron modelos de segmentación de instancias porque la salida distingue cada tornillo; por eso la terna no coincide literalmente con esos ejemplos generales.
 
-El ajuste de hiperparámetros fue parcial: las recetas de referencia se adaptaron al tamaño de los tornillos y la mejor época y el umbral de confianza se eligieron en validación, pero no hubo una búsqueda sistemática de combinaciones para las tres familias. Tampoco se midió por separado el tiempo de inferencia, ni se afirma que el éxito de segmentación garantice que un robot pueda retirar el tornillo: eso requiere validación física. Las métricas se calculan respecto a las anotaciones disponibles; los tornillos visibles que carezcan de etiqueta pueden afectar su interpretación.
+No se midió por separado el tiempo de inferencia, ni se afirma que el éxito de segmentación garantice que un robot pueda retirar el tornillo: eso requiere validación física. Las métricas se calculan respecto a las anotaciones disponibles; los tornillos visibles que carezcan de etiqueta pueden afectar su interpretación.

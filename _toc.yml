@@ -11,7 +11,19 @@ parts:
             title: EDA 1 · Imágenes y particiones
           - file: notebooks/02_eda_instancias
             title: EDA 2 · Tornillos y máscaras
-  - caption: Modelos y resultados
+  - caption: Modelos
     chapters:
-      - file: notebooks/03_modelos_base_instancias
-        title: 3–5. Modelos, resultados y análisis estadístico
+      - file: notebooks/03_revision_literatura
+        title: 3. Revisión de literatura
+      - file: notebooks/04_modelos_base
+        title: 4. Modelos base
+  - caption: Resultados
+    chapters:
+      - file: notebooks/05_linea_base_estadistica
+        title: 5. Línea base estadística
+      - file: conclusiones
+        title: 6. Conclusiones
+  - caption: Anexos
+    chapters:
+      - file: reproducibilidad
+        title: Reproducibilidad
