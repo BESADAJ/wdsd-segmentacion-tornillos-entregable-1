@@ -19,7 +19,13 @@ Esquema conceptual de la segmentación de instancias y su posible aplicación ro
 
 ## Resultados principales
 
-La métrica primaria es el F1 de instancia por imagen. Se emparejan las máscaras predichas y reales con el algoritmo húngaro; una pareja cuenta como acierto cuando su IoU de máscara es al menos 0,5. Los valores son la media y la desviación estándar entre cinco semillas:
+Para evaluar los modelos, se compara cada máscara predicha con las máscaras de referencia, que delimitan los tornillos anotados en el dataset. La **intersección sobre unión (IoU)** mide cuánto coinciden dos máscaras: divide el área que comparten entre el área total que ocupan juntas. Su valor va de 0, cuando no se superponen, a 1, cuando coinciden por completo. Aquí se exige una IoU de al menos 0,5 para considerar una coincidencia válida.
+
+Como una imagen puede contener varios tornillos, también hace falta decidir qué predicción corresponde a cada anotación. El **algoritmo húngaro** resuelve esa asignación entre predicciones y referencias, manteniendo una correspondencia de uno a uno para evitar contar varias veces un mismo tornillo.
+
+La medida principal es el **F1 de instancia**, calculado por imagen. Combina la precisión —qué proporción de los tornillos detectados corresponde a tornillos anotados— y la sensibilidad —qué proporción de los tornillos anotados logró detectar el modelo— mediante su media armónica: F1 = 2 × precisión × sensibilidad / (precisión + sensibilidad). Un valor cercano a 1 indica pocos falsos positivos y pocos tornillos omitidos; un valor bajo refleja dificultades en uno o ambos aspectos.
+
+Como medidas complementarias se presentan la **calidad panóptica (PQ)**, que combina la detección de los tornillos con la coincidencia de sus máscaras, y la **precisión promedio con IoU de al menos 0,5 (AP50)**, que resume la relación entre precisión y sensibilidad al variar el nivel de confianza exigido a las predicciones. La tabla muestra la media y la desviación estándar de cada métrica en cinco entrenamientos con distintas semillas aleatorias:
 
 | Modelo | F1 de instancia | PQ | AP50 de máscara |
 |---|---:|---:|---:|
