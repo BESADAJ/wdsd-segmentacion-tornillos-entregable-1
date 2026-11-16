@@ -1,0 +1,48 @@
+{
+ "identificados": 1503,
+ "por_base": {
+  "scopus": 1031,
+  "wos": 372,
+  "ieee": 100
+ },
+ "por_cadena_y_base": {
+  "A1 ieee": 100,
+  "A1 scopus": 108,
+  "A1 wos": 55,
+  "A2 scopus": 589,
+  "A2 wos": 283,
+  "A3 scopus": 56,
+  "A3 wos": 34,
+  "B1 scopus": 34,
+  "B2 scopus": 126,
+  "B3 scopus": 38,
+  "B4 scopus": 80
+ },
+ "duplicados": 440,
+ "unicos": 1063,
+ "excluidos_tipo_documento": 38,
+ "cribados": 1025,
+ "capa_A": {
+  "cribados": 811,
+  "por_regla": {
+   "R1": 99,
+   "R2": 51,
+   "R3": 158,
+   "R4": 423,
+   "R5": 80
+  },
+  "incluidos": 64
+ },
+ "capa_B": {
+  "cribados": 214,
+  "incluidos": 56,
+  "por_mecanismo": {
+   "M1": 14,
+   "M2": 2,
+   "M3": 4,
+   "M4": 21,
+   "M5": 1,
+   "M6": 14
+  }
+ }
+}

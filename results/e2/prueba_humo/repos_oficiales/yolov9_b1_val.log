@@ -1,0 +1,129 @@
+﻿python.exe : [34m[1msegment\val: [0mdata=D:\Documents\Personal\Uninorte\Maestra\Primer semestre\Deep 
+Learning\Trabajo\datos\wdsd\datos_inst\humo_yolo\data.yaml, weights=['runs/train-seg/humo_b1/weights/last.pt'], batch_size=1, 
+imgsz=1280, conf_thres=0.001, iou_thres=0.6, max_det=300, task=train, device=0, workers=8, single_cls=False, augment=False, 
+verbose=False, save_txt=False, save_hybrid=False, save_conf=False, save_json=False, project=runs\val-seg, name=exp, exist_ok=False, 
+half=False, dnn=False
+At line:1 char:1
++ & $PY9 segment/val.py --data $HUMO --weights runs/train-seg/humo_b1/w ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([34m[1msegmen...alse, dnn=False:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+fatal: cannot change to 'D:\Documents\Personal\Uninorte\Maestr├¡a\Primer': No such file or directory
+YOLO  2026-11-16 Python-3.11.18 torch-2.1.2+cu121 CUDA:0 (NVIDIA GeForce RTX 3060 Laptop GPU, 6144MiB)
+
+Fusing layers... 
+gelan-c-seg summary: 414 layers, 27362899 parameters, 0 gradients, 144.2 GFLOPs
+
+[34m[1mtrain: [0mScanning D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep 
+Learning\Trabajo\datos\wdsd\datos_inst\humo_yolo\labels\train...:   0%|          | 0/4 00:00
+[34m[1mtrain: [0mScanning D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep 
+Learning\Trabajo\datos\wdsd\datos_inst\humo_yolo\labels\train... 1 images, 0 backgrounds, 0 corrupt:  25%|ΓûêΓûêΓûî       | 1/4 
+00:09
+[34m[1mtrain: [0mScanning D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep 
+Learning\Trabajo\datos\wdsd\datos_inst\humo_yolo\labels\train... 4 images, 0 backgrounds, 0 corrupt: 
+100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 4/4 00:09
+[34m[1mtrain: [0mWARNING  Cache directory D:\Documents\Personal\Uninorte\Maestra\Primer semestre\Deep 
+Learning\Trabajo\datos\wdsd\datos_inst\humo_yolo\labels is not writeable: [WinError 183] Cannot create a file when that file 
+already exists: 'D:\\Documents\\Personal\\Uninorte\\Maestra\\Primer semestre\\Deep 
+Learning\\Trabajo\\datos\\wdsd\\datos_inst\\humo_yolo\\labels\\train.cache.npy' -> 
+'D:\\Documents\\Personal\\Uninorte\\Maestra\\Primer semestre\\Deep 
+Learning\\Trabajo\\datos\\wdsd\\datos_inst\\humo_yolo\\labels\\train.cache'
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Mask(P          R      mAP50  
+mAP50-95):   0%|          | 0/4 00:00
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Mask(P          R      mAP50  
+mAP50-95):  25%|ΓûêΓûêΓûî       | 1/4 00:00Exception in thread Thread-5 (plot_images_and_masks):
+Traceback (most recent call last):
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+Exception in thread Thread-4 (plot_images_and_masks):
+Traceback (most recent call last):
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+    self._target(*self._args, **self._kwargs)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    w, h = self.font.getsize(label)  # text width, height
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    w, h = self.font.getsize(label)  # text width, height
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Mask(P          R      mAP50  
+mAP50-95):  50%|ΓûêΓûêΓûêΓûêΓûê     | 2/4 00:00Exception in thread Thread-7 (plot_images_and_masks):
+Exception in thread Thread-6 (plot_images_and_masks):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    self._target(*self._args, **self._kwargs)
+    w, h = self.font.getsize(label)  # text width, height
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    w, h = self.font.getsize(label)  # text width, height
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Mask(P          R      mAP50  
+mAP50-95):  75%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûî  | 3/4 00:00Exception in thread Thread-9 (plot_images_and_masks):
+Traceback (most recent call last):
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+Exception in thread Thread-8 (plot_images_and_masks):
+Traceback (most recent call last):
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 1045, in _bootstrap_inner
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+    self.run()
+  File "C:\Users\ivanj\miniconda3\envs\wdsd_yolo9\Lib\threading.py", line 982, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    self._target(*self._args, **self._kwargs)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\segment\plots.py", line 
+81, in plot_images_and_masks
+    w, h = self.font.getsize(label)  # text width, height
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+    annotator.box_label(box, label, color=color)
+  File "D:\Documents\Personal\Uninorte\Maestr├¡a\Primer semestre\Deep Learning\Trabajo\datos\yolov9\utils\plots.py", line 86, in 
+box_label
+    w, h = self.font.getsize(label)  # text width, height
+           ^^^^^^^^^^^^^^^^^
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95)     Mask(P          R      mAP50  
+mAP50-95): 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 4/4 00:00
+                   all          4         13          1      0.846      0.923      0.759      0.727      0.615      0.692       0.36
+Speed: 0.0ms pre-process, 105.9ms inference, 19.0ms NMS per image at shape (1, 3, 1280, 1280)
+Results saved to [1mruns\val-seg\exp3[0m

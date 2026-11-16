@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-16 00:38",
+ "modelo": "mask2former",
+ "marco": "mmdet",
+ "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "lote": 1,
+ "estado": "CABE",
+ "pico_asignada_gb": 3.19,
+ "pico_reservada_gb": 5.47,
+ "segm_AP50_4img": 0.842,
+ "segm_AP_4img": 0.704,
+ "sanidad_ok": "s\u00ed",
+ "minutos": 8.4,
+ "parametros": 44003074,
+ "error": ""
+}

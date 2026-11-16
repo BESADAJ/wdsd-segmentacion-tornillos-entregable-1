@@ -1,0 +1,3080 @@
+2026/11/15 23:23:54 - mmengine - INFO - 
+------------------------------------------------------------
+System environment:
+    sys.platform: win32
+    Python: 3.11.18 | packaged by Anaconda, Inc. | (main, Oct 26 2026, 18:13:29) [MSC v.1942 64 bit (AMD64)]
+    CUDA available: True
+    MUSA available: False
+    numpy_random_seed: 42
+    GPU 0: NVIDIA GeForce RTX 3060 Laptop GPU
+    CUDA_HOME: None
+    GCC: n/a
+    PyTorch: 2.1.2+cu121
+    PyTorch compiling details: PyTorch built with:
+  - C++ Version: 199711
+  - MSVC 192930151
+  - Intel(R) Math Kernel Library Version 2020.0.2 Product Build 20200624 for Intel(R) 64 architecture applications
+  - Intel(R) MKL-DNN v3.1.1 (Git Hash 64f6bcbcbab628e96f33a62c3e975f8535a7bde4)
+  - OpenMP 2019
+  - LAPACK is enabled (usually provided by MKL)
+  - CPU capability usage: AVX2
+  - CUDA Runtime 12.1
+  - NVCC architecture flags: -gencode;arch=compute_50,code=sm_50;-gencode;arch=compute_60,code=sm_60;-gencode;arch=compute_61,code=sm_61;-gencode;arch=compute_70,code=sm_70;-gencode;arch=compute_75,code=sm_75;-gencode;arch=compute_80,code=sm_80;-gencode;arch=compute_86,code=sm_86;-gencode;arch=compute_90,code=sm_90
+  - CuDNN 8.8.1  (built against CUDA 12.0)
+  - Magma 2.5.4
+  - Build settings: BLAS_INFO=mkl, BUILD_TYPE=Release, CUDA_VERSION=12.1, CUDNN_VERSION=8.8.1, CXX_COMPILER=C:/actions-runner/_work/pytorch/pytorch/builder/windows/tmp_bin/sccache-cl.exe, CXX_FLAGS=/DWIN32 /D_WINDOWS /GR /EHsc /bigobj /FS -DUSE_PTHREADPOOL -DNDEBUG -DUSE_KINETO -DLIBKINETO_NOCUPTI -DLIBKINETO_NOROCTRACER -DUSE_FBGEMM -DUSE_XNNPACK -DSYMBOLICATE_MOBILE_DEBUG_HANDLE /utf-8 /wd4624 /wd4068 /wd4067 /wd4267 /wd4661 /wd4717 /wd4244 /wd4804 /wd4273, LAPACK_INFO=mkl, PERF_WITH_AVX=1, PERF_WITH_AVX2=1, PERF_WITH_AVX512=1, TORCH_DISABLE_GPU_ASSERTS=OFF, TORCH_VERSION=2.1.2, USE_CUDA=ON, USE_CUDNN=ON, USE_EXCEPTION_PTR=1, USE_GFLAGS=OFF, USE_GLOG=OFF, USE_MKL=ON, USE_MKLDNN=ON, USE_MPI=OFF, USE_NCCL=OFF, USE_NNPACK=OFF, USE_OPENMP=ON, USE_ROCM=OFF, 
+
+    TorchVision: 0.16.2+cu121
+    OpenCV: 4.11.0
+    MMEngine: 0.10.4
+
+Runtime environment:
+    cudnn_benchmark: False
+    dist_cfg: {'backend': 'gloo'}
+    seed: 42
+    deterministic: False
+    Distributed launcher: none
+    Distributed training: False
+    GPU number: 1
+------------------------------------------------------------
+
+2026/11/15 23:23:55 - mmengine - INFO - Config:
+auto_scale_lr = dict(base_batch_size=16, enable=False)
+backend_args = None
+data_root = 'data/coco/'
+dataset_type = 'CocoDataset'
+default_hooks = dict(
+    checkpoint=dict(
+        interval=1000000000, save_last=False, type='CheckpointHook'),
+    logger=dict(interval=25, type='LoggerHook'),
+    param_scheduler=dict(type='ParamSchedulerHook'),
+    sampler_seed=dict(type='DistSamplerSeedHook'),
+    timer=dict(type='IterTimerHook'),
+    visualization=dict(type='DetVisualizationHook'))
+default_scope = 'mmdet'
+env_cfg = dict(cudnn_benchmark=False, dist_cfg=dict(backend='gloo'))
+load_from = 'https://download.openmmlab.com/mmdetection/v2.0/queryinst/queryinst_r50_fpn_1x_coco/queryinst_r50_fpn_1x_coco_20210907_084916-5a8f1998.pth'
+log_level = 'INFO'
+log_processor = dict(by_epoch=True, type='LogProcessor', window_size=50)
+model = dict(
+    backbone=dict(
+        depth=50,
+        frozen_stages=1,
+        init_cfg=dict(checkpoint='torchvision://resnet50', type='Pretrained'),
+        norm_cfg=dict(requires_grad=True, type='BN'),
+        norm_eval=True,
+        num_stages=4,
+        out_indices=(
+            0,
+            1,
+            2,
+            3,
+        ),
+        style='pytorch',
+        type='ResNet'),
+    data_preprocessor=dict(
+        bgr_to_rgb=True,
+        mean=[
+            123.675,
+            116.28,
+            103.53,
+        ],
+        pad_mask=True,
+        pad_size_divisor=32,
+        std=[
+            58.395,
+            57.12,
+            57.375,
+        ],
+        type='DetDataPreprocessor'),
+    neck=dict(
+        add_extra_convs='on_input',
+        in_channels=[
+            256,
+            512,
+            1024,
+            2048,
+        ],
+        num_outs=4,
+        out_channels=256,
+        start_level=0,
+        type='FPN'),
+    roi_head=dict(
+        bbox_head=[
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+            dict(
+                bbox_coder=dict(
+                    clip_border=False,
+                    target_means=[
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                    ],
+                    target_stds=[
+                        0.5,
+                        0.5,
+                        1.0,
+                        1.0,
+                    ],
+                    type='DeltaXYWHBBoxCoder'),
+                dropout=0.0,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=7,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv'),
+                feedforward_channels=2048,
+                ffn_act_cfg=dict(inplace=True, type='ReLU'),
+                in_channels=256,
+                loss_bbox=dict(loss_weight=5.0, type='L1Loss'),
+                loss_cls=dict(
+                    alpha=0.25,
+                    gamma=2.0,
+                    loss_weight=2.0,
+                    type='FocalLoss',
+                    use_sigmoid=True),
+                loss_iou=dict(loss_weight=2.0, type='GIoULoss'),
+                num_classes=1,
+                num_cls_fcs=1,
+                num_ffn_fcs=2,
+                num_heads=8,
+                num_reg_fcs=3,
+                type='DIIHead'),
+        ],
+        bbox_roi_extractor=dict(
+            featmap_strides=[
+                4,
+                8,
+                16,
+                32,
+            ],
+            out_channels=256,
+            roi_layer=dict(output_size=7, sampling_ratio=2, type='RoIAlign'),
+            type='SingleRoIExtractor'),
+        mask_head=[
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+            dict(
+                class_agnostic=False,
+                conv_kernel_size=3,
+                conv_out_channels=256,
+                dynamic_conv_cfg=dict(
+                    act_cfg=dict(inplace=True, type='ReLU'),
+                    feat_channels=64,
+                    in_channels=256,
+                    input_feat_shape=14,
+                    norm_cfg=dict(type='LN'),
+                    out_channels=256,
+                    type='DynamicConv',
+                    with_proj=False),
+                in_channels=256,
+                loss_mask=dict(
+                    activate=False,
+                    eps=1e-05,
+                    loss_weight=8.0,
+                    type='DiceLoss',
+                    use_sigmoid=True),
+                norm_cfg=dict(type='BN'),
+                num_classes=1,
+                num_convs=4,
+                roi_feat_size=14,
+                type='DynamicMaskHead',
+                upsample_cfg=dict(scale_factor=2, type='deconv')),
+        ],
+        mask_roi_extractor=dict(
+            featmap_strides=[
+                4,
+                8,
+                16,
+                32,
+            ],
+            out_channels=256,
+            roi_layer=dict(output_size=14, sampling_ratio=2, type='RoIAlign'),
+            type='SingleRoIExtractor'),
+        num_stages=6,
+        proposal_feature_channel=256,
+        stage_loss_weights=[
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+        ],
+        type='SparseRoIHead'),
+    rpn_head=dict(
+        num_proposals=100,
+        proposal_feature_channel=256,
+        type='EmbeddingRPNHead'),
+    test_cfg=dict(rcnn=dict(mask_thr_binary=0.5, max_per_img=100), rpn=None),
+    train_cfg=dict(
+        rcnn=[
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+            dict(
+                assigner=dict(
+                    match_costs=[
+                        dict(type='FocalLossCost', weight=2.0),
+                        dict(box_format='xyxy', type='BBoxL1Cost', weight=5.0),
+                        dict(iou_mode='giou', type='IoUCost', weight=2.0),
+                    ],
+                    type='HungarianAssigner'),
+                mask_size=28,
+                pos_weight=1,
+                sampler=dict(type='PseudoSampler')),
+        ],
+        rpn=None),
+    type='QueryInst')
+num_proposals = 100
+num_stages = 6
+optim_wrapper = dict(
+    clip_grad=dict(max_norm=0.1, norm_type=2),
+    optimizer=dict(lr=0.0001, type='AdamW', weight_decay=0.0001),
+    paramwise_cfg=dict(
+        custom_keys=dict(backbone=dict(decay_mult=1.0, lr_mult=0.1))),
+    type='AmpOptimWrapper')
+param_scheduler = [
+    dict(begin=0, by_epoch=False, end=20, start_factor=0.1, type='LinearLR'),
+]
+randomness = dict(deterministic=False, seed=42)
+resume = False
+test_cfg = dict(type='TestLoop')
+test_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/humo4.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/train/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=False, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+test_evaluator = dict(
+    ann_file=
+    'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/humo4.json',
+    format_only=False,
+    metric='segm',
+    type='CocoMetric')
+test_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(keep_ratio=True, scale=(
+        1333,
+        800,
+    ), type='Resize'),
+    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(
+        meta_keys=(
+            'img_id',
+            'img_path',
+            'ori_shape',
+            'img_shape',
+            'scale_factor',
+        ),
+        type='PackDetInputs'),
+]
+train_cfg = dict(max_iters=300, type='IterBasedTrainLoop', val_interval=300)
+train_dataloader = dict(
+    batch_size=2,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/humo4.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/train/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=True, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(type='PackDetInputs'),
+        ],
+        test_mode=False,
+        type='CocoDataset'),
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=True, type='InfiniteSampler'))
+train_pipeline = [
+    dict(backend_args=None, type='LoadImageFromFile'),
+    dict(type='LoadAnnotations', with_bbox=True, with_mask=True),
+    dict(keep_ratio=True, scale=(
+        1333,
+        800,
+    ), type='Resize'),
+    dict(prob=0.5, type='RandomFlip'),
+    dict(type='PackDetInputs'),
+]
+val_cfg = dict(type='ValLoop')
+val_dataloader = dict(
+    batch_size=1,
+    dataset=dict(
+        ann_file=
+        'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/humo4.json',
+        data_prefix=dict(
+            img=
+            'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/yolo/images/train/'
+        ),
+        data_root='',
+        filter_cfg=dict(filter_empty_gt=False, min_size=0),
+        metainfo=dict(classes=('tornillo', )),
+        pipeline=[
+            dict(type='LoadImageFromFile'),
+            dict(keep_ratio=True, scale=(
+                1280,
+                720,
+            ), type='Resize'),
+            dict(
+                meta_keys=(
+                    'img_id',
+                    'img_path',
+                    'ori_shape',
+                    'img_shape',
+                    'scale_factor',
+                ),
+                type='PackDetInputs'),
+        ],
+        test_mode=True,
+        type='CocoDataset'),
+    drop_last=False,
+    num_workers=0,
+    persistent_workers=False,
+    sampler=dict(shuffle=False, type='DefaultSampler'))
+val_evaluator = dict(
+    ann_file=
+    'D:/Documents/Personal/Uninorte/Maestría/Primer semestre/Deep Learning/Trabajo/datos/wdsd/datos_inst/coco/humo4.json',
+    format_only=False,
+    metric='segm',
+    type='CocoMetric')
+vis_backends = [
+    dict(type='LocalVisBackend'),
+]
+visualizer = dict(
+    name='vis_queryinst_2_1794803034444305400',
+    type='DetLocalVisualizer',
+    vis_backends=[
+        dict(type='LocalVisBackend'),
+    ])
+work_dir = 'D:\\Documents\\Personal\\Uninorte\\Maestría\\Primer semestre\\Deep Learning\\Trabajo\\datos\\wdsd\\results\\e2\\prueba_humo\\queryinst\\lote2'
+
+2026/11/15 23:23:57 - mmengine - INFO - Distributed training is not used, all SyncBatchNorm (SyncBN) layers in the model will be automatically reverted to BatchNormXd layers if they are used.
+2026/11/15 23:23:57 - mmengine - INFO - Hooks will be executed in the following order:
+before_run:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+before_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_train_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DistSamplerSeedHook                
+ -------------------- 
+before_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_train_iter:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_train_epoch:
+(NORMAL      ) IterTimerHook                      
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_val_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_val_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_val_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_val_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+(LOW         ) ParamSchedulerHook                 
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+after_val:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_train:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(VERY_LOW    ) CheckpointHook                     
+ -------------------- 
+before_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+before_test_epoch:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+before_test_iter:
+(NORMAL      ) IterTimerHook                      
+ -------------------- 
+after_test_iter:
+(NORMAL      ) IterTimerHook                      
+(NORMAL      ) DetVisualizationHook               
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test_epoch:
+(VERY_HIGH   ) RuntimeInfoHook                    
+(NORMAL      ) IterTimerHook                      
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+after_test:
+(VERY_HIGH   ) RuntimeInfoHook                    
+ -------------------- 
+after_run:
+(BELOW_NORMAL) LoggerHook                         
+ -------------------- 
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.conv1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.bn1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.bn1.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.conv1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn1.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.conv2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn2.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.conv3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.bn3.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.downsample.0.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.downsample.1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.0.downsample.1.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.conv1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn1.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.conv2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn2.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.conv3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.1.bn3.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.conv1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn1.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn1.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.conv2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn2.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn2.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.conv3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn3.weight is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - WARNING - backbone.layer1.2.bn3.bias is skipped since its requires_grad=False
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.0.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.0.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.0.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.0.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.0.downsample.1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.1.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.2.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer2.3.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.0.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.0.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.0.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.0.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.0.downsample.1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.1.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.2.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.3.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.4.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer3.5.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.0.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.0.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.0.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.0.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.0.downsample.1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.1.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn1.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn2.bias:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.conv3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.weight:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.weight:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.weight:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.weight:decay_mult=1.0
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.bias:lr=1e-05
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.bias:weight_decay=0.0001
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.bias:lr_mult=0.1
+2026/11/15 23:23:58 - mmengine - INFO - paramwise_options -- backbone.layer4.2.bn3.bias:decay_mult=1.0
+2026/11/15 23:23:59 - mmengine - INFO - load model from: torchvision://resnet50
+2026/11/15 23:23:59 - mmengine - INFO - Loads checkpoint by torchvision backend from path: torchvision://resnet50
+2026/11/15 23:23:59 - mmengine - WARNING - The model and loaded state dict do not match exactly
+
+unexpected key in source state_dict: fc.weight, fc.bias
+
+Name of parameter - Initialization information
+
+backbone.conv1.weight - torch.Size([64, 3, 7, 7]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv1.weight - torch.Size([64, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.0.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.0.downsample.1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.1.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv1.weight - torch.Size([64, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn1.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv2.weight - torch.Size([64, 64, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.weight - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn2.bias - torch.Size([64]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.conv3.weight - torch.Size([256, 64, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer1.2.bn3.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv1.weight - torch.Size([128, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.0.weight - torch.Size([512, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.0.downsample.1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.1.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.2.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv1.weight - torch.Size([128, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn1.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv2.weight - torch.Size([128, 128, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.weight - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn2.bias - torch.Size([128]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.conv3.weight - torch.Size([512, 128, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer2.3.bn3.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv1.weight - torch.Size([256, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.0.weight - torch.Size([1024, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.0.downsample.1.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.1.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.2.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.3.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.4.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv1.weight - torch.Size([256, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn1.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv2.weight - torch.Size([256, 256, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.weight - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn2.bias - torch.Size([256]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.conv3.weight - torch.Size([1024, 256, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.weight - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer3.5.bn3.bias - torch.Size([1024]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv1.weight - torch.Size([512, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.0.weight - torch.Size([2048, 1024, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.0.downsample.1.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.1.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv1.weight - torch.Size([512, 2048, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn1.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv2.weight - torch.Size([512, 512, 3, 3]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.weight - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn2.bias - torch.Size([512]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.conv3.weight - torch.Size([2048, 512, 1, 1]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.weight - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+backbone.layer4.2.bn3.bias - torch.Size([2048]): 
+PretrainedInit: load from torchvision://resnet50 
+
+neck.lateral_convs.0.conv.weight - torch.Size([256, 256, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.lateral_convs.1.conv.weight - torch.Size([256, 512, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.lateral_convs.2.conv.weight - torch.Size([256, 1024, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.lateral_convs.3.conv.weight - torch.Size([256, 2048, 1, 1]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.lateral_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.fpn_convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.0.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.fpn_convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.1.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.fpn_convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.2.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+neck.fpn_convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+XavierInit: gain=1, distribution=uniform, bias=0 
+
+neck.fpn_convs.3.conv.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+rpn_head.init_proposal_bboxes.weight - torch.Size([100, 4]): 
+Initialized by user-defined `init_weights` in EmbeddingRPNHead  
+
+rpn_head.init_proposal_features.weight - torch.Size([100, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.0.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.0.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.0.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.1.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.1.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.1.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.2.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.2.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.2.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.3.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.3.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.3.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.4.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.4.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.4.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.fc_cls.weight - torch.Size([1, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.fc_cls.bias - torch.Size([1]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.fc_reg.weight - torch.Size([4, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.fc_reg.bias - torch.Size([4]): 
+NormalInit: mean=0, std=0.001, bias=0 
+
+roi_head.bbox_head.5.attention.attn.in_proj_weight - torch.Size([768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.attention.attn.in_proj_bias - torch.Size([768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.attention.attn.out_proj.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.attention.attn.out_proj.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.attention_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.attention_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.fc_layer.weight - torch.Size([256, 12544]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.instance_interactive_conv.fc_layer.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.fc_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv.fc_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.instance_interactive_conv_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.ffn.layers.0.0.weight - torch.Size([2048, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.ffn.layers.0.0.bias - torch.Size([2048]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.ffn.layers.1.weight - torch.Size([256, 2048]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.ffn.layers.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.ffn_norm.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.ffn_norm.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.cls_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.cls_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.cls_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.0.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.reg_fcs.1.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.1.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.3.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.reg_fcs.4.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.4.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.6.weight - torch.Size([256, 256]): 
+Initialized by user-defined `init_weights` in DIIHead  
+
+roi_head.bbox_head.5.reg_fcs.7.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.bbox_head.5.reg_fcs.7.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.0.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.1.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.2.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.3.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.4.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.0.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.0.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.0.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.1.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.1.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.1.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.2.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.2.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.2.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.3.conv.weight - torch.Size([256, 256, 3, 3]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.3.bn.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.convs.3.bn.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.upsample.weight - torch.Size([256, 256, 2, 2]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.upsample.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.conv_logits.weight - torch.Size([1, 256, 1, 1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.conv_logits.bias - torch.Size([1]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.dynamic_layer.weight - torch.Size([32768, 256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.dynamic_layer.bias - torch.Size([32768]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.norm_in.weight - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.norm_in.bias - torch.Size([64]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.norm_out.weight - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+
+roi_head.mask_head.5.instance_interactive_conv.norm_out.bias - torch.Size([256]): 
+The value is the same before and after calling `init_weights` of QueryInst  
+2026/11/15 23:23:59 - mmengine - INFO - Load checkpoint from https://download.openmmlab.com/mmdetection/v2.0/queryinst/queryinst_r50_fpn_1x_coco/queryinst_r50_fpn_1x_coco_20210907_084916-5a8f1998.pth
+2026/11/15 23:23:59 - mmengine - WARNING - "FileClient" will be deprecated in future. Please use io functions in https://mmengine.readthedocs.io/en/latest/api/fileio.html#file-io
+2026/11/15 23:23:59 - mmengine - INFO - Checkpoints will be saved to D:\Documents\Personal\Uninorte\Maestría\Primer semestre\Deep Learning\Trabajo\datos\wdsd\results\e2\prueba_humo\queryinst\lote2.
+2026/11/15 23:24:01 - mmengine - INFO - Exp name: queryinst_r50_fpn_1x_coco_20261115_232354
+2026/11/15 23:24:01 - mmengine - INFO - Epoch(train) [1][2/2]  base_lr: 1.4737e-05 lr: 1.4737e-06  eta: 0:02:47  time: 0.5636  data_time: 0.0749  memory: 2571  grad_norm: nan  loss: 82.1927  s0.loss_cls: 2.4132  s0.pos_acc: 100.0000  s0.loss_bbox: 1.2740  s0.loss_iou: 2.0220  s0.loss_mask: 7.8684  s1.loss_cls: 2.1684  s1.pos_acc: 100.0000  s1.loss_bbox: 1.3549  s1.loss_iou: 2.0164  s1.loss_mask: 7.9378  s2.loss_cls: 2.2341  s2.pos_acc: 100.0000  s2.loss_bbox: 1.2974  s2.loss_iou: 2.0564  s2.loss_mask: 7.9302  s3.loss_cls: 2.7527  s3.pos_acc: 100.0000  s3.loss_bbox: 1.3242  s3.loss_iou: 2.0778  s3.loss_mask: 7.9330  s4.loss_cls: 2.3555  s4.pos_acc: 100.0000  s4.loss_bbox: 1.3587  s4.loss_iou: 2.0785  s4.loss_mask: 7.9384  s5.loss_cls: 2.3403  s5.pos_acc: 100.0000  s5.loss_bbox: 1.3822  s5.loss_iou: 2.1250  s5.loss_mask: 7.9532
+2026/11/15 23:24:14 - mmengine - INFO - Epoch(train) [1][25/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:02:44  time: 0.5979  data_time: 0.0734  memory: 3890  grad_norm: nan  loss: 65.2184  s0.loss_cls: 1.6082  s0.pos_acc: 100.0000  s0.loss_bbox: 0.7490  s0.loss_iou: 2.0813  s0.loss_mask: 6.9848  s1.loss_cls: 1.4358  s1.pos_acc: 100.0000  s1.loss_bbox: 0.6737  s1.loss_iou: 2.0559  s1.loss_mask: 7.0293  s2.loss_cls: 1.4414  s2.pos_acc: 100.0000  s2.loss_bbox: 0.6613  s2.loss_iou: 1.9581  s2.loss_mask: 6.8237  s3.loss_cls: 1.7099  s3.pos_acc: 100.0000  s3.loss_bbox: 0.6795  s3.loss_iou: 1.8788  s3.loss_mask: 6.6347  s4.loss_cls: 1.4559  s4.pos_acc: 100.0000  s4.loss_bbox: 0.7004  s4.loss_iou: 1.8445  s4.loss_mask: 6.5373  s5.loss_cls: 1.4326  s5.pos_acc: 100.0000  s5.loss_bbox: 0.6635  s5.loss_iou: 1.8629  s5.loss_mask: 6.3159
+2026/11/15 23:24:30 - mmengine - INFO - Epoch(train) [1][50/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:02:34  time: 0.6185  data_time: 0.0722  memory: 3890  grad_norm: nan  loss: 45.8174  s0.loss_cls: 1.1295  s0.pos_acc: 100.0000  s0.loss_bbox: 0.5375  s0.loss_iou: 2.0565  s0.loss_mask: 5.1679  s1.loss_cls: 0.9732  s1.pos_acc: 100.0000  s1.loss_bbox: 0.4006  s1.loss_iou: 1.7236  s1.loss_mask: 4.9315  s2.loss_cls: 0.9361  s2.pos_acc: 100.0000  s2.loss_bbox: 0.3828  s2.loss_iou: 1.5321  s2.loss_mask: 4.6809  s3.loss_cls: 1.0527  s3.pos_acc: 100.0000  s3.loss_bbox: 0.3906  s3.loss_iou: 1.4559  s3.loss_mask: 4.4734  s4.loss_cls: 0.8913  s4.pos_acc: 100.0000  s4.loss_bbox: 0.3998  s4.loss_iou: 1.4164  s4.loss_mask: 4.4559  s5.loss_cls: 0.8905  s5.pos_acc: 100.0000  s5.loss_bbox: 0.3761  s5.loss_iou: 1.4131  s5.loss_mask: 4.1495
+2026/11/15 23:24:47 - mmengine - INFO - Epoch(train) [1][75/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:02:21  time: 0.6471  data_time: 0.0710  memory: 3890  grad_norm: nan  loss: 19.4624  s0.loss_cls: 0.5483  s0.pos_acc: 100.0000  s0.loss_bbox: 0.2694  s0.loss_iou: 2.0283  s0.loss_mask: 2.7055  s1.loss_cls: 0.3785  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0849  s1.loss_iou: 1.1877  s1.loss_mask: 1.8862  s2.loss_cls: 0.3190  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0616  s2.loss_iou: 0.8729  s2.loss_mask: 1.6684  s3.loss_cls: 0.2904  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0577  s3.loss_iou: 0.7877  s3.loss_mask: 1.4894  s4.loss_cls: 0.2233  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0556  s4.loss_iou: 0.7448  s4.loss_mask: 1.5130  s5.loss_cls: 0.2370  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0502  s5.loss_iou: 0.7265  s5.loss_mask: 1.2762
+2026/11/15 23:25:03 - mmengine - INFO - Epoch(train) [1][100/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:02:06  time: 0.6515  data_time: 0.0709  memory: 3890  grad_norm: 153.0646  loss: 13.5569  s0.loss_cls: 0.4430  s0.pos_acc: 100.0000  s0.loss_bbox: 0.2263  s0.loss_iou: 2.1283  s0.loss_mask: 2.7805  s1.loss_cls: 0.3022  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0563  s1.loss_iou: 1.0516  s1.loss_mask: 1.0525  s2.loss_cls: 0.2211  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0248  s2.loss_iou: 0.6509  s2.loss_mask: 0.7628  s3.loss_cls: 0.2007  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0150  s3.loss_iou: 0.5248  s3.loss_mask: 0.6347  s4.loss_cls: 0.1494  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0130  s4.loss_iou: 0.4952  s4.loss_mask: 0.6166  s5.loss_cls: 0.1514  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0125  s5.loss_iou: 0.4840  s5.loss_mask: 0.5593
+2026/11/15 23:25:19 - mmengine - INFO - Epoch(train) [1][125/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:01:51  time: 0.6463  data_time: 0.0716  memory: 3890  grad_norm: 130.2737  loss: 12.3157  s0.loss_cls: 0.3961  s0.pos_acc: 100.0000  s0.loss_bbox: 0.2562  s0.loss_iou: 2.1108  s0.loss_mask: 2.5157  s1.loss_cls: 0.2739  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0563  s1.loss_iou: 0.9897  s1.loss_mask: 0.8742  s2.loss_cls: 0.1898  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0262  s2.loss_iou: 0.5577  s2.loss_mask: 0.6283  s3.loss_cls: 0.1544  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0203  s3.loss_iou: 0.4537  s3.loss_mask: 0.5488  s4.loss_cls: 0.1380  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0168  s4.loss_iou: 0.4371  s4.loss_mask: 0.5583  s5.loss_cls: 0.1320  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0186  s5.loss_iou: 0.4284  s5.loss_mask: 0.5345
+2026/11/15 23:25:35 - mmengine - INFO - Epoch(train) [1][150/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:01:35  time: 0.6473  data_time: 0.0723  memory: 3890  grad_norm: 114.7564  loss: 9.1075  s0.loss_cls: 0.2768  s0.pos_acc: 100.0000  s0.loss_bbox: 0.2291  s0.loss_iou: 1.9700  s0.loss_mask: 1.4497  s1.loss_cls: 0.1506  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0299  s1.loss_iou: 0.7655  s1.loss_mask: 0.4947  s2.loss_cls: 0.1054  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0151  s2.loss_iou: 0.4154  s2.loss_mask: 0.4570  s3.loss_cls: 0.0656  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0159  s3.loss_iou: 0.3662  s3.loss_mask: 0.4401  s4.loss_cls: 0.0679  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0139  s4.loss_iou: 0.3665  s4.loss_mask: 0.4720  s5.loss_cls: 0.0639  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0164  s5.loss_iou: 0.3773  s5.loss_mask: 0.4827
+2026/11/15 23:25:51 - mmengine - INFO - Epoch(train) [1][175/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:01:19  time: 0.6473  data_time: 0.0713  memory: 3890  grad_norm: 166.3768  loss: 7.9491  s0.loss_cls: 0.1675  s0.pos_acc: 100.0000  s0.loss_bbox: 0.1738  s0.loss_iou: 1.9415  s0.loss_mask: 1.3398  s1.loss_cls: 0.1082  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0197  s1.loss_iou: 0.6836  s1.loss_mask: 0.4126  s2.loss_cls: 0.0703  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0092  s2.loss_iou: 0.3648  s2.loss_mask: 0.3574  s3.loss_cls: 0.0501  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0076  s3.loss_iou: 0.3150  s3.loss_mask: 0.3584  s4.loss_cls: 0.0441  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0077  s4.loss_iou: 0.3249  s4.loss_mask: 0.3942  s5.loss_cls: 0.0437  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0080  s5.loss_iou: 0.3419  s5.loss_mask: 0.4052
+2026/11/15 23:26:08 - mmengine - INFO - Epoch(train) [1][200/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:01:04  time: 0.6461  data_time: 0.0701  memory: 3890  grad_norm: 200.1602  loss: 7.1281  s0.loss_cls: 0.1049  s0.pos_acc: 100.0000  s0.loss_bbox: 0.1386  s0.loss_iou: 1.8506  s0.loss_mask: 1.0972  s1.loss_cls: 0.0776  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0177  s1.loss_iou: 0.6096  s1.loss_mask: 0.4045  s2.loss_cls: 0.0508  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0090  s2.loss_iou: 0.3272  s2.loss_mask: 0.3389  s3.loss_cls: 0.0406  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0074  s3.loss_iou: 0.2929  s3.loss_mask: 0.3392  s4.loss_cls: 0.0380  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0073  s4.loss_iou: 0.2907  s4.loss_mask: 0.3836  s5.loss_cls: 0.0376  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0073  s5.loss_iou: 0.2950  s5.loss_mask: 0.3617
+2026/11/15 23:26:24 - mmengine - INFO - Epoch(train) [1][225/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:00:48  time: 0.6497  data_time: 0.0691  memory: 3890  grad_norm: 228.4207  loss: 6.0424  s0.loss_cls: 0.0619  s0.pos_acc: 100.0000  s0.loss_bbox: 0.1086  s0.loss_iou: 1.7652  s0.loss_mask: 0.7542  s1.loss_cls: 0.0387  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0111  s1.loss_iou: 0.4536  s1.loss_mask: 0.3407  s2.loss_cls: 0.0252  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0067  s2.loss_iou: 0.2758  s2.loss_mask: 0.3132  s3.loss_cls: 0.0113  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0067  s3.loss_iou: 0.2775  s3.loss_mask: 0.3150  s4.loss_cls: 0.0142  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0066  s4.loss_iou: 0.2775  s4.loss_mask: 0.3369  s5.loss_cls: 0.0154  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0072  s5.loss_iou: 0.2968  s5.loss_mask: 0.3222
+2026/11/15 23:26:40 - mmengine - INFO - Epoch(train) [1][250/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:00:32  time: 0.6493  data_time: 0.0690  memory: 3890  grad_norm: 259.1618  loss: 5.5106  s0.loss_cls: 0.0375  s0.pos_acc: 100.0000  s0.loss_bbox: 0.1089  s0.loss_iou: 1.7845  s0.loss_mask: 0.6734  s1.loss_cls: 0.0293  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0098  s1.loss_iou: 0.4153  s1.loss_mask: 0.2863  s2.loss_cls: 0.0205  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0054  s2.loss_iou: 0.2492  s2.loss_mask: 0.2582  s3.loss_cls: 0.0074  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0054  s3.loss_iou: 0.2441  s3.loss_mask: 0.2499  s4.loss_cls: 0.0063  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0056  s4.loss_iou: 0.2537  s4.loss_mask: 0.2792  s5.loss_cls: 0.0069  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0064  s5.loss_iou: 0.2814  s5.loss_mask: 0.2860
+2026/11/15 23:26:56 - mmengine - INFO - Epoch(train) [1][275/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:00:16  time: 0.6462  data_time: 0.0695  memory: 3890  grad_norm: 247.0363  loss: 5.3219  s0.loss_cls: 0.0228  s0.pos_acc: 100.0000  s0.loss_bbox: 0.1065  s0.loss_iou: 1.7410  s0.loss_mask: 0.6295  s1.loss_cls: 0.0242  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0095  s1.loss_iou: 0.4087  s1.loss_mask: 0.2705  s2.loss_cls: 0.0231  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0053  s2.loss_iou: 0.2426  s2.loss_mask: 0.2441  s3.loss_cls: 0.0093  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0052  s3.loss_iou: 0.2314  s3.loss_mask: 0.2327  s4.loss_cls: 0.0084  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0058  s4.loss_iou: 0.2513  s4.loss_mask: 0.2765  s5.loss_cls: 0.0102  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0062  s5.loss_iou: 0.2685  s5.loss_mask: 0.2886
+2026/11/15 23:27:13 - mmengine - INFO - Epoch(train) [1][300/2]  base_lr: 1.0000e-04 lr: 1.0000e-05  eta: 0:00:00  time: 0.6493  data_time: 0.0694  memory: 3890  grad_norm: 237.7843  loss: 4.8701  s0.loss_cls: 0.0159  s0.pos_acc: 100.0000  s0.loss_bbox: 0.0873  s0.loss_iou: 1.6218  s0.loss_mask: 0.4853  s1.loss_cls: 0.0155  s1.pos_acc: 100.0000  s1.loss_bbox: 0.0077  s1.loss_iou: 0.3501  s1.loss_mask: 0.2662  s2.loss_cls: 0.0190  s2.pos_acc: 100.0000  s2.loss_bbox: 0.0048  s2.loss_iou: 0.2283  s2.loss_mask: 0.2474  s3.loss_cls: 0.0050  s3.pos_acc: 100.0000  s3.loss_bbox: 0.0048  s3.loss_iou: 0.2237  s3.loss_mask: 0.2369  s4.loss_cls: 0.0037  s4.pos_acc: 100.0000  s4.loss_bbox: 0.0053  s4.loss_iou: 0.2393  s4.loss_mask: 0.2708  s5.loss_cls: 0.0047  s5.pos_acc: 100.0000  s5.loss_bbox: 0.0056  s5.loss_iou: 0.2541  s5.loss_mask: 0.2667
+2026/11/15 23:27:14 - mmengine - INFO - Evaluating segm...
+2026/11/15 23:27:14 - mmengine - INFO - segm_mAP_copypaste: 0.983 1.000 1.000 0.983 -1.000 -1.000
+2026/11/15 23:27:14 - mmengine - INFO - Epoch(val) [0][4/4]    coco/segm_mAP: 0.9830  coco/segm_mAP_50: 1.0000  coco/segm_mAP_75: 1.0000  coco/segm_mAP_s: 0.9830  coco/segm_mAP_m: -1.0000  coco/segm_mAP_l: -1.0000  data_time: 0.0228  time: 0.2965
+2026/11/15 23:27:15 - mmengine - INFO - Evaluating segm...
+2026/11/15 23:27:15 - mmengine - INFO - segm_mAP_copypaste: 0.983 1.000 1.000 0.983 -1.000 -1.000
+2026/11/15 23:27:15 - mmengine - INFO - Epoch(val) [0][4/4]    coco/segm_mAP: 0.9830  coco/segm_mAP_50: 1.0000  coco/segm_mAP_75: 1.0000  coco/segm_mAP_s: 0.9830  coco/segm_mAP_m: -1.0000  coco/segm_mAP_l: -1.0000  data_time: 0.0201  time: 0.2882

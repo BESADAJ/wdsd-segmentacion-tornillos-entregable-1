@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-16 00:50",
+ "modelo": "yolo26n-seg",
+ "marco": "ultra",
+ "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "lote": 2,
+ "estado": "CABE",
+ "pico_asignada_gb": 1.72,
+ "pico_reservada_gb": 1.93,
+ "segm_AP50_4img": 0.759,
+ "segm_AP_4img": 0.301,
+ "sanidad_ok": "NO",
+ "minutos": 3.3,
+ "parametros": 3082751,
+ "error": ""
+}

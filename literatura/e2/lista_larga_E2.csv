@@ -1,0 +1,27 @@
+﻿modelo,familia,modelo_base_E1,anio_lanzamiento,anio_registro_cita,citas,fuente_citas,mem_ref_GB,mask_AP_COCO,fuente_AP,implementacion,exclusion_F1_F3,F4_6GB_prueba_humo,AP50_mascara_4img_prueba_humo
+Mask R-CNN,R,1,2017,2017,26511.0,Scopus 2026-11-15,4.4,34.7,MMDet r50 1x,1.0,,modelo base E1,
+Cascade Mask R-CNN,R,0,2021,2021,1871.0,Scopus 2026-11-15,6.0,35.9,MMDet r50 1x,1.0,,"sí (lote 2, 2.25 GB)",1.0
+HTC,R,0,2019,2019,1465.0,Scopus 2026-11-15,8.2,37.4,MMDet r50 1x,1.0,,"sí (lote 2, 2.44 GB)",1.0
+Mask Scoring R-CNN,R,0,2019,2019,1145.0,Scopus 2026-11-15,4.5,36.0,MMDet r50 1x,1.0,,"sí (lote 2, 1.94 GB)",0.968
+PointRend,R,0,2020,2020,1202.0,Scopus 2026-11-15,4.6,36.3,MMDet r50 1x,1.0,,"sí (lote 2, 1.98 GB)",1.0
+SCNet,R,0,2021,2021,118.0,Scopus 2026-11-15,7.0,39.2,MMDet r50 1x,1.0,,"sí (lote 2, 2.37 GB)",1.0
+SOLOv2,K,1,2020,2020,1094.0,Scopus 2026-11-15,5.1,34.8,MMDet r50 1x,1.0,,modelo base E1,
+SOLO,K,0,2020,2020,728.0,Scopus 2026-11-15,8.0,33.1,MMDet r50 1x,1.0,,sin probar (primera corrida no válida; descarta objetos < paso del nivel),
+CondInst,K,0,2020,2020,602.0,Scopus 2026-11-15,,36.0,MMDet r50 90k,1.0,,"sí (lote 2, 2.16 GB)",0.484
+SparseInst,K,0,2022,2022,231.0,Scopus 2026-11-15,8.7,32.9,MMDet r50 270k,1.0,,sin probar,
+BoxInst,K,0,2021,2021,,Scopus 2026-11-15,,31.1,MMDet r50,1.0,supervisión con cajas,sin probar,
+YOLOv8-seg,P,1,2023,2023,6828.0,"Google Scholar 2026-11-15 (registro Zenodo 'Ultralytics YOLO', 2023; compartido con YOLO11)",,30.5,ultralytics n 640,1.0,,modelo base E1,0.734
+YOLACT,P,0,2019,2019,2505.0,Scopus 2026-11-15,,29.0,MMDet r50,1.0,,sin probar,
+RTMDet-Ins,P,0,2022,2022,1598.0,Google Scholar 2026-11-15 (arXiv 2022),,35.4,MMDet tiny 300e,1.0,,sin probar,
+YOLO11-seg,P,0,2024,2023,6828.0,"Google Scholar 2026-11-15 (registro Zenodo 'Ultralytics YOLO', 2023; compartido con YOLOv8)",,32.0,ultralytics n 640,1.0,,"sí (lote 2, 1.34 GB)",0.718
+YOLO26-seg,P,0,2026,2026,389.0,Google Scholar 2026-11-15 (arXiv 2026),,33.9,ultralytics n 640 e2e,1.0,,"sí (lote 2, 1.72 GB)",0.765
+YOLOv7-seg,P,0,2023,2023,11612.0,"Scopus 2026-11-15 (paper de detección YOLOv7, CVPR 2023)",,40.5,repo oficial yolov7-seg 640,0.5,,"sí (lote 1, 3.89 GB; lote 2 7.41 GB desborda)",0.817
+YOLOv9-seg,P,0,2025,2025,1271.0,"Scopus 2026-11-15 (paper de detección YOLOv9, ECCV 2024)",,42.4,repo oficial gelan-c-seg 640,0.5,,"sí (lote 1, 3.57 GB; lote 2 6.89 GB desborda)",0.787
+BlendMask,P,0,2020,2020,652.0,Scopus 2026-11-15,,35.8,AdelaiDet r50 1x,0.5,,sin probar,
+CenterMask,P,0,2020,2020,732.0,Scopus 2026-11-15,,36.4,repo oficial r50 24ep val,0.5,,sin probar,
+QueryInst,Q,0,2021,2021,357.0,Scopus 2026-11-15,,37.5,MMDet r50 1x,1.0,,"sí (lote 2, 3.80 GB)",1.0
+Mask2Former,Q,0,2022,2022,3924.0,Scopus 2026-11-15,13.7,42.9,MMDet r50 50e,1.0,,"sí (lote 1, 3.19 GB; lote 2 sin memoria)",0.842
+Mask DINO,Q,0,2023,2023,617.0,Scopus 2026-11-15,15.0,46.1,repo oficial r50 50ep,0.5,,"no (15 GB por GPU documentados, solo detectron2)",
+FastInst,Q,0,2023,2023,153.0,Scopus 2026-11-15,,34.9,repo oficial D1 r50 576,0.5,,sin probar,
+PolarMask,C,0,2020,2020,632.0,Scopus 2026-11-15,,29.2,repo oficial r50 1x minival,0.5,,sin probar,
+SAM,S,0,2023,2023,10560.0,Scopus 2026-11-15,,,,0.5,necesita prompts,sin probar,

@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-15 23:27",
+ "modelo": "queryinst",
+ "marco": "mmdet",
+ "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "lote": 2,
+ "estado": "CABE",
+ "pico_asignada_gb": 3.8,
+ "pico_reservada_gb": 5.12,
+ "segm_AP50_4img": 1.0,
+ "segm_AP_4img": 0.983,
+ "sanidad_ok": "s\u00ed",
+ "minutos": 3.4,
+ "parametros": 172445172,
+ "error": ""
+}

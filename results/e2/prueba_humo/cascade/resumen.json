@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-15 23:14",
+ "modelo": "cascade",
+ "marco": "mmdet",
+ "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "lote": 2,
+ "estado": "CABE",
+ "pico_asignada_gb": 2.25,
+ "pico_reservada_gb": 2.56,
+ "segm_AP50_4img": 1.0,
+ "segm_AP_4img": 1.0,
+ "sanidad_ok": "s\u00ed",
+ "minutos": 2.4,
+ "parametros": 77020772,
+ "error": ""
+}

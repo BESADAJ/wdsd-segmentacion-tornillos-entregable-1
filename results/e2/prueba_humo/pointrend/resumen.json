@@ -1,0 +1,16 @@
+{
+ "fecha": "2026-11-15 23:19",
+ "modelo": "pointrend",
+ "marco": "mmdet",
+ "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+ "lote": 2,
+ "estado": "CABE",
+ "pico_asignada_gb": 1.98,
+ "pico_reservada_gb": 2.27,
+ "segm_AP50_4img": 1.0,
+ "segm_AP_4img": 1.0,
+ "sanidad_ok": "s\u00ed",
+ "minutos": 1.9,
+ "parametros": 55754888,
+ "error": ""
+}
