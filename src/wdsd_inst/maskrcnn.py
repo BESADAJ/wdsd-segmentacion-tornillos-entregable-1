@@ -97,8 +97,13 @@ def predecir(modelo, ruta_json: Path, disp, umbral_score: float = 0.05) -> list[
 
 
 def entrenar(datos: Path, carpeta: Path, semilla: int, epocas: int, disp, lote: int = 2, lr: float | None = None,
-             preentrenado: bool = True, max_iter: int | None = None, log=print) -> dict:
-    """Entrena, selecciona la mejor época por AP de máscara en val y deja preds_val/preds_test.json."""
+             preentrenado: bool = True, max_iter: int | None = None, log=print, splits: tuple = ("val", "test"),
+             lr_min_ratio: float = 0.0) -> dict:
+    """Entrena, selecciona la mejor época por AP de máscara en val y deja preds_<split>.json de cada split.
+
+    splits y lr_min_ratio se añadieron en el E2 (búsqueda sin test; coseno hasta lr_min_ratio x lr). Sus valores por
+    defecto reproducen el E1.
+    """
     carpeta.mkdir(parents=True, exist_ok=True)
     lr = lr if lr is not None else 0.0025 * lote  # escala lineal: 0.02 para lote 8x2 en la receta de torchvision
     g = torch.Generator().manual_seed(semilla)
@@ -111,10 +116,10 @@ def entrenar(datos: Path, carpeta: Path, semilla: int, epocas: int, disp, lote: 
     calentamiento = min(500, max(1, pasos // 10))
     sched = torch.optim.lr_scheduler.LambdaLR(
         opt, lambda i: (i + 1) / calentamiento if i < calentamiento
-        else 0.5 * (1 + math.cos(math.pi * (i - calentamiento) / max(1, pasos - calentamiento))))
+        else lr_min_ratio + (1 - lr_min_ratio) * 0.5 * (1 + math.cos(math.pi * (i - calentamiento) / max(1, pasos - calentamiento))))
     scaler = torch.amp.GradScaler(enabled=disp.type == "cuda")
     gt_val = cargar_gt(datos / "coco/val.json")
-    historial, mejor = [], -1.0
+    historial, mejor, mejor_epoca = [], -1.0, 0
     if disp.type == "cuda":
         torch.cuda.reset_peak_memory_stats()
     for ep in range(1, epocas + 1):
@@ -141,11 +146,11 @@ def entrenar(datos: Path, carpeta: Path, semilla: int, epocas: int, disp, lote: 
         log(f"  maskrcnn s{semilla} época {ep}/{epocas}: pérdida {fila['perdida']:.3f}, val AP {ap['AP']:.3f}, "
             f"AP50 {ap['AP50']:.3f}, {fila['s_total']:.0f} s")
         if ap["AP"] > mejor:
-            mejor = ap["AP"]
+            mejor, mejor_epoca = ap["AP"], ep
             torch.save(modelo.state_dict(), carpeta / "mejor.pt")
     modelo.load_state_dict(torch.load(carpeta / "mejor.pt", map_location=disp))
-    (carpeta / "preds_val.json").write_text(json.dumps(predecir(modelo, datos / "coco/val.json", disp)))
-    (carpeta / "preds_test.json").write_text(json.dumps(predecir(modelo, datos / "coco/test.json", disp)))
+    for split in splits:
+        (carpeta / f"preds_{split}.json").write_text(json.dumps(predecir(modelo, datos / f"coco/{split}.json", disp)))
     pico = torch.cuda.max_memory_allocated() / 2**30 if disp.type == "cuda" else float("nan")
-    return {"historial": historial, "mejor_val_AP": mejor, "gpu_pico_gb": pico,
+    return {"historial": historial, "mejor_val_AP": mejor, "mejor_epoca": mejor_epoca, "gpu_pico_gb": pico,
             "parametros": sum(p.numel() for p in modelo.parameters())}

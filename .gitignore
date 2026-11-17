@@ -23,3 +23,6 @@ _build/
 
 # E2: exportaciones de Scopus, WoS e IEEE (terminos de uso de las bases)
 literatura/e2/exportaciones/
+
+# E2: rutas de los entornos de cada máquina (entrenar_e2.py configurar)
+maquina_e2.json
