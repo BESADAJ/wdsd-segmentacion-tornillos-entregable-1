@@ -227,21 +227,31 @@ def cmd_buscar(a):
 
 
 def elegir(modelo: str):
-    """Mejor configuración por F1 de instancia por grupo en val; empate a 0.005 -> la de por defecto."""
+    """Mejor configuración por F1 de instancia por grupo en val; empate a 0.005 -> la de por defecto.
+    Una configuración que falló dos veces (fallo.json) queda fuera y se elige entre las demás."""
     valores, defecto = R.configs(modelo)
-    res = {}
+    res, fallidas = {}, []
     for v in valores:
-        p = SALIDA / "busqueda" / f"{modelo}_c{R.etiqueta(v)}" / "resumen.json"
-        if not p.exists():
+        c = SALIDA / "busqueda" / f"{modelo}_c{R.etiqueta(v)}"
+        if not (c / "resumen.json").exists():
+            if (c / "fallo.json").exists():
+                fallidas.append(R.etiqueta(v))
+                continue
             print(f"{modelo}: falta la configuración {v:g}; no elijo todavía.")
             return
-        r = json.loads(p.read_text(encoding="utf8"))
+        r = json.loads((c / "resumen.json").read_text(encoding="utf8"))
         res[v] = {"F1_grupo_val": r["metricas"]["val"]["F1_grupo"], "AP_val": r["metricas"]["val"]["AP"],
                   "maquina": r.get("maquina"), "mejor_epoca": r.get("mejor_epoca")}
+    if not res:
+        print(f"!! {modelo}: fallaron las {len(valores)} configuraciones de la búsqueda; no hay elección.")
+        return
     mejor = max(res, key=lambda v: res[v]["F1_grupo_val"])
-    elegido = defecto if res[defecto]["F1_grupo_val"] >= res[mejor]["F1_grupo_val"] - R.EMPATE else mejor
+    if defecto in res and res[defecto]["F1_grupo_val"] >= res[mejor]["F1_grupo_val"] - R.EMPATE:
+        elegido = defecto
+    else:
+        elegido = mejor
     salida = {"modelo": modelo, "elegido": elegido, "por_defecto": defecto, "regla": "max F1_grupo val; empate 0.005",
-              "configuraciones": {R.etiqueta(v): x for v, x in res.items()},
+              "configuraciones": {R.etiqueta(v): x for v, x in res.items()}, "fallidas": fallidas,
               "misma_maquina": len({x["maquina"] for x in res.values()}) == 1}
     (SALIDA / "busqueda" / f"{modelo}_elegida.json").write_text(json.dumps(salida, indent=1), encoding="utf8")
     print(f"{modelo}: elegida {elegido:g} " + " | ".join(f"{v:g}: F1 {x['F1_grupo_val']:.3f}" for v, x in res.items()))
@@ -257,6 +267,11 @@ def cmd_final(a):
         if m == "vacio":
             continue
         p = SALIDA / "busqueda" / f"{m}_elegida.json"
+        valores, _ = R.configs(m)
+        if not p.exists() and all((SALIDA / "busqueda" / f"{m}_c{R.etiqueta(v)}" / "fallo.json").exists()
+                                  for v in valores):
+            print(f"!! {m}: su búsqueda falló entera; no tiene corridas finales (queda como fallo, preregistro §6).")
+            continue
         if not p.exists():
             sys.exit(f"Falta {p.relative_to(RAIZ)}: corre antes `buscar` para {m} (o copia ese archivo de la otra máquina).")
         elegidos[m] = json.loads(p.read_text(encoding="utf8"))["elegido"]
@@ -306,8 +321,17 @@ def cmd_una(a):
     from wdsd_e2 import comun, evaluar
     carpeta = Path(a.carpeta)
     spec = R.MODELOS[a.modelo]
-    disp = comun.preparar_gpu(a.permitir_cpu)
-    comun.fijar_semilla(a.semilla)
+    if spec["marco"] == "oficial":
+        # El repo oficial entrena en un proceso hijo: este proceso no debe abrir un contexto de CUDA (ocupa VRAM que
+        # le falta al hijo). torch.cuda.is_available() no crea contexto.
+        import torch
+        if not torch.cuda.is_available() and not a.permitir_cpu:
+            raise SystemExit(f"torch {torch.__version__} no ve la GPU. Revisa el entorno (o --permitir-cpu solo para pruebas).")
+        disp = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    else:
+        disp = comun.preparar_gpu(a.permitir_cpu)
+    if spec["marco"] != "oficial":  # en los repos oficiales la semilla la fija train.py (--seed)
+        comun.fijar_semilla(a.semilla)
     t0 = time.time()
     splits = SPLITS[a.modo]
     if spec["marco"] == "vacio":

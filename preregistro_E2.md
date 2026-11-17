@@ -1,6 +1,6 @@
 # Preregistro del Entregable 2
 
-Estado: **BORRADOR, 2026-11-16.** Cuenta como preregistro solo cuando esté fechado en una release etiquetada (`e2-preregistro`) **antes del primer entrenamiento** del E2 (PDF E2 §9). Ninguna corrida de entrenamiento del E2 se ha hecho. La prueba de humo de `results/e2/prueba_humo/` usó solo 4 imágenes de train, para medir memoria y sanidad; no usó validación ni prueba.
+Estado: **PREREGISTRO, 2026-11-16 (hora de Colombia).** Cuenta como preregistro solo cuando esté fechado en una release etiquetada (`e2-preregistro`) **antes del primer entrenamiento** del E2 (PDF E2 §9). Antes de la release solo se corrió el piloto de tiempo (§4: 1 época por modelo en la 3060, sin guardar ni usar métricas). La prueba de humo de `results/e2/prueba_humo/` usó solo 4 imágenes de train, para medir memoria y sanidad; no usó validación ni prueba.
 
 Cada campo dice de dónde viene:
 - **[E1]**: heredado sin cambios de `results/eda/declaracion_a_priori_instancias.json` (2026-11-11), como exige el PDF E2.
@@ -18,7 +18,7 @@ Cada campo dice de dónde viene:
 | Hash de val | `8252f051f632fa44a1be3f1e39146d0b35422232b986043003caa73b3d2b9166` **[E1]** |
 | Hash de test | `af1fed4e311dfab3fe2762961b6d6b5bbd6c36184ff179af77247a76e16e80fa` **[E1]** |
 | Entrada | Imagen completa de 1280×720, sin ventana deslizante **[E1]**. |
-| Código y entornos | El commit de la release `e2-preregistro`; `requirements_wdsd_dl_congelado.txt`, `requirements_wdsd_mmdet_congelado.txt` y `requirements_wdsd_yolo9_congelado.txt`; YOLOv9 `5b1ea9a`, YOLOv7 u7 `44f30af` **[E2]**. |
+| Código y entornos | El commit de la release `e2-preregistro`; `requirements_wdsd_dl_congelado.txt`, `requirements_wdsd_mmdet_congelado.txt` y `requirements_wdsd_yolo9_congelado.txt`; YOLOv9 `5b1ea9a`, YOLOv7 u7 `44f30af`, con los cambios declarados en `results/e2/prueba_humo/repos_oficiales/README.md` **[E2]**. |
 
 ## 2. Métricas y márgenes
 
@@ -74,31 +74,39 @@ Cada campo dice de dónde viene:
 **Fijo [E2].** Mismo presupuesto para los 13 modelos (Top 10 y modelos base) y el baseline no profundo (PDF §11.1 y §11.2):
 
 - **Búsqueda de hiperparámetros:** T = 3 configuraciones por modelo. Son la tasa de aprendizaje por defecto de cada marco multiplicada por {0.5, 1, 2}, en escala logarítmica.
-  - Cada configuración se entrena con la semilla 42 y 1/3 de las épocas finales.
+  - Cada configuración se entrena con la semilla 42 y ⌈E/3⌉ épocas (2 con E = 6).
   - Se elige por el F1 de instancia promediado por grupo en val, con el umbral de score elegido en val. Si la mejor supera a la de por defecto por menos de 0.005, gana la de por defecto.
   - Se reportan el mejor valor, su posición en el espacio y la curva de F1 contra tasa de aprendizaje.
-- **Corridas finales:** E épocas iguales para todos, con la configuración elegida y R = 5 semillas. Valor propuesto: **E = 12**, que es el programa "1x" de MMDetection y las épocas de la Mask R-CNN del E1.
+- **Corridas finales:** E épocas iguales para todos, con la configuración elegida y R = 5 semillas. **E = 6**, fijado el 2026-11-16 con el piloto y la regla de abajo (el valor inicial propuesto era 12, el programa "1x" de MMDetection).
+- **Si una configuración de la búsqueda falla dos veces**, se elige entre las que terminaron. Si fallan las tres, el modelo no tiene corridas finales y se reporta como fallo.
 - **Reparto entre máquinas por semillas, nunca por modelos (como en el E1):** cada modelo tiene las mismas semillas en cada GPU, así que el hardware queda balanceado entre modelos. El tiempo de entrenamiento se reporta por máquina. La latencia de inferencia se mide para todos en una sola GPU. Las T configuraciones de la búsqueda de un modelo van en la misma máquina.
 - **Piloto de tiempo:** 1 época por modelo en cada máquina, semilla 42, solo para medir segundos por época, tiempo fijo y segundos de predicción por imagen. No predice test ni calcula F1; el AP de val que imprimen los marcos durante la época no se guarda ni se usa.
 - **Si el hardware no alcanza:** se baja E, igual para todos, **antes** de la release. Nunca después de ver resultados.
 - **Parada:** el mismo criterio para todos: E épocas fijas y la mejor época por val. Se reportan las curvas de train y val. Si la curva de val de un modelo sigue subiendo en la última época, se declara que ese modelo quedó subentrenado con E.
 
 **Hardware [E2], confirmado el 2026-11-16:** dos portátiles, sin nube.
-- RTX 3060 Laptop de 6 GB: piloto, búsqueda de hiperparámetros y semillas 42–45. Disponible desde la noche del 2026-11-16.
-- RTX 3050 Laptop de 6 GB: piloto y semilla 46. Disponible desde la tarde del 2026-11-17.
+- RTX 3060 Laptop de 6 GB: piloto, búsqueda de hiperparámetros y semillas 42–45. Desde la noche del 2026-11-16.
+- Semilla 46: entera en la 3060 o entera en la RTX 3050 Laptop de 6 GB (disponible del 2026-11-17 20:00 al 2026-11-18 06:00). Se decide antes de que empiece la semilla 46 y se reporta. Nunca se reparten los modelos de una misma semilla entre máquinas, salvo para terminar corridas que la 3050 no alcance a las 06:00, lo que se declararía.
+- El tiempo en la 3050 se estima con el piloto de la 3060 por la razón 3050/3060 que midió el E1 en cada marco (`results/instancias/corridas/*/resumen.json`, minutos por corrida): MMDetection 1.76 (SOLOv2: 55.9 / 31.7), torchvision 2.19 (Mask R-CNN: 73.5 / 33.5), ultralytics 2.97 (YOLOv8: 62.4 / 21.0). YOLOv7 y YOLOv9 usan 2.97, la más lenta.
 
 **Regla para fijar E**, decidida antes de entrenar:
-1. El piloto de tiempo mide en cada máquina los segundos por época, el tiempo fijo y los segundos de predicción por imagen de cada modelo (`entrenar_e2.py piloto`).
-2. Con esa medida se calcula el E más grande, entre 12 y 4, con el que la búsqueda y las corridas finales caben en las horas disponibles de las dos máquinas hasta 24 h antes de la entrega (2026-11-18, 24:00).
+1. El piloto de tiempo mide en la 3060 los segundos por época, el tiempo fijo y los segundos de predicción por imagen de cada modelo (`entrenar_e2.py piloto`, `results/e2/piloto/3060/`).
+2. Con esa medida se elige el E más grande, entre 12 y 4, con el que la búsqueda y las 5 semillas caben antes de las 06:00 del 2026-11-18, para dejar el resto del día al análisis (entrega: 2026-11-18, 24:00).
 3. Ese E es el mismo para todos los modelos. Se anota aquí, con la fecha, antes de publicar la release.
 
-Estimación inferida de la prueba de humo, sin medir: una época de los 13 modelos tarda ≈ 0.68 h en la 3060, y la 3050 es ≈ 2.2 veces más lenta. La búsqueda (3 configuraciones × E/3 épocas) cuesta lo mismo que una semilla. Horas disponibles: ≈ 26 en la 3060 y ≈ 10 en la 3050.
+**Piloto (3060, observado, 2026-11-16).** Minutos por época con la validación incluida: Mask2Former 7.5, YOLOv7 4.7, YOLOv9 4.6, HTC 4.2, Cascade 3.7, PointRend 3.1, CondInst 3.0, MS R-CNN 3.0, Mask R-CNN 3.0, SOLOv2 2.8, YOLO26 2.1, YOLO11 1.5, YOLOv8 1.1; el clásico tarda 1.1 min en total. YOLOv9 dio primero pérdida infinita por una división por cero de su repo; se parchó (`results/e2/prueba_humo/repos_oficiales/README.md`, cambio 5) y el piloto se repitió. Suma: 44 min por época en la 3060 y ≈ 96 min en la 3050.
 
-| E | Búsqueda + semillas 42–45 (3060) | Semilla 46 (3050) |
-|---|---|---|
-| 8 | ≈ 27 h | ≈ 12 h |
-| 7 | ≈ 24 h | ≈ 10.5 h |
-| 6 | ≈ 20 h | ≈ 9 h |
+| E | Búsqueda (3060) | Una semilla (3060) | Búsqueda + 5 semillas (3060) | Una semilla (3050) |
+|---|---|---|---|---|
+| 8 | 7.1 h | 6.3 h | 38.3 h | 13.6 h |
+| 7 | 7.1 h | 5.5 h | 34.6 h | 12.0 h |
+| **6** | **4.8 h** | **4.8 h** | **28.7 h** | **10.4 h** |
+| 5 | 4.8 h | 4.0 h | 25.0 h | 8.8 h |
+| 4 | 4.8 h | 3.3 h | 21.3 h | 7.2 h |
+
+Arrancando el 2026-11-16 hacia las 24:00, E = 7 termina hacia las 10:30 del 2026-11-18 en la 3060 sola, y la semilla 46 en la 3050 no cabe en su ventana de 10 h. **E = 6** termina hacia las 04:45 del 2026-11-18. Por eso E = 6.
+
+**Suficiencia de E = 6 (observado en el E1, mismo lote efectivo 2).** La Mask R-CNN del E1 (12 épocas) tuvo AP de máscara en val de 0.278 / 0.264 / 0.281 en la época 6, contra un máximo de 0.294 / 0.284 / 0.289 (épocas 9, 8 y 5; semillas 42–44). SOLOv2 tuvo su mejor época en la 6, 7 y 6. Los modelos que convergen más lento (en particular Mask2Former) pueden quedar subentrenados; se declara con la regla de parada de arriba.
 
 ## 5. Preguntas de investigación y pruebas
 
@@ -145,4 +153,6 @@ Estimación inferida de la prueba de humo, sin medir: una época de los 13 model
   - latencia;
   - con y sin preentrenamiento, solo en el mejor modelo.
 - Se registra el número total de modelos, configuraciones y métricas examinados (PDF §9.3).
-- **Limitación del paper guía:** se declara aquí antes de los experimentos definitivos (pendiente, §5 del PDF).
+- **Paper guía y su limitación (PDF §5):** Kalitsios et al. 2022 (artículo original de WDSD; DOI 10.1109/ICRCV55858.2022.9953178). Es el único trabajo con el mismo dataset. Reporta con Mask R-CNN ResNet-101 un AP de 0.586 y un AP50 de 0.849, con la partición oficial (765/90/90).
+  - **Limitación declarada:** esa partición es aleatoria por imagen y el 48.9 % de las imágenes de test tiene un casi gemelo en train (EDA del E1). Su AP puede estar inflado por esa fuga. Por eso el E2 usa la partición agrupada y no compara sus números con los del paper.
+  - **Verificación:** exploratoria. Si sobra tiempo después de las corridas finales: ≥ 3 modelos del Top 10 entrenados con la partición oficial, comparando el AP de test en las imágenes con y sin casi gemelo (bootstrap por grupo). No se usa para elegir modelo.

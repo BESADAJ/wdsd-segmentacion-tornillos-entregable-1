@@ -17,10 +17,12 @@ Estos dos modelos no están en MMDetection ni en ultralytics. Se corren con los 
 
 `PYTHONUTF8=1` es necesario porque la ruta tiene "í".
 
+Versiones exactas: `requirements_wdsd_yolo9_congelado.txt` (este entorno) y `requirements_wdsd_mmdet_congelado.txt` (MMDetection), en la raíz del repo.
+
 | Repo | Commit / rama | Pesos COCO |
 |---|---|---|
-| https://github.com/WongKinYiu/yolov9 | `main` | `gelan-c-seg.pt` (release v0.1) |
-| https://github.com/WongKinYiu/yolov7 | rama `u7`, carpeta `seg/` | `yolov7-seg.pt` (release v0.1) |
+| https://github.com/WongKinYiu/yolov9 | `5b1ea9a8b3f0ffe4fe0e203ec6232d788bb3fcff` (`main`) | `gelan-c-seg.pt` (release v0.1) |
+| https://github.com/WongKinYiu/yolov7 | `44f30af0daccb1a3baecc5d80eae22948516c579` (rama `u7`, carpeta `seg/`) | `yolov7-seg.pt` (release v0.1) |
 
 ## Cambios a los repositorios (declarados)
 
@@ -34,6 +36,7 @@ Estos dos modelos no están en MMDetection ni en ultralytics. Se corren con los 
    - `np.int`, `np.float`, `np.bool` y `np.object` pasan a los tipos de Python, porque NumPy ≥ 1.24 los eliminó.
    - Se quita `return_seg=True,` en la llamada a `random_perspective` de `utils/segment/dataloaders.py`. Es un error del repo: esa función no acepta ese argumento, y la ruta sin mosaico falla.
 4. **Solo YOLOv9:** el mismo reemplazo de `np.int` y similares, donde aparece.
+5. **Solo YOLOv9, añadido para el E2 (2026-11-16):** en `utils/segment/loss_tal.py`, `target_scores_sum = target_scores.sum()` pasa a `target_scores_sum = max(target_scores.sum(), 1)`, igual que en la pérdida de ultralytics. Sin el cambio, cuando el asignador da puntaje 0 a todos los objetivos de una imagen, las pérdidas de clase y de caja se dividen por 0. En el piloto del E2 en la 3060 eso dio una pérdida media infinita en la primera época. Copia del archivo parchado: `yolov9_loss_tal.py`.
 
 ## Comandos (PowerShell, desde la carpeta de cada repo)
 

@@ -1,7 +1,7 @@
 """Trabajador de los repositorios oficiales (entorno wdsd_yolo9): YOLOv7-seg (u7, carpeta seg/) y YOLOv9-seg (GELAN-C).
 
-Mismos cambios declarados en results/e2/prueba_humo/repos_oficiales/README.md: nbs = 2 en segment/train.py (se
-verifica antes de entrenar) y parches de NumPy. El hyp se genera desde el hyp.scratch-high.yaml de cada repo:
+Mismos cambios declarados en results/e2/prueba_humo/repos_oficiales/README.md: nbs = 2 en segment/train.py y, en
+YOLOv9, max(target_scores.sum(), 1) en utils/segment/loss_tal.py (los dos se verifican antes de entrenar), y parches de NumPy. El hyp se genera desde el hyp.scratch-high.yaml de cada repo:
 - lr0 = 0.01 x factor (SGD, el optimizador por defecto de los dos repos), lrf = 0.01, coseno (--cos-lr);
 - warmup_epochs = calentamiento común del E2 (el repo además impone un mínimo de 100 iteraciones);
 - única aumentación: fliplr 0.5 (mosaic, mixup, copy_paste, HSV, escala, traslación en 0).
@@ -35,6 +35,9 @@ def verificar_repo(repo: Path, spec: dict):
         raise FileNotFoundError(f"No encuentro {train}. --repo debe ser la carpeta yolov9/ o yolov7u7/seg/.")
     if not re.search(r"^\s*nbs\s*=\s*2\b", train.read_text(encoding="utf8"), re.M):
         raise RuntimeError(f"{train} no tiene el parche nbs = 2 (repos_oficiales/README.md, cambio 1).")
+    perdida = repo / "utils" / "segment" / "loss_tal.py"  # solo YOLOv9 (YOLOv7 u7 usa utils/segment/loss.py)
+    if perdida.exists() and "max(target_scores.sum(), 1)" not in perdida.read_text(encoding="utf8"):
+        raise RuntimeError(f"{perdida} no tiene el parche max(target_scores.sum(), 1) (repos_oficiales/README.md, cambio 5).")
     if not (repo / spec["pesos"]).exists():
         raise FileNotFoundError(f"Faltan los pesos COCO {repo / spec['pesos']}")
 
@@ -130,7 +133,7 @@ def entrenar(modelo: str, carpeta: Path, semilla: int, epocas: int, factor: floa
     t_entrenar = time.time() - t0
     # GPU_mem del log = memoria reservada por PyTorch en GB de 10^9 bytes (repos_oficiales/README.md)
     mem = [float(x) for x in re.findall(r"\s(\d+(?:\.\d+)?)G\s", texto)]
-    total = torch.cuda.get_device_properties(0).total_memory / 1e9 if torch.cuda.is_available() else float("inf")
+    total = 6.44  # GB (10^9) de las tarjetas de 6 GB; no se consulta a CUDA para no abrir un contexto en este proceso
     pico = max(mem) if mem else None
     filas = leer_results(carpeta / "oficial" / "results.csv", epocas)
     mejor = max(filas, key=lambda f: (f["metrics/mAP_0.5:0.95(M)"], -f["epoch"]))
